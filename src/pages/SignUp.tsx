@@ -1,12 +1,12 @@
+import { Flex, Space, Text } from '@/components/common/Wrapper';
 import DepartmentSelect from '@/components/signup/DepartmentSelect';
-import { useForm, Controller } from 'react-hook-form';
-import type { color as colorType } from 'wowds-tokens';
 import GlobalSize from '@/constants/globalSize';
-import { color, color as wowColor, space } from 'wowds-tokens';
-import { css } from '@emotion/react';
+import useCreateUserInfo from '@/hooks/mutation/useCreateUserInfo';
 import { media } from '@/styles';
-import { Space, Flex, Text } from '@/components/common/Wrapper';
-import useCreateUserBasicInfo from '@/hooks/mutation/useCreateUserBasicInfo';
+import { css } from '@emotion/react';
+import { Controller, useForm } from 'react-hook-form';
+import type { color as colorType } from 'wowds-tokens';
+import { color, space, color as wowColor } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 import Checkbox from 'wowds-ui/Checkbox';
 import TextField from 'wowds-ui/TextField';
@@ -15,10 +15,10 @@ import { LoadingForm } from '@/components/common/LoadingForm';
 import RoutePath from '@/routes/routePath';
 import { Suspense } from 'react';
 
+import EmailInputField from '@/components/signup/EmailInputField';
 import { formatPhoneNumberInProgress } from '@/utils/phone';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import EmailInputField from '@/components/signup/EmailInputField';
 
 export type FormStateType = {
   name: string;
@@ -35,7 +35,7 @@ type colorKey = keyof typeof colorType;
 
 /** 가입 신청서 페이지 */
 export const SignUp = () => {
-  const { createBasicInfo } = useCreateUserBasicInfo();
+  const { createInfo } = useCreateUserInfo();
   const {
     control,
     formState: { isValid },
@@ -57,7 +57,7 @@ export const SignUp = () => {
 
   const onSubmit = async (data: FormStateType) => {
     const { name, email, department, phone, studentId, emailDomain } = data;
-    createBasicInfo({
+    createInfo({
       name,
       studentId,
       phone,

@@ -1,10 +1,10 @@
-import styled from '@emotion/styled';
+import { FooterGithubIcon, FooterInstagramIcon } from '@/assets/FooterIcons';
+import { FooterLogoIcon } from '@/assets/FooterLogoIcon';
 import { Logo } from '@/assets/LogoIcon';
+import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { color } from 'wowds-tokens';
 import { Flex, Text } from '../common/Wrapper';
-import { FooterLogoIcon } from '@/assets/FooterLogoIcon';
-import { FooterGithubIcon, FooterInstagramIcon } from '@/assets/FooterIcons';
 
 const Footer = () => {
   return (
@@ -32,13 +32,13 @@ const Footer = () => {
       <Flex gap="md" align="start" justify="start" style={{ width: '100%' }}>
         <button
           onClick={() => {
-            window.location.href = 'https://github.com/GDSC-Hongik';
+            window.location.href = 'https://github.com/gdg-hongik-univ';
           }}>
           <FooterGithubIcon />
         </button>
         <button
           onClick={() => {
-            window.location.href = 'https://www.instagram.com/gdsc.hongik/';
+            window.location.href = 'https://www.instagram.com/gdg.hongikuniv';
           }}>
           <FooterInstagramIcon />
         </button>
