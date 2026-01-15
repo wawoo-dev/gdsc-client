@@ -1,18 +1,18 @@
+import memberApi from '@/apis/member/memberApi';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Flex, Space } from '@/components/common/Wrapper';
-import { color } from 'wowds-tokens';
-import JoinRegularMemberBottomSheet from '../components/bottomsheet/JoinRegularMemberBottomSheet';
-import JoinRegularMember from '@/components/myPage/JoinRegularMember';
 import AssociateRequirementCheck from '@/components/myPage/AssociateRequirementCheck';
-import BasicUserInfo from '@/components/myPage/BasicUserInfo';
+import JoinRegularMember from '@/components/myPage/JoinRegularMember';
+import JoinStatus from '@/components/myPage/JoinStatus';
+import { Privacy } from '@/components/myPage/Privacy';
+import UserInfo from '@/components/myPage/UserInfo';
+import GlobalSize from '@/constants/globalSize';
+import useBottomSheet from '@/hooks/common/useBottomSheet';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
-import { Privacy } from '@/components/myPage/Privacy';
 import { useQuery } from '@tanstack/react-query';
-import memberApi from '@/apis/member/memberApi';
-import GlobalSize from '@/constants/globalSize';
-import JoinStatus from '@/components/myPage/JoinStatus';
-import useBottomSheet from '@/hooks/common/useBottomSheet';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { color } from 'wowds-tokens';
+import JoinRegularMemberBottomSheet from '../components/bottomsheet/JoinRegularMemberBottomSheet';
 
 export const Dashboard = () => {
   const { isOpen } = useBottomSheet();
@@ -38,7 +38,7 @@ export const Dashboard = () => {
       <Wrapper direction="column" justify="flex-start">
         <Space height={20} />
         <Flex justify="flex-start" direction="column" align="flex-start">
-          <BasicUserInfo member={member} />
+          <UserInfo member={member} />
           <JoinStatus
             role={member.role}
             currentRecruitmentRound={currentRecruitmentRound}
@@ -55,7 +55,7 @@ export const Dashboard = () => {
         <AssociateRequirementCheck
           associateRequirement={member.associateRequirement}
         />
-        <Privacy basicInfo={member.basicInfo} />
+        <Privacy info={member.info} />
         <Space height={104} />
       </Wrapper>
       {isOpen && (

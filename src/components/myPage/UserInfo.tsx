@@ -1,9 +1,9 @@
 import { Flex, Text } from '@/components/common/Wrapper';
-import { User } from '@/types/user';
 import { useLogout } from '@/hooks/mutation';
-import { typography, color } from 'wowds-tokens';
+import { User } from '@/types/user';
+import { color, typography } from 'wowds-tokens';
 
-const BasicUserInfo = ({ member }: { member: User }) => {
+const UserInfo = ({ member }: { member: User }) => {
   const { mutate } = useLogout();
   const handleLogoutClick = () => {
     mutate();
@@ -11,9 +11,9 @@ const BasicUserInfo = ({ member }: { member: User }) => {
 
   return (
     <Flex gap="sm" direction="column">
-      {member.basicInfo.name ? (
+      {member.info.name ? (
         <p style={typography.h1} color={color.textBlack}>
-          {member.basicInfo.name} 님
+          {member.info.name} 님
         </p>
       ) : (
         <Text typo="h1" color="darkDisabled">
@@ -35,4 +35,4 @@ const BasicUserInfo = ({ member }: { member: User }) => {
   );
 };
 
-export default BasicUserInfo;
+export default UserInfo;
