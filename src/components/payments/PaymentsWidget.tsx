@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { nanoid } from 'nanoid';
+import { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
 import RoutePath from '@/routes/routePath';
+import { useQuery } from '@tanstack/react-query';
 
-import { media } from '@/styles';
 import { Flex, Space } from '@/components/common/Wrapper';
+import { media } from '@/styles';
 import Button from 'wowds-ui/Button';
 
-import GlobalSize from '@/constants/globalSize';
-import styled from '@emotion/styled';
-import { CLIENT_KEY } from '@/constants/environment';
-import { color } from 'wowds-tokens';
 import meApi from '@/apis/me/meApi';
 import memberApi from '@/apis/member/memberApi';
-import { useProduct } from '@/hooks/zustand/useProduct';
+import { CLIENT_KEY } from '@/constants/environment';
+import GlobalSize from '@/constants/globalSize';
 import usePostPrevOrder from '@/hooks/mutation/usePostPrevOrder';
+import { useProduct } from '@/hooks/zustand/useProduct';
+import styled from '@emotion/styled';
+import { color } from 'wowds-tokens';
 
 const clientKey = CLIENT_KEY;
 const customerKey = nanoid();
@@ -24,7 +24,7 @@ const customerKey = nanoid();
 export function PaymentsWidget() {
   const { data: user } = useQuery({
     queryKey: ['me'],
-    queryFn: meApi.GET_BASIC_INFO
+    queryFn: meApi.GET_USER_INFO
   });
 
   const { data: dashboard } = useQuery({
