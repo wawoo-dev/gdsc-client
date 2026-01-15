@@ -1,10 +1,10 @@
 import { Flex, Text } from '@/components/common/Wrapper';
+import { UserInfo } from '@/types/user';
 import Box from 'wowds-ui/Box';
-import { UserBasicInfo } from '@/types/user';
 
-export const Privacy = ({ basicInfo }: { basicInfo: UserBasicInfo }) => {
+export const Privacy = ({ info }: { info: UserInfo }) => {
   const { studentId, department, phone, email, discordUsername, nickname } =
-    basicInfo;
+    info;
 
   return (
     <Flex justify="flex-start" direction="column" align="flex-start" gap="sm">

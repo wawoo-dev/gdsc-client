@@ -1,19 +1,19 @@
-import { OnboardingArrow } from '@/assets/OnboardingArrow';
 import {
   JoinText,
   OnboardingLogo1,
   OnboardingLogo2
 } from '@/assets/Onboarding';
-import { isAuthenticated } from '@/utils/auth';
+import { OnboardingArrow } from '@/assets/OnboardingArrow';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import { InformationBox } from '@/components/onboarding/InformationBox';
-import { color, typography } from 'wowds-tokens';
-import { media } from '@/styles';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 import GlobalSize from '@/constants/globalSize';
+import { media } from '@/styles';
+import { isAuthenticated } from '@/utils/auth';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { color, typography } from 'wowds-tokens';
 import RoutePath from './routes/routePath';
 
 const IMG_SRC = [
@@ -145,8 +145,8 @@ function App() {
       <Flex direction="column" gap="sm">
         <InformationBox
           title="모집 기간"
-          description="1차 지원 기간 : 2월 27일 ~ 3월 4일"
-          description2="2차 지원 기간 : 3월 6일 ~ 3월 11일"
+          description="1차 지원 기간 : 8월 27일 ~ 9월 2일"
+          description2="2차 지원 기간 : 9월 8일 ~ 9월 14일"
         />
         <InformationBox
           title="지원 자격"

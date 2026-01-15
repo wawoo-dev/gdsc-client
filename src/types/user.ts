@@ -3,7 +3,7 @@ import { Status, UnivEmailStatus } from '@/types/status';
 export type User = {
   memberId: string; // C000000 (학번)
   role: UserRoleType;
-  basicInfo: UserBasicInfo;
+  info: UserInfo;
   associateRequirement: {
     univStatus: UnivEmailStatus;
     discordStatus: Status;
@@ -19,7 +19,7 @@ export type AssociateRequirement = {
   infoStatus: Status;
 };
 
-export type UserBasicInfo = {
+export type UserInfo = {
   name: string;
   studentId: string;
   email: string;
