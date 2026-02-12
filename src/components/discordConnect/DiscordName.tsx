@@ -1,15 +1,15 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
-import Button from 'wowds-ui/Button';
-import DiscordImage from '/discord/discord-name.png';
-import TextField from 'wowds-ui/TextField';
-import TextButton from 'wowds-ui/TextButton';
-import RoutePath from '@/routes/routePath';
-import { useFormContext, useController, Control } from 'react-hook-form';
-import { useCallback, memo, useEffect } from 'react';
-import { Image } from '../common/Image';
-import { DiscordFormValues } from '@/types/discord';
 import { usePostDiscordName } from '@/hooks/mutation/usePostDiscordName';
+import RoutePath from '@/routes/routePath';
+import { DiscordFormValues } from '@/types/discord';
+import { memo, useCallback, useEffect } from 'react';
+import { Control, useController, useFormContext } from 'react-hook-form';
+import Button from 'wowds-ui/Button';
 import Divider from 'wowds-ui/Divider';
+import TextButton from 'wowds-ui/TextButton';
+import TextField from 'wowds-ui/TextField';
+import { Image } from '../common/Image';
+import DiscordImage from '/discord/discord-name.png';
 
 export const DiscordName = ({ onNext }: { onNext: () => void }) => {
   const { getValues, control, trigger, setError } =
@@ -59,7 +59,7 @@ export const DiscordName = ({ onNext }: { onNext: () => void }) => {
         </Button>
         <Space height="xs" />
         <TextButton
-          text="디스코드 계정이 없으신가요?"
+          text="디스코드 계정이 없나요?"
           asProp="a"
           target="_blank"
           href={RoutePath.DiscordRegisterLink}
@@ -79,13 +79,7 @@ const TextSection = memo(() => {
           GDGoC Hongik 디스코드 서버에서는 사용자명을 통해 멤버를 구분해요.
         </Text>
       </div>
-      <Image
-        src={DiscordImage}
-        alt="discord-name"
-        width={325}
-        height={157}
-        align="center"
-      />
+      <Image src={DiscordImage} alt="discord-name" align="center" />
       <Text typo="body1">
         본인의 디스코드 사용자명을 아래 규정과 맞게 설정한 후 입력해주세요.
       </Text>
@@ -134,7 +128,7 @@ const NameField = ({ control }: { control: Control<DiscordFormValues> }) => {
         </ul>
       }
       label="디스코드 사용자명"
-      placeholder="내용을 입력해주세요"
+      placeholder="내용을 입력해주세요."
       error={!!fieldState.error}
     />
   );
