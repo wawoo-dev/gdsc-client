@@ -1,8 +1,9 @@
 import { Flex, Text } from '@/components/common/Wrapper';
-import Button from 'wowds-ui/Button';
-import DiscordImage from '/discord/discord-guide-account.png';
-import { useNavigate } from 'react-router-dom';
 import RoutePath from '@/routes/routePath';
+import { useNavigate } from 'react-router-dom';
+import Button from 'wowds-ui/Button';
+import { Image } from '../common/Image';
+import DiscordImage from '/discord/discord-guide-account.png';
 
 export const AccountDescription = () => {
   const navigate = useNavigate();
@@ -10,12 +11,10 @@ export const AccountDescription = () => {
     <>
       <Flex direction="column" align="flex-start" gap="lg">
         <Text typo="h1">계정은 어떻게 만드나요?</Text>
-        <img
+        <Image
           src={DiscordImage}
           alt="discord-guide-account"
-          width={218}
-          height={281}
-          style={{ margin: '0 auto' }}
+          style={{ padding: '0 27px' }}
         />
         <Text typo="body1">
           디스코드 계정을 만들기 위해서는 위와 같은 정보를 입력해야 해요. 계정을

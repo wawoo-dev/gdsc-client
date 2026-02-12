@@ -1,5 +1,6 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import Button from 'wowds-ui/Button';
+import { Image } from '../common/Image';
 import DiscordImage from '/discord/discord-guide-name.png';
 
 export const NameDescription = ({ onNext }: { onNext: () => void }) => {
@@ -7,7 +8,7 @@ export const NameDescription = ({ onNext }: { onNext: () => void }) => {
     <>
       <Flex direction="column" align="flex-start" gap="lg">
         <Text typo="h1">별명? 사용자명?</Text>
-        <img src={DiscordImage} alt="discord-guide-name" />
+        <Image src={DiscordImage} alt="discord-guide-name" />
         <div>
           <Text typo="label1" color="discord">
             별명 = 이름
