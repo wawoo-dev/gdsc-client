@@ -52,6 +52,7 @@ export const Dashboard = () => {
         )}
         <AssociateRequirementCheck
           associateRequirement={member.associateRequirement}
+          memberInfo={member.info}
         />
         <Privacy info={member.info} />
         <Space height={104} />
