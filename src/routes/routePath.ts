@@ -19,7 +19,7 @@ const RoutePath = {
   StudentVerificationServerRedirect: '/onboarding/verify-email',
   GDSCHongikLink: 'https://www.gdschongik.com',
   GDSCHongikDiscord: 'https://discord.gg/dSV6vSEuGU',
-  GitHubGuideLink: 'https://www.gdschongik.com/guide/github',
+  GitHubGuideLink: 'https://www.wawoo.dev/onboard-guide/github',
   StudentEmailLinkGuideLink: 'https://www.gdschongik.com/guide/student-email',
   CommunityGuideLink:
     'https://www.gdschongik.com/onboarding/community-guideline',
