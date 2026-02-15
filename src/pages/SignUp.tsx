@@ -1,7 +1,6 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import DepartmentSelect from '@/components/signup/DepartmentSelect';
 import GlobalSize from '@/constants/globalSize';
-import useCreateUserInfo from '@/hooks/mutation/useCreateUserInfo';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
 import { Controller, useForm } from 'react-hook-form';
@@ -16,6 +15,7 @@ import RoutePath from '@/routes/routePath';
 import { Suspense } from 'react';
 
 import EmailInputField from '@/components/signup/EmailInputField';
+import useCreateUserInfo from '@/hooks/mutation/useCreateUserInfo';
 import { formatPhoneNumberInProgress } from '@/utils/phone';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
@@ -68,7 +68,7 @@ export const SignUp = () => {
 
   return (
     <Container>
-      <Text typo="h1">기본 회원 정보 입력하기</Text>
+      <Text typo="h1">기본 회원 정보 입력</Text>
       <Space height={24} />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -102,7 +102,7 @@ export const SignUp = () => {
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 helperText={fieldState.error?.message}
-                placeholder="내용을 입력하세요"
+                placeholder="김홍익"
               />
             </InputFormWrapper>
           )}
@@ -219,7 +219,7 @@ export const SignUp = () => {
                         to={RoutePath.TermsLink}
                         target="_blank"
                         color={field.value ? 'textBlack' : 'sub'}>
-                        GDGoC 회칙
+                        GDG Hongik Univ. 회칙
                       </GuideLink>
                       에 동의합니다.
                     </Text>
@@ -245,7 +245,7 @@ export const SignUp = () => {
                         to={RoutePath.PersonalPrivacyLink}
                         target="_blank"
                         color={field.value ? 'textBlack' : 'sub'}>
-                        개인정보 수집
+                        개인정보 처리방침
                       </GuideLink>
                       에 동의합니다.
                     </Text>
@@ -279,6 +279,7 @@ const Container = styled(Flex)`
   }
   min-height: calc(100vh - 54px);
   justify-content: flex-start;
+  align-items: flex-start;
   background-color: ${color.mono50};
   width: ${GlobalSize.width};
   padding: 40px 16px;
