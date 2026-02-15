@@ -13,6 +13,7 @@ export interface CustomBoxProps<T extends BoxVariantType> {
   subTextContent?: React.ReactNode;
   status?: 'default' | 'success' | 'error';
   style?: React.CSSProperties;
+  centered?: boolean;
 }
 
 const CustomBox = <T extends BoxVariantType>({
@@ -24,6 +25,7 @@ const CustomBox = <T extends BoxVariantType>({
   status = 'default',
   onClick,
   style,
+  centered = false,
   ...rest
 }: CustomBoxProps<T>) => {
   const getBorderColor = () => {
@@ -76,11 +78,11 @@ const CustomBox = <T extends BoxVariantType>({
       align="center"
       direction="row"
       gap={variant !== 'text' ? 'lg' : undefined}
-      justify="space-between"
+      justify={centered ? 'center' : 'space-between'}
       style={containerStyle}
       onClick={handleArrowClick}
       {...rest}>
-      <Flex align="center" direction="row" gap="xs" style={{ width: '100%' }}>
+      <Flex align="center" direction="row" gap="xs" style={{ width: centered ? 'auto' : '100%' }}>
         {leftElement}
         <Flex direction="column" gap="sm">
           <Text
@@ -94,11 +96,13 @@ const CustomBox = <T extends BoxVariantType>({
           )}
         </Flex>
       </Flex>
-      <div>
-        {variant === 'arrow' && (
-          <RightArrow width={20} height={20} stroke={getStrokeColor()} />
-        )}
-      </div>
+      {!centered && (
+        <div>
+          {variant === 'arrow' && (
+            <RightArrow width={20} height={20} stroke={getStrokeColor()} />
+          )}
+        </div>
+      )}
     </Flex>
   );
 };
