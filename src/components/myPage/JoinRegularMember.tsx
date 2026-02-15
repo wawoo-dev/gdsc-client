@@ -39,45 +39,47 @@ const JoinRegularMember = ({
         </Text>
         <StatusBadge statusMessage={statusMessage} />
       </Flex>
-      {isApplying ? (
-        currentRecruitment ? (
-          <CustomBox
-            text={
-              paymentStatus === 'UNSATISFIED'
-                ? '이번 학기 회비를 납부해주세요.'
-                : '이번 학기 회비를 납부했어요.'
-            }
-            variant={paymentStatus === 'UNSATISFIED' ? 'arrow' : 'text'}
-            status={paymentStatus === 'UNSATISFIED' ? 'error' : 'success'}
-            subTextContent={
-              paymentStatus === 'UNSATISFIED' ? (
+      {paymentStatus === 'UNSATISFIED' ? (
+        isApplying ? (
+          currentRecruitment ? (
+            <CustomBox
+              text={'이번 학기 회비를 납부해주세요.'}
+              variant={'arrow'}
+              status={'error'}
+              subTextContent={
                 <Text color="sub">
                   카드·계좌이체 등 여러 결제수단을 지원해요.
                 </Text>
-              ) : undefined
-            }
-            onClick={() => {
-              if (paymentStatus === 'UNSATISFIED') handleClickRoute();
-            }}
-          />
+              }
+              onClick={() => {
+                if (paymentStatus === 'UNSATISFIED') handleClickRoute();
+              }}
+            />
+          ) : (
+            <CustomBox
+              text="현재 정회원 모집 기간이 아니예요."
+              subTextContent={
+                <Text typo="body2" color="sub">
+                  정회원 모집 기간이 되면 버튼이 활성화 돼요.
+                </Text>
+              }
+              status="success"
+            />
+          )
         ) : (
           <CustomBox
-            text="현재 정회원 모집 기간이 아니예요."
-            subTextContent={
-              <Text typo="body2" color="sub">
-                정회원 모집 기간이 되면 버튼이 활성화 돼요.
-              </Text>
-            }
-            status="success"
+            text={`${convertRecruitmentName(currentRecruitment.name, currentRecruitment.roundTypeValue)}`}
+            subTextContent={`${convertRecruitmentPeriod(currentRecruitment.period)}`}
+            variant={'arrow'}
+            status="error"
+            onClick={() => handleBottomSheet(() => setIsApplying(true))}
           />
         )
       ) : (
         <CustomBox
-          text={`${convertRecruitmentName(currentRecruitment.name, currentRecruitment.roundTypeValue)}`}
-          subTextContent={`${convertRecruitmentPeriod(currentRecruitment.period)}`}
-          variant={'arrow'}
-          status="error"
-          onClick={() => handleBottomSheet(() => setIsApplying(true))}
+          text={'이번 학기 회비를 납부했어요.'}
+          variant={'text'}
+          status={'success'}
         />
       )}
     </Flex>
