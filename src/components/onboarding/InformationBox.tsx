@@ -28,7 +28,7 @@ export const InformationBox = ({
       <Space height={8} />
       <Text
         typo="body1"
-        color="black"
+        color="sub"
         css={css`
           word-break: keep-all;
           line-height: 160%;
@@ -37,7 +37,7 @@ export const InformationBox = ({
       </Text>
       <Text
         typo="body1"
-        color="black"
+        color="sub"
         css={css`
           word-break: keep-all;
         `}>
