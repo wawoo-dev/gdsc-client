@@ -4,7 +4,6 @@ import { Flex, Space } from '@/components/common/Wrapper';
 import AssociateRequirementCheck from '@/components/myPage/AssociateRequirementCheck';
 import JoinRegularMember from '@/components/myPage/JoinRegularMember';
 import JoinStatus from '@/components/myPage/JoinStatus';
-import { Privacy } from '@/components/myPage/Privacy';
 import UserInfo from '@/components/myPage/UserInfo';
 import GlobalSize from '@/constants/globalSize';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
@@ -37,16 +36,11 @@ export const Dashboard = () => {
         <Space height={20} />
         <Flex justify="flex-start" direction="column" align="flex-start">
           <UserInfo member={member} />
-          <JoinStatus
-            role={member.role}
-            currentRecruitmentRound={currentRecruitmentRound}
-            currentMembership={currentMembership}
-            member={member}
-          />
+          <JoinStatus role={member.role} member={member} />
         </Flex>
-        {(currentMembership || member.role === 'REGULAR') && (
+        {member.role !== 'GUEST' && (
           <JoinRegularMember
-            member={member}
+            currentRecruitment={currentRecruitmentRound}
             paymentStatus={currentMembership?.regularRequirement.paymentStatus}
           />
         )}
@@ -54,7 +48,7 @@ export const Dashboard = () => {
           associateRequirement={member.associateRequirement}
           memberInfo={member.info}
         />
-        <Privacy info={member.info} />
+
         <Space height={104} />
       </Wrapper>
       {isOpen && (
