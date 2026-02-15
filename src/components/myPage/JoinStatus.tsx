@@ -1,35 +1,30 @@
-import { space } from 'wowds-tokens';
-import { useState, useRef } from 'react';
-import { Help } from 'wowds-icons';
-import styled from '@emotion/styled';
 import MemberStatusInfoBox from '@/components/myPage/MemberStatusInfoBox';
-import { ApproveBox } from './ApproveBox';
-import { Text, Flex, Space } from '../common/Wrapper';
-import {
-  CurrentMembershipType,
-  CurrentRecruitmentType
-} from '@/apis/member/memberType';
-import MemberStatusStepper from './MemberStatusStepper';
 import { User, UserRoleType } from '@/types/user';
+import styled from '@emotion/styled';
+import { useRef, useState } from 'react';
+import { Help } from 'wowds-icons';
+import { space } from 'wowds-tokens';
+import { Flex, Space, Text } from '../common/Wrapper';
+
+import MemberStatusStepper from './MemberStatusStepper';
+import { StatusBox } from './StatusBox';
 
 const JoinStatus = ({
   role,
-  currentRecruitmentRound,
-  member,
-  currentMembership
+
+  member
 }: {
   role: UserRoleType;
-  currentRecruitmentRound: CurrentRecruitmentType;
+
   member: User;
-  currentMembership?: CurrentMembershipType;
 }) => {
   const [openInfo, setOpenInfo] = useState(false);
   const helpButtonRef = useRef<HTMLDivElement>(null);
   return (
-    <Flex justify="flex-start" direction="column" align="flex-start">
+    <Flex justify="flex-start" direction="column" align="center">
       <Space height={40} />
       <Container>
-        <Text typo="h2" color="textBlack">
+        <Text typo="label1" color="textBlack">
           현재 회원 상태
         </Text>
         <div
@@ -38,8 +33,8 @@ const JoinStatus = ({
             setOpenInfo(!openInfo);
           }}>
           <Help
-            width={24}
-            height={24}
+            width={18}
+            height={18}
             fill="sub"
             stroke="sub"
             style={{ cursor: 'pointer' }}
@@ -55,11 +50,7 @@ const JoinStatus = ({
       <Space height={40} />
       <MemberStatusStepper member={member} />
       <Space height={20} />
-      <ApproveBox
-        role={role}
-        currentRecruitment={currentRecruitmentRound}
-        currentMembership={currentMembership}
-      />
+      <StatusBox role={role} />
     </Flex>
   );
 };
