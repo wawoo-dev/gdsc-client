@@ -156,7 +156,9 @@ function App() {
           <Text typo="h1" color="black">
             GDG에 대해 궁금한 점이 있나요?
           </Text>
-          <Button size="sm">FAQ 바로가기</Button>
+          <Button size="sm" onClick={() => navigate(RoutePath.FAQ)}>
+            FAQ 바로가기
+          </Button>
         </Flex>
       </Flex>
       <BlueSection direction="column" justify="space-between">

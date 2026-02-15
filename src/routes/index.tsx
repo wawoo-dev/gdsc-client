@@ -15,7 +15,8 @@ import {
   JoinDiscord,
   PaymentsSuccess,
   PaymentsFail,
-  PaymentsCheckout
+  PaymentsCheckout,
+  FAQ
 } from '@/pages';
 import { DiscordConnect } from '@/pages/DiscordConnect';
 import { DiscordGuide } from '@/pages/DiscordGuide';
@@ -37,6 +38,7 @@ const router = sentryCreateBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <App /> },
+      { path: RoutePath.FAQ, element: <FAQ /> },
       {
         path: RoutePath.AuthServerRedirect,
         element: <AuthServerRedirectNavigate />

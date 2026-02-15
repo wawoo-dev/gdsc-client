@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { color } from 'wowds-tokens';
 
 const Bold = styled.span`
-  color: #001a51;
+  color: ${color.mono950};
 `;
+
 const slides = [
   {
     chip: '정규 스터디',
@@ -55,42 +57,32 @@ const slides = [
 
 export default function DirectCarouselDemo() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState(0);
 
   const slideCount = slides.length;
 
-  // Compute the slide width on demand (container's clientWidth)
-  const getSlideWidth = () => scrollerRef.current?.clientWidth ?? 1;
+  const [active, setActive] = useState(0);
+  const activeRef = useRef(active);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
-  // Update active dot while scrolling (throttled via rAF)
-  const rafRef = useRef<number | null>(null);
-  const onScroll = () => {
-    if (rafRef.current) return;
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = null;
-      const el = scrollerRef.current;
-      if (!el) return;
-      const w = getSlideWidth();
-      const next = Math.round(el.scrollLeft / w);
-      setActive(Math.max(0, Math.min(slideCount - 1, next)));
-    });
+  // ---- Auto play ----
+  const AUTO_DELAY = 3000;
+  const RESUME_DELAY = 5000;
+
+  const autoTimerRef = useRef<number | null>(null);
+  const resumeTimerRef = useRef<number | null>(null);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
+  const stopAutoPlay = () => {
+    if (autoTimerRef.current) {
+      clearInterval(autoTimerRef.current);
+      autoTimerRef.current = null;
+    }
   };
 
-  // Keep active dot correct when the viewport changes size
-  useEffect(() => {
-    const onResize = () => {
-      const el = scrollerRef.current;
-      if (!el) return;
-      const w = getSlideWidth();
-      const next = Math.round(el.scrollLeft / w);
-      setActive(Math.max(0, Math.min(slideCount - 1, next)));
-    };
+  const getSlideWidth = () => scrollerRef.current?.clientWidth ?? 1;
 
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [slideCount]);
-
-  // Scroll to slide (dot click)
   const scrollTo = (index: number) => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -98,7 +90,79 @@ export default function DirectCarouselDemo() {
     el.scrollTo({ left: w * index, behavior: 'smooth' });
   };
 
-  // Keyboard accessibility (optional)
+  const startAutoPlay = () => {
+    stopAutoPlay();
+
+    autoTimerRef.current = window.setInterval(() => {
+      // auto에서는 setActive 하지 말고 scrollTo만!
+      const next = (activeRef.current + 1) % slideCount;
+      scrollTo(next);
+    }, AUTO_DELAY);
+  };
+
+  const pauseAndResumeLater = () => {
+    stopAutoPlay();
+    setIsAutoPlay(false);
+
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+
+    resumeTimerRef.current = window.setTimeout(() => {
+      setIsAutoPlay(true);
+    }, RESUME_DELAY);
+  };
+
+  useEffect(() => {
+    if (isAutoPlay) startAutoPlay();
+    else stopAutoPlay();
+
+    return () => stopAutoPlay();
+    // slideCount는 상수라 굳이 deps에 안 넣어도 되는데, lint면 넣어도 OK
+  }, [isAutoPlay]);
+
+  // ---- Scroll end debounce (버벅임 해결 핵심) ----
+  const scrollEndTimerRef = useRef<number | null>(null);
+
+  const onScroll = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    if (scrollEndTimerRef.current) {
+      window.clearTimeout(scrollEndTimerRef.current);
+    }
+
+    // 스크롤이 "멈춘 뒤"에만 active 갱신
+    scrollEndTimerRef.current = window.setTimeout(() => {
+      const w = getSlideWidth();
+      // round보다 튐 덜한 중앙 기준
+      const next = Math.floor((el.scrollLeft + w / 2) / w);
+      const clamped = Math.max(0, Math.min(slideCount - 1, next));
+      setActive(clamped);
+    }, 90);
+  };
+
+  // resize 시 active 재계산
+  useEffect(() => {
+    const onResize = () => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const w = getSlideWidth();
+      const next = Math.floor((el.scrollLeft + w / 2) / w);
+      setActive(Math.max(0, Math.min(slideCount - 1, next)));
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [slideCount]);
+
+  // cleanup (타이머 누수 방지)
+  useEffect(() => {
+    return () => {
+      stopAutoPlay();
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+      if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
+    };
+  }, []);
+
   const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === 'ArrowLeft') scrollTo(Math.max(0, active - 1));
     if (e.key === 'ArrowRight') scrollTo(Math.min(slideCount - 1, active + 1));
@@ -125,10 +189,13 @@ export default function DirectCarouselDemo() {
         </Flex>
 
         <Space height={24} />
+
         <div
           ref={scrollerRef}
           style={styles.scroller}
           onScroll={onScroll}
+          onTouchStart={pauseAndResumeLater}
+          onMouseDown={pauseAndResumeLater}
           tabIndex={0}
           onKeyDown={onKeyDown}
           aria-label="GDG 활동 슬라이더">
@@ -152,7 +219,10 @@ export default function DirectCarouselDemo() {
               <button
                 key={i}
                 type="button"
-                onClick={() => scrollTo(i)}
+                onClick={() => {
+                  pauseAndResumeLater(); // dot 클릭도 사용자 조작으로 보고 잠깐 멈추기
+                  scrollTo(i);
+                }}
                 style={{
                   ...styles.dot,
                   opacity: isActive ? 1 : 0.25,
@@ -175,28 +245,6 @@ export default function DirectCarouselDemo() {
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  chipRow: {
-    marginTop: 18
-  },
-  chip: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '10px 14px',
-    borderRadius: 12,
-    background: '#eaf2ff',
-    color: '#2563eb',
-    fontWeight: 700,
-    fontSize: 16
-  },
-  desc: {
-    marginTop: 14,
-    marginBottom: 18,
-    color: '#6b7280',
-    lineHeight: 1.6,
-    fontSize: 15
-  },
-
-  // The important part: scroll-snap carousel
   scroller: {
     display: 'flex',
     overflowX: 'auto',
@@ -208,14 +256,12 @@ const styles: Record<string, React.CSSProperties> = {
     outline: 'none'
   },
   slide: {
-    flex: '0 0 100%', // each slide is exactly 1 page wide
-    scrollSnapAlign: 'start',
-    paddingRight: 0
+    flex: '0 0 100%',
+    scrollSnapAlign: 'start'
   },
   card: {
     height: 210,
     borderRadius: 18,
-    background: '#d9d9d9',
     display: 'grid',
     placeItems: 'center',
     userSelect: 'none'
@@ -225,7 +271,6 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'rgba(17,24,39,0.55)',
     fontWeight: 600
   },
-
   dots: {
     display: 'flex',
     justifyContent: 'center',

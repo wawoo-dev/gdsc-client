@@ -11,3 +11,4 @@ export * from './PaymentsCheckout';
 export * from './PaymentsFail';
 export * from './PaymentsSuccess';
 export * from './NotFound';
+export * from './FAQ';
