@@ -29,7 +29,12 @@ export const EmailVerification = () => {
       localStorage.setItem('previousGithubHandle', state.previousGithubHandle);
       localStorage.setItem('currentGithubHandle', state.currentGithubHandle);
     }
-  }, [state]);
+
+    // 페이지 접속 시 자동으로 인증 메일 전송
+    if (state?.previousMemberId) {
+      sendVerifyEmail(state.previousMemberId);
+    }
+  }, [state, sendVerifyEmail]);
 
   const handleResendEmail = () => {
     if (state?.previousMemberId) {

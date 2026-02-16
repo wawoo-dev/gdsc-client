@@ -6,10 +6,12 @@ import { media } from '@/styles';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useLayoutEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { color } from 'wowds-tokens';
+import Button from 'wowds-ui/Button';
 
 export const EmailVerificationServerRedirect = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const { isSuccess, isPending, verifyEmail } = useVerifyEmail();
@@ -25,32 +27,49 @@ export const EmailVerificationServerRedirect = () => {
     setCurrentGithubHandle(currHandle);
   }, [token, verifyEmail]);
 
+  const handleButtonClick = () => {
+    if (isSuccess) {
+      navigate('/dashboard');
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <Wrapper direction="column">
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column" align="flex-start">
-          <Text
-            typo="h1"
-            css={css`
-              margin-bottom: 20px;
-              margin-top: 40px;
-            `}>
-            {isSuccess ? '본인 인증 성공' : '본인 인증 실패'}
-          </Text>
-          <TextContainer>
-            {isSuccess ? (
-              <Text typo="body1">
-                기존 계정({previousGithubHandle})의 내용을 삭제하고 새로운 계정({currentGithubHandle})으로 이전했어요. 가입 절차를 계속해서 진행해주세요.
-              </Text>
-            ) : (
-              <Text typo="body1">
-                본인 인증에 실패했어요. 원래 페이지로 돌아가서 인증메일 다시
-                받기 버튼을 눌러주세요.
-              </Text>
-            )}
-          </TextContainer>
+        <Container
+          direction="column"
+          align="flex-start"
+          justify="space-between">
+          <Flex direction="column" align="flex-start" gap="xl">
+            <Text
+              typo="h1"
+              css={css`
+                margin-top: 40px;
+              `}>
+              {isSuccess ? '본인 인증 성공' : '본인 인증 실패'}
+            </Text>
+            <TextContainer>
+              {isSuccess ? (
+                <Text typo="body1">
+                  기존 계정({previousGithubHandle})의 내용을 삭제하고
+                  <br /> 새로운 계정({currentGithubHandle})으로 이전했어요.
+                  <br /> 가입 절차를 계속해서 진행해주세요.
+                </Text>
+              ) : (
+                <Text typo="body1">
+                  본인 인증에 실패했어요. 원래 페이지로 돌아가서 인증메일 다시
+                  받기 버튼을 눌러주세요.
+                </Text>
+              )}
+            </TextContainer>
+          </Flex>
+          <Button onClick={handleButtonClick}>
+            {isSuccess ? '대시보드로 가기' : '돌아가기'}
+          </Button>
         </Container>
       )}
     </Wrapper>
@@ -75,9 +94,9 @@ const Wrapper = styled(Flex)`
 
 const Container = styled(Flex)`
   position: relative;
-  justify-content: flex-start;
   width: 100%;
   min-height: calc(100vh - 54px);
+  padding: 0 0 40px 0;
 `;
 
 const TextContainer = styled.div`
