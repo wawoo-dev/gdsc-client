@@ -1,7 +1,6 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import DepartmentSelect from '@/components/signup/DepartmentSelect';
 import GlobalSize from '@/constants/globalSize';
-import useCreateUserInfo from '@/hooks/mutation/useCreateUserInfo';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,14 +10,22 @@ import Button from 'wowds-ui/Button';
 import Checkbox from 'wowds-ui/Checkbox';
 import TextField from 'wowds-ui/TextField';
 
+import { GitHubIcon } from '@/assets/GitHubIcon';
 import { LoadingForm } from '@/components/common/LoadingForm';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Modal } from '@/components/common/Modal';
 import RoutePath from '@/routes/routePath';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import EmailInputField from '@/components/signup/EmailInputField';
+import useCreateUserInfo from '@/hooks/mutation/useCreateUserInfo';
+import { useGetAccountInfo } from '@/hooks/query';
+import useCheckStudentId from '@/hooks/query/useCheckStudentId';
+import usePreviousMemberInfo from '@/hooks/query/usePreviousMemberInfo';
+import useAccountInfoStore from '@/hooks/zustand/useAccountInfo';
 import { formatPhoneNumberInProgress } from '@/utils/phone';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export type FormStateType = {
   name: string;
@@ -36,11 +43,22 @@ type colorKey = keyof typeof colorType;
 /** 가입 신청서 페이지 */
 export const SignUp = () => {
   const { createInfo } = useCreateUserInfo();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [previousStudentId, setPreviousStudentId] = useState('');
+
+  useGetAccountInfo();
+  const currentGithubHandle = useAccountInfoStore(
+    (state) => state.githubHandle
+  );
+
   const {
     control,
     formState: { isValid },
     handleSubmit,
-    register
+    register,
+    watch,
+    trigger
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -55,6 +73,52 @@ export const SignUp = () => {
     }
   });
 
+  const studentId = watch('studentId');
+  const { data: studentIdCheckData, dataUpdatedAt } =
+    useCheckStudentId(studentId);
+  const { data: previousMemberInfo, isLoading: isPreviousMemberInfoLoading } =
+    usePreviousMemberInfo(previousStudentId);
+
+  useEffect(() => {
+    if (studentId && /^[A-C]{1}[0-9]{6}$/.test(studentId)) {
+      trigger('studentId');
+    }
+  }, [dataUpdatedAt, studentId, trigger]);
+
+  useEffect(() => {
+    // previousMemberInfo 로딩이 완료되면 모달 열기
+    if (
+      !isPreviousMemberInfoLoading &&
+      previousMemberInfo &&
+      previousStudentId
+    ) {
+      setIsModalOpen(true);
+    }
+  }, [isPreviousMemberInfoLoading, previousMemberInfo, previousStudentId]);
+
+  const handleRegisterClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setPreviousStudentId(studentId);
+    // 모달은 previousMemberInfo 로딩 완료 후 useEffect에서 열림
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleChangeAccount = () => {
+    setIsModalOpen(false);
+    if (previousMemberInfo) {
+      navigate(RoutePath.EmailVerification, {
+        state: {
+          email: previousMemberInfo.previousEmail,
+          previousMemberId: previousMemberInfo.previousMemberId,
+          previousGithubHandle: previousMemberInfo.previousGithubHandle,
+          currentGithubHandle: currentGithubHandle
+        }
+      });
+    }
+  };
   const onSubmit = async (data: FormStateType) => {
     const { name, email, department, phone, studentId, emailDomain } = data;
     createInfo({
@@ -68,7 +132,10 @@ export const SignUp = () => {
 
   return (
     <Container>
-      <Text typo="h1">기본 회원 정보 입력하기</Text>
+      {isPreviousMemberInfoLoading && previousStudentId !== '' && (
+        <LoadingSpinner />
+      )}
+      <Text typo="h1">기본 회원 정보 입력</Text>
       <Space height={24} />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -102,7 +169,7 @@ export const SignUp = () => {
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 helperText={fieldState.error?.message}
-                placeholder="내용을 입력하세요"
+                placeholder="김홍익"
               />
             </InputFormWrapper>
           )}
@@ -119,9 +186,19 @@ export const SignUp = () => {
             pattern: {
               value: /^[A-C]{1}[0-9]{6}$/,
               message: '* C000000 형식으로 입력해주세요.'
+            },
+            validate: () => {
+              if (studentIdCheckData?.isDuplicate) {
+                return '* 이미 등록된 학번입니다.';
+              }
+              return true;
             }
           }}
           render={({ field, fieldState }) => {
+            const isDuplicateError =
+              studentIdCheckData?.isDuplicate &&
+              fieldState.error?.message?.includes('이미 등록된 학번입니다');
+
             return (
               <InputFormWrapper>
                 <TextField
@@ -131,7 +208,18 @@ export const SignUp = () => {
                   value={field.value}
                   onChange={field.onChange}
                   onBlur={field.onBlur}
-                  helperText={fieldState.error?.message}
+                  helperText={
+                    isDuplicateError ? (
+                      <HelperTextWrapper>
+                        <span>{fieldState.error?.message}</span>
+                        <RegisterButton onClick={handleRegisterClick}>
+                          새로 가입하기
+                        </RegisterButton>
+                      </HelperTextWrapper>
+                    ) : (
+                      fieldState.error?.message
+                    )
+                  }
                   placeholder="내용을 입력하세요"
                 />
               </InputFormWrapper>
@@ -219,7 +307,7 @@ export const SignUp = () => {
                         to={RoutePath.TermsLink}
                         target="_blank"
                         color={field.value ? 'textBlack' : 'sub'}>
-                        GDGoC 회칙
+                        GDG Hongik Univ. 회칙
                       </GuideLink>
                       에 동의합니다.
                     </Text>
@@ -245,7 +333,7 @@ export const SignUp = () => {
                         to={RoutePath.PersonalPrivacyLink}
                         target="_blank"
                         color={field.value ? 'textBlack' : 'sub'}>
-                        개인정보 수집
+                        개인정보 처리방침
                       </GuideLink>
                       에 동의합니다.
                     </Text>
@@ -267,6 +355,60 @@ export const SignUp = () => {
           </Button>
         </Flex>
       </form>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+        <Flex direction="column" gap="md">
+          <Text typo="body1" align="center">
+            기존에 가입한 회원과 중복되는 정보입니다.
+            <br />
+            기존 GitHub 계정과 연결을 끊고
+            <br />새 GitHub 계정을 연결하시겠습니까?
+          </Text>
+          <Text typo="body3" color="sub">
+            <ul
+              style={{
+                listStyleType: 'disc',
+
+                listStylePosition: 'outside'
+              }}>
+              <li>
+                연결된 GitHub 계정을 변경하면 기존에 활동했던
+                <br /> 이력도 자동으로 새로운 계정에 반영돼요.
+              </li>
+            </ul>
+          </Text>
+          <Flex direction="column" gap="xs">
+            <GitHubHandleRow>
+              <Text typo="label2" color="sub">
+                기존 GitHub
+              </Text>
+              <GitHubHandleBadge>
+                <GitHubIcon width={14} height={14} />
+                <Text typo="label2">
+                  {previousMemberInfo?.previousGithubHandle || '-'}
+                </Text>
+              </GitHubHandleBadge>
+            </GitHubHandleRow>
+            <GitHubHandleRow>
+              <Text typo="label2" color="sub">
+                현재 GitHub
+              </Text>
+              <GitHubHandleBadge>
+                <GitHubIcon width={14} height={14} />
+                <Text typo="label2">{currentGithubHandle || '-'}</Text>
+              </GitHubHandleBadge>
+            </GitHubHandleRow>
+          </Flex>
+          <ModalButtonGroup>
+            <Button
+              style={{ color: color.sub, borderColor: color.outline }}
+              variant="outline"
+              onClick={handleModalClose}>
+              취소하기
+            </Button>
+            <Button onClick={handleChangeAccount}>변경하기</Button>
+          </ModalButtonGroup>
+        </Flex>
+      </Modal>
     </Container>
   );
 };
@@ -279,6 +421,7 @@ const Container = styled(Flex)`
   }
   min-height: calc(100vh - 54px);
   justify-content: flex-start;
+  align-items: flex-start;
   background-color: ${color.mono50};
   width: ${GlobalSize.width};
   padding: 40px 16px;
@@ -310,4 +453,51 @@ const GuideLink = styled(Link)<{ color?: colorKey }>`
 const InputFormWrapper = styled.div`
   height: 84.8px;
   width: 100%;
+`;
+
+const HelperTextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const RegisterButton = styled.a`
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+  &:visited {
+    color: inherit;
+  }
+`;
+
+const ModalButtonGroup = styled.div`
+  display: flex;
+  gap: 12px;
+  width: 100%;
+
+  button {
+    flex: 1;
+  }
+`;
+
+const GitHubHandleRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+const GitHubHandleBadge = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 40px;
+  background: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${color.outline};
+  gap: 4px;
 `;

@@ -1,5 +1,5 @@
-import { useRef, type ReactNode, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useRef, useState, type ReactNode } from 'react';
 
 import DropDown from 'wowds-ui/DropDown';
 import DropDownOption from 'wowds-ui/DropDownOption';
@@ -8,10 +8,10 @@ import couponApi from '@/apis/coupon/couponApi';
 import { CouponResponse } from '@/apis/coupon/couponType';
 import { useProduct } from '@/hooks/zustand/useProduct';
 
-import { Flex, Text } from '../common/Wrapper';
-import { space } from 'wowds-tokens';
 import styled from '@emotion/styled';
 import { Help } from 'wowds-icons';
+import { space } from 'wowds-tokens';
+import { Flex, Text } from '../common/Wrapper';
 import CouponInfoBox from './CouponInfoBox';
 
 export const CouponDropDown = () => {
@@ -39,7 +39,7 @@ export const CouponDropDown = () => {
   return (
     <Flex justify="flex-start" direction="column" align="flex-start" gap="sm">
       <Container>
-        <Text typo="h2" color="black">
+        <Text typo="label1" color="black">
           할인 쿠폰
         </Text>
         <div
@@ -48,8 +48,8 @@ export const CouponDropDown = () => {
             setOpenInfo(!openInfo);
           }}>
           <Help
-            width={24}
-            height={24}
+            width={18}
+            height={18}
             fill="sub"
             stroke="sub"
             style={{ cursor: 'pointer' }}

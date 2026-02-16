@@ -1,18 +1,16 @@
-import { nanoid } from 'nanoid';
 import { useQuery } from '@tanstack/react-query';
+import { nanoid } from 'nanoid';
+import { useState } from 'react';
 
 import memberApi from '@/apis/member/memberApi';
-import { useFunnel } from '@/hooks/common/useFunnel';
+import { Modal } from '@/components/common/Modal';
 import { Payments } from '@/components/payments/Payments';
 import { PaymentsWidget } from '@/components/payments/PaymentsWidget';
-import useCustomBack from '@/hooks/common/useCutomBack';
-import { useProduct } from '@/hooks/zustand/useProduct';
 import usePostFreeOrder from '@/hooks/mutation/usePostFreeOrder';
-
-const steps = ['회비 납부', '결제 위젯'];
+import { useProduct } from '@/hooks/zustand/useProduct';
 
 export const PaymentsCheckout = () => {
-  const { Funnel, Step, setStep, currentStep } = useFunnel(steps[0]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { amount, discount, totalAmount, issuedCouponId } = useProduct();
   const { postFreeOrder } = usePostFreeOrder(totalAmount);
   const { data: dashboard } = useQuery({
@@ -20,7 +18,7 @@ export const PaymentsCheckout = () => {
     queryFn: memberApi.GET_DASHBOARD
   });
 
-  const nextClickHandler = (step: string) => {
+  const nextClickHandler = () => {
     if (!totalAmount && dashboard) {
       const id = nanoid();
       postFreeOrder({
@@ -33,24 +31,15 @@ export const PaymentsCheckout = () => {
       });
       return;
     }
-    setStep(step);
+    setIsModalOpen(true);
   };
 
-  const handleBack = () => {
-    const currentStepIndex = steps.indexOf(currentStep);
-    if (currentStepIndex === 0) return;
-    setStep(steps[currentStepIndex - 1]);
-  };
-
-  useCustomBack(handleBack);
   return (
-    <Funnel>
-      <Step name={steps[0]}>
-        <Payments onNext={() => nextClickHandler(steps[1])} />
-      </Step>
-      <Step name={steps[1]}>
+    <>
+      <Payments onNext={nextClickHandler} />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <PaymentsWidget />
-      </Step>
-    </Funnel>
+      </Modal>
+    </>
   );
 };

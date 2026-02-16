@@ -30,3 +30,9 @@ export interface CurrentMembershipType {
     paymentSatisfied: boolean;
   };
 }
+
+export interface PreviousMemberInfoResponse {
+  previousMemberId: number;
+  previousGithubHandle: string;
+  previousEmail: string;
+}

@@ -1,18 +1,30 @@
-import { Flex, Text } from '@/components/common/Wrapper';
-import Box from 'wowds-ui/Box';
-import { UnivEmailStatus } from '@/types/status';
 import { Discord } from '@/assets/Discord';
-import { AssociateRequirement } from '@/types/user';
+import { Flex, Text } from '@/components/common/Wrapper';
 import RoutePath from '@/routes/routePath';
+import { UnivEmailStatus } from '@/types/status';
+import { AssociateRequirement, UserInfo } from '@/types/user';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { color } from 'wowds-tokens';
+import Button from 'wowds-ui/Button';
+import { Modal } from '../common/Modal';
+import CustomBox from './CustomBox';
+import StatusBadge from './StatusBadge';
 
 const AssociateRequirementCheck = ({
-  associateRequirement
+  associateRequirement,
+  memberInfo
 }: {
   associateRequirement: AssociateRequirement;
+  memberInfo: UserInfo;
 }) => {
+  const [discordModalOpen, setDiscordModalOpen] = useState(false);
   const { infoStatus, discordStatus, univStatus } = associateRequirement;
   const navigate = useNavigate();
+
+  const handleClose = () => {
+    setDiscordModalOpen(false);
+  };
 
   const univStatusContent = (univStatus: UnivEmailStatus) => {
     if (univStatus === 'UNSATISFIED')
@@ -47,53 +59,179 @@ const AssociateRequirementCheck = ({
           </Text>
         </Flex>
       );
-    return '홍익대학교 재학생 인증을 완료했어요.';
+    return '재학생 이메일 인증이 완료되었어요.';
   };
-
+  const statusMessage =
+    infoStatus === 'SATISFIED' &&
+    discordStatus === 'SATISFIED' &&
+    univStatus === 'SATISFIED'
+      ? '완료'
+      : '진행전';
   return (
     <Flex justify="flex-start" direction="column" align="flex-start" gap="sm">
-      <Text typo="h2" color="black">
-        준회원 가입 조건
-      </Text>
-      <Box
-        text={
-          infoStatus === 'UNSATISFIED'
-            ? '기본 회원 정보를 입력해주세요.'
-            : '기본 회원 정보를 모두 입력했어요.'
+      <Flex gap="xs" justify="flex-start">
+        <Text typo="h2" color="textBlack">
+          신청 조건
+        </Text>
+        <StatusBadge statusMessage={statusMessage} />
+      </Flex>
+      <CustomBox
+        text="기본 회원 정보를 입력해주세요."
+        subTextContent={
+          infoStatus === 'SATISFIED' ? (
+            <Flex direction="column" gap="sm">
+              <Flex justify="flex-start" gap="xs">
+                <Text color="outline" typo="label2">
+                  학번
+                </Text>
+                <Text color="sub" typo="body2">
+                  {memberInfo.studentId}
+                </Text>
+              </Flex>
+              <Flex justify="flex-start" gap="xs">
+                <Text color="outline" typo="label2">
+                  학과
+                </Text>
+                <Text color="sub" typo="body2">
+                  {memberInfo.department}
+                </Text>
+              </Flex>
+              <Flex justify="flex-start" gap="xs">
+                <Text color="outline" typo="label2">
+                  전화번호
+                </Text>
+                <Text color="sub" typo="body2">
+                  {memberInfo.phone}
+                </Text>
+              </Flex>
+              <Flex justify="flex-start" gap="xs">
+                <Text color="outline" typo="label2">
+                  이메일
+                </Text>
+                <Text color="sub" typo="body2">
+                  {memberInfo.email}
+                </Text>
+              </Flex>
+            </Flex>
+          ) : undefined
         }
+        variant={infoStatus === 'UNSATISFIED' ? 'arrow' : 'text'}
+        status={infoStatus === 'UNSATISFIED' ? 'error' : 'success'}
         onClick={() => {
           if (infoStatus === 'UNSATISFIED') navigate(RoutePath.Signup);
         }}
-        status={infoStatus === 'UNSATISFIED' ? 'error' : 'success'}
-        variant={infoStatus === 'UNSATISFIED' ? 'arrow' : 'text'}
       />
-      <Box
-        text={'GDGoC Hongik Discord'}
-        textColor="discord"
-        subText={
-          discordStatus === 'UNSATISFIED'
-            ? '디스코드 연동이 필요해요.'
-            : '디스코드 연동을 완료했어요.'
-        }
-        leftElement={<Discord />}
-        variant={discordStatus === 'UNSATISFIED' ? 'arrow' : 'text'}
-        status={discordStatus === 'UNSATISFIED' ? 'error' : 'success'}
-        onClick={() => {
-          if (discordStatus === 'UNSATISFIED') {
-            navigate(RoutePath.Discord);
-          } else {
-            window.open('https://discord.gg/dSV6vSEuGU');
+
+      {infoStatus === 'SATISFIED' && (
+        <>
+          {
+            // 디스코드 해지 모달 (연동된 상태에서 클릭 시)
+            <Modal isOpen={discordModalOpen} onClose={handleClose}>
+              <Flex direction="column" gap="md">
+                <Text typo="body1" align="center">
+                  디스코드 계정을 해지하고
+                  <br />
+                  새로운 계정으로 재연동하겠습니까?
+                </Text>
+                <Flex gap="xxs">
+                  <Text typo="label2" color="sub">
+                    기존 Discord
+                  </Text>
+                  <div
+                    style={{
+                      padding: '8px 12px 8px 12px',
+                      borderRadius: 40,
+                      border: `1px solid ${color.outline}`,
+                      display: 'flex',
+                      gap: 4,
+                      alignItems: 'center'
+                    }}>
+                    <Discord width="14" height="14" />
+                    <Text color="textBlack" typo="label2">
+                      {memberInfo.discordUsername}
+                    </Text>
+                  </div>
+                </Flex>
+                <Flex gap="xs" style={{ marginTop: 8 }}>
+                  <Button
+                    style={{ borderColor: color.outline, color: color.sub }}
+                    variant="outline"
+                    onClick={handleClose}>
+                    취소하기
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      handleClose();
+                      navigate(`${RoutePath.Discord}?reconnect=true`);
+                    }}>
+                    재연동하기
+                  </Button>
+                </Flex>
+              </Flex>
+            </Modal>
           }
-        }}
-      />
-      <Box
-        onClick={() => {
-          navigate(RoutePath.StudentVerification);
-        }}
-        text={univStatusContent(univStatus)}
-        status={univStatus === 'SATISFIED' ? 'success' : 'error'}
-        variant={univStatus === 'SATISFIED' ? 'text' : 'arrow'}
-      />
+          <CustomBox
+            text={
+              discordStatus === 'UNSATISFIED'
+                ? '디스코드 연동이 필요해요.'
+                : '디스코드 연동이 완료되었어요.'
+            }
+            subTextContent={
+              discordStatus === 'UNSATISFIED' ? (
+                <Flex
+                  direction="column"
+                  align="flex-start"
+                  justify="flex-start">
+                  <Flex justify="flex-start">
+                    <Discord width="20" height="20" />
+                    <Text color="discord" style={{ marginLeft: 3 }}>
+                      GDG Hongik Univ.
+                    </Text>
+                    <Text color="sub"> 서버에</Text>
+                  </Flex>
+                  <Text color="sub">본인 계정을 연동하세요.</Text>
+                </Flex>
+              ) : (
+                <Flex direction="column" gap="sm">
+                  <Flex justify="flex-start" gap="xs">
+                    <Text color="outline" typo="label2">
+                      디스코드 닉네임
+                    </Text>
+                    <Text color="sub" typo="body2">
+                      {memberInfo.nickname}
+                    </Text>
+                  </Flex>
+                  <Flex justify="flex-start" gap="xs">
+                    <Text color="outline" typo="label2">
+                      디스코드 사용자명
+                    </Text>
+                    <Text color="sub" typo="body2">
+                      {memberInfo.discordUsername}
+                    </Text>
+                  </Flex>
+                </Flex>
+              )
+            }
+            variant={'arrow'}
+            status={discordStatus === 'UNSATISFIED' ? 'error' : 'success'}
+            onClick={() => {
+              if (discordStatus === 'UNSATISFIED') {
+                navigate(RoutePath.Discord);
+              } else {
+                setDiscordModalOpen(true);
+              }
+            }}
+          />
+          <CustomBox
+            onClick={() => {
+              navigate(RoutePath.StudentVerification);
+            }}
+            text={univStatusContent(univStatus)}
+            status={univStatus === 'SATISFIED' ? 'success' : 'error'}
+            variant={univStatus === 'SATISFIED' ? 'text' : 'arrow'}
+          />
+        </>
+      )}
     </Flex>
   );
 };

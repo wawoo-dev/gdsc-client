@@ -1,4 +1,3 @@
-import { HeaderLogo } from '@/assets/HeaderLogo';
 import { Logo } from '@/assets/LogoIcon';
 import { Flex } from '@/components/common/Wrapper';
 import { JoinButton } from '@/components/layout/JoinButton';
@@ -27,7 +26,8 @@ export default function Header() {
         <LogoContainer onClick={() => navigation(RoutePath.Home)}>
           <Flex direction="row" align="center" justify="flex-start" gap="xs">
             <Logo />
-            <HeaderLogo />
+            <LogoText>GDG</LogoText>
+            <SubLogoText>Hongik Univ.</SubLogoText>
           </Flex>
         </LogoContainer>
         {isAuthenticated() ? (
@@ -44,11 +44,32 @@ const Container = styled(Flex)`
   width: 100%;
   height: ${GlobalSize.header};
   gap: 16px;
-  background-color: ${color.white};
+  background-color: ${color.monoBackgroundPressed};
   border-bottom: 1px solid ${color.mono400};
   position: fixed;
   top: 0;
   z-index: 99;
+`;
+const LogoText = styled.div`
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('/fonts/GoogleSans-Bold.ttf') format('truetype');
+    font-style: normal;
+  }
+  font-family: 'Google Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: ${color.black};
+`;
+const SubLogoText = styled.div`
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+  font-family: 'Google Sans', sans-serif;
+  font-size: 14px;
+  color: ${color.primary};
 `;
 
 const HeaderContainter = styled(Flex)`

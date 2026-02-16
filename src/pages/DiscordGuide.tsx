@@ -8,11 +8,14 @@ import { DiscordDescription } from '@/components/discordGuide/DiscordDescription
 import { AccountDescription } from '@/components/discordGuide/AccountDescription';
 import { NameDescription } from '@/components/discordGuide/NameDescription';
 import useCustomBack from '@/hooks/common/useCutomBack';
+import { useSearchParams } from 'react-router-dom';
 
 const steps = ['디스코드 설명', '이름 설명', '계정 생성 설명'];
 
 export const DiscordGuide = () => {
   const { Funnel, Step, setStep, currentStep } = useFunnel(steps[0]);
+  const [searchParams] = useSearchParams();
+  const isReconnect = searchParams.get('reconnect') === 'true';
 
   const nextClickHandler = (step: string) => {
     setStep(step);
@@ -38,7 +41,7 @@ export const DiscordGuide = () => {
             <NameDescription onNext={() => nextClickHandler(steps[2])} />
           </Step>
           <Step name="계정 생성 설명">
-            <AccountDescription />
+            <AccountDescription isReconnect={isReconnect} />
           </Step>
         </Funnel>
       </Wrapper>
