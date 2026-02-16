@@ -3,7 +3,8 @@ import useSendVerifyEmail from '@/hooks/mutation/useSendVerifyEmail';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { color } from 'wowds-tokens';
 import Box from 'wowds-ui/Box';
 import Button from 'wowds-ui/Button';
@@ -17,27 +18,38 @@ interface EmailVerificationState {
 
 export const EmailVerification = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state as EmailVerificationState;
   const { sendVerifyEmail } = useSendVerifyEmail();
+
+  const isValidState =
+    state?.email && state?.previousMemberId !== undefined && state?.previousMemberId !== null;
 
   const maskedEmail = state?.email
     ? state.email.replace(/(.{3})(.*)(@.*)/, '$1***$3')
     : '';
 
   useEffect(() => {
+    // 상태가 없거나 유효하지 않은 경우 토스트 에러를 띄우고 이전 페이지로 이동
+    if (!isValidState) {
+      toast.error('인증 링크가 만료되었거나 잘못된 접근입니다.');
+      navigate(-1);
+      return;
+    }
+
     if (state?.previousGithubHandle && state?.currentGithubHandle) {
       localStorage.setItem('previousGithubHandle', state.previousGithubHandle);
       localStorage.setItem('currentGithubHandle', state.currentGithubHandle);
     }
 
     // 페이지 접속 시 자동으로 인증 메일 전송
-    if (state?.previousMemberId) {
+    if (state.previousMemberId) {
       sendVerifyEmail(state.previousMemberId);
     }
-  }, [state, sendVerifyEmail]);
+  }, [state, sendVerifyEmail, isValidState, navigate]);
 
   const handleResendEmail = () => {
-    if (state?.previousMemberId) {
+    if (isValidState && state?.previousMemberId) {
       sendVerifyEmail(state.previousMemberId);
     }
   };

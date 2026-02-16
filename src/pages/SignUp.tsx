@@ -12,6 +12,7 @@ import TextField from 'wowds-ui/TextField';
 
 import { GitHubIcon } from '@/assets/GitHubIcon';
 import { LoadingForm } from '@/components/common/LoadingForm';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Modal } from '@/components/common/Modal';
 import RoutePath from '@/routes/routePath';
 import { Suspense, useEffect, useState } from 'react';
@@ -75,7 +76,8 @@ export const SignUp = () => {
   const studentId = watch('studentId');
   const { data: studentIdCheckData, dataUpdatedAt } =
     useCheckStudentId(studentId);
-  const { data: previousMemberInfo } = usePreviousMemberInfo(previousStudentId);
+  const { data: previousMemberInfo, isLoading: isPreviousMemberInfoLoading } =
+    usePreviousMemberInfo(previousStudentId);
 
   useEffect(() => {
     if (studentId && /^[A-C]{1}[0-9]{6}$/.test(studentId)) {
@@ -83,10 +85,17 @@ export const SignUp = () => {
     }
   }, [dataUpdatedAt, studentId, trigger]);
 
+  useEffect(() => {
+    // previousMemberInfo 로딩이 완료되면 모달 열기
+    if (!isPreviousMemberInfoLoading && previousMemberInfo && previousStudentId) {
+      setIsModalOpen(true);
+    }
+  }, [isPreviousMemberInfoLoading, previousMemberInfo, previousStudentId]);
+
   const handleRegisterClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setPreviousStudentId(studentId);
-    setIsModalOpen(true);
+    // 모달은 previousMemberInfo 로딩 완료 후 useEffect에서 열림
   };
 
   const handleModalClose = () => {
@@ -119,6 +128,9 @@ export const SignUp = () => {
 
   return (
     <Container>
+      {isPreviousMemberInfoLoading && previousStudentId !== '' && (
+        <LoadingSpinner />
+      )}
       <Text typo="h1">기본 회원 정보 입력</Text>
       <Space height={24} />
       <form

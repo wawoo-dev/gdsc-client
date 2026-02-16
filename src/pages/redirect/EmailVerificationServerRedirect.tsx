@@ -2,6 +2,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Flex, Text } from '@/components/common/Wrapper';
 import GlobalSize from '@/constants/globalSize';
 import { useVerifyEmail } from '@/hooks/mutation';
+import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -29,7 +30,7 @@ export const EmailVerificationServerRedirect = () => {
 
   const handleButtonClick = () => {
     if (isSuccess) {
-      navigate('/dashboard');
+      navigate(RoutePath.Dashboard);
     } else {
       navigate(-1);
     }
@@ -81,9 +82,7 @@ const Wrapper = styled(Flex)`
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
-  direction: column;
   justify-content: flex-start;
-  gap: '40px';
   align-items: flex-start;
   background-color: ${color.mono50};
 

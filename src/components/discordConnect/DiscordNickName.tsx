@@ -105,8 +105,11 @@ const NameField = ({ control }: { control: Control<DiscordFormValues> }) => {
           <li>
             <button
               onClick={() => {
-                window.location.href =
-                  'https://www.wawoo.dev/onboard-guide/community-guideline';
+                window.open(
+                  'https://www.wawoo.dev/onboard-guide/community-guideline',
+                  '_blank',
+                  'noopener,noreferrer'
+                );
               }}>
               <u>GDG Hongik 가이드라인</u>
             </button>

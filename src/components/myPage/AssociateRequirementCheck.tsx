@@ -127,13 +127,13 @@ const AssociateRequirementCheck = ({
           {
             // 디스코드 해지 모달 (연동된 상태에서 클릭 시)
             <Modal isOpen={discordModalOpen} onClose={handleClose}>
-              <Flex justify="cneter" direction="column" gap="md">
+              <Flex direction="column" gap="md">
                 <Text typo="body1" align="center">
                   디스코드 계정 연동을 해지하시겠습니까? <br />
                   해지 이후에 다시 디스코드 계정을 연동해야 준회원으로 활동이
                   가능합니다.
                 </Text>
-                <Flex align="center" justify="center" gap="xxs">
+                <Flex gap="xxs">
                   <Text typo="label2" color="sub">
                     기존 Discord
                   </Text>

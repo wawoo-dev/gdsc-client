@@ -29,7 +29,7 @@ const CustomBox = <T extends BoxVariantType>({
   ...rest
 }: CustomBoxProps<T>) => {
   const getBorderColor = () => {
-    if (disabled) return 'lightDisabled';
+    if (disabled) return color.lightDisabled;
     switch (status) {
       case 'error':
         return color.error;
@@ -82,7 +82,11 @@ const CustomBox = <T extends BoxVariantType>({
       style={containerStyle}
       onClick={handleArrowClick}
       {...rest}>
-      <Flex align="center" direction="row" gap="xs" style={{ width: centered ? 'auto' : '100%' }}>
+      <Flex
+        align="center"
+        direction="row"
+        gap="xs"
+        style={{ width: centered ? 'auto' : '100%' }}>
         {leftElement}
         <Flex direction="column" gap="sm">
           {typeof text === 'string' ? (

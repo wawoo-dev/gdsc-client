@@ -24,7 +24,7 @@ const RoutePath = {
   GDSCHongikLink: 'https://www.wawoo.dev',
   GDSCHongikDiscord: 'https://discord.gg/dSV6vSEuGU',
   GitHubGuideLink: 'https://www.wawoo.dev/onboard-guide/github',
-  StudentEmailLinkGuideLink: 'https://www.gdschongik.com/guide/student-email',
+  StudentEmailLinkGuideLink: 'https://www.wawoo.dev/guide/student-email',
   CommunityGuideLink: 'https://www.wawoo.dev/onboard-guide/community-guideline',
   TermsLink: 'https://www.wawoo.dev/onboard-guide/community-rule',
   PersonalPrivacyLink: 'https://www.wawoo.dev/onboard-guide/privacy-policy',

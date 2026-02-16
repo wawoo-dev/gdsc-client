@@ -58,7 +58,7 @@ const ModalContainer = styled.div<{ width?: string | number }>`
   background-color: ${color.backgroundNormal};
   border-radius: 8px;
   padding: 24px;
-  width: ${({ width }) => (width ? width : '90%')};
+  width: ${({ width }) => (width ? (typeof width === 'number' ? `${width}px` : width) : '90%')};
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
