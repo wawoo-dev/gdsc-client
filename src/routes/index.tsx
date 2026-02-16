@@ -9,6 +9,7 @@ import {
   Dashboard,
   EmailVerification,
   EmailVerificationServerRedirect,
+  FAQ,
   JoinDiscord,
   PaymentsCheckout,
   PaymentsFail,
@@ -39,6 +40,7 @@ const router = sentryCreateBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <App /> },
+      { path: RoutePath.FAQ, element: <FAQ /> },
       {
         path: RoutePath.AuthServerRedirect,
         element: <AuthServerRedirectNavigate />

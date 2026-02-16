@@ -4,6 +4,8 @@ const RoutePath = {
   Index: '/',
   Home: '/',
 
+  FAQ: '/faq',
+
   Dashboard: '/dashboard',
   Discord: '/discord',
   DiscordConnect: '/discord/connect',
