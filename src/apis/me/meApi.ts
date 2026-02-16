@@ -8,7 +8,6 @@ const meApi = {
   },
   GET_ACCOUNT_INFO: async (): Promise<AccountInfoResponse> => {
     const response = await apiClient.get(`/common/members/me/account-info`);
-    console.log(response);
     return response.data;
   }
 };

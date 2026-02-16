@@ -1,6 +1,6 @@
 import { Logo } from '@/assets/LogoIcon';
 import { UserRoleType } from '@/types/user';
-import { Flex, Text } from '../common/Wrapper';
+import { Text } from '../common/Wrapper';
 import CustomBox from './CustomBox';
 
 export const StatusBox = ({ role }: { role: UserRoleType }) => {
@@ -12,12 +12,12 @@ export const StatusBox = ({ role }: { role: UserRoleType }) => {
         return '준회원';
       default:
         return (
-          <Flex gap="xs" justify="flex-start">
+          <>
             <Logo width="30" height="15" />
-            <Text color="primary" typo="h3">
-              <strong>GDG Hongik Univ.정회원</strong>
-            </Text>
-          </Flex>
+            <strong style={{ color: '#4285f4', marginLeft: '4px' }}>
+              GDG Hongik Univ.정회원
+            </strong>
+          </>
         );
     }
   };

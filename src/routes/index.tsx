@@ -1,27 +1,29 @@
 import App from '@/App';
-import * as Sentry from '@sentry/react';
-import RoutePath from '@/routes/routePath';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from '@/components/layout/Layout';
 import AuthAccessGuard from '@/components/auth/guard/AuthAccessGuard';
-import NotFoundPage from '@/pages/NotFound';
+import PaymentAccessGuard from '@/components/auth/guard/PaymentAccessGuard';
+import VerificationGuard from '@/components/auth/guard/VerificationGuard';
+import Layout from '@/components/layout/Layout';
 import {
-  AuthServerRedirectNavigate,
-  StudentVerificationServerRedirect,
   Auth,
-  StudentVerification,
-  SignUp,
+  AuthServerRedirectNavigate,
   Dashboard,
+  EmailVerification,
+  EmailVerificationServerRedirect,
   JoinDiscord,
-  PaymentsSuccess,
+  PaymentsCheckout,
   PaymentsFail,
-  PaymentsCheckout
+  PaymentsSuccess,
+  SignUp,
+  StudentVerification,
+  StudentVerificationServerRedirect
 } from '@/pages';
 import { DiscordConnect } from '@/pages/DiscordConnect';
 import { DiscordGuide } from '@/pages/DiscordGuide';
+import NotFoundPage from '@/pages/NotFound';
+import RoutePath from '@/routes/routePath';
+import * as Sentry from '@sentry/react';
 import { Suspense } from 'react';
-import PaymentAccessGuard from '@/components/auth/guard/PaymentAccessGuard';
-import VerificationGuard from '@/components/auth/guard/VerificationGuard';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const sentryCreateBrowserRouter =
   Sentry.wrapCreateBrowserRouter(createBrowserRouter);
@@ -45,6 +47,10 @@ const router = sentryCreateBrowserRouter([
       {
         path: RoutePath.StudentVerificationServerRedirect,
         element: <StudentVerificationServerRedirect />
+      },
+      {
+        path: RoutePath.EmailVerificationServerRedirect,
+        element: <EmailVerificationServerRedirect />
       },
       {
         path: RoutePath.GithubSignin,
@@ -77,6 +83,16 @@ const router = sentryCreateBrowserRouter([
                 <SignUp />
               </VerificationGuard>
             )
+          }
+        ]
+      },
+      {
+        path: RoutePath.EmailVerification,
+        element: <AuthAccessGuard />,
+        children: [
+          {
+            index: true,
+            element: <EmailVerification />
           }
         ]
       },

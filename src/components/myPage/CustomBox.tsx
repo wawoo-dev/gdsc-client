@@ -85,15 +85,25 @@ const CustomBox = <T extends BoxVariantType>({
       <Flex align="center" direction="row" gap="xs" style={{ width: centered ? 'auto' : '100%' }}>
         {leftElement}
         <Flex direction="column" gap="sm">
-          <Text
-            typo="h3"
-            color={disabled ? 'sub' : 'textBlack'}
-            style={{ width: '100%' }}>
-            {text}
-          </Text>
-          {subTextContent && (
-            <div style={{ width: '100%' }}>{subTextContent}</div>
+          {typeof text === 'string' ? (
+            <Text
+              typo="h3"
+              color={disabled ? 'sub' : 'textBlack'}
+              style={{ width: '100%' }}>
+              {text}
+            </Text>
+          ) : (
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}>
+              {text}
+            </div>
           )}
+          {subTextContent}
         </Flex>
       </Flex>
       {!centered && (

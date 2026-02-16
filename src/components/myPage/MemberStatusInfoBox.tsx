@@ -5,17 +5,15 @@ import { forwardRef, useRef } from 'react';
 import { color, space } from 'wowds-tokens';
 import { Flex, Text } from '../common/Wrapper';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MemberStatusInfoBox = forwardRef(
-  ({
-    setOpenInfo,
-    exceptRef
-  }: {
+const MemberStatusInfoBox = forwardRef<
+  HTMLDivElement,
+  {
     setOpenInfo: (value: React.SetStateAction<boolean>) => void;
     exceptRef: React.RefObject<HTMLElement>;
-  }) => {
-    const infoBoxRef = useRef<HTMLDivElement>(null);
-    useClickOutside(infoBoxRef, () => setOpenInfo(false), exceptRef);
+  }
+>(({ setOpenInfo, exceptRef }, _ref) => {
+  const infoBoxRef = useRef<HTMLDivElement>(null);
+  useClickOutside(infoBoxRef, () => setOpenInfo(false), exceptRef);
     return (
       <Wrapper
         direction="column"
@@ -51,8 +49,7 @@ const MemberStatusInfoBox = forwardRef(
         </Text>
       </Wrapper>
     );
-  }
-);
+  });
 
 MemberStatusInfoBox.displayName = 'MemberStatusInfoBox';
 export default MemberStatusInfoBox;

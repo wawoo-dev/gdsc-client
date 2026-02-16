@@ -3,15 +3,12 @@ import { Flex, Text } from '@/components/common/Wrapper';
 import { useGetAccountInfo } from '@/hooks/query';
 import useAccountInfoStore from '@/hooks/zustand/useAccountInfo';
 import { User } from '@/types/user';
-import { useEffect } from 'react';
 import { color } from 'wowds-tokens';
 
 const UserInfo = ({ member }: { member: User }) => {
   useGetAccountInfo(); // API 호출 및 zustand에 저장
   const githubHandle = useAccountInfoStore((state) => state.githubHandle);
-  useEffect(() => {
-    console.log(githubHandle);
-  }, [githubHandle]);
+
   return (
     <Flex gap="sm" direction="column" align="flex-start">
       <Flex gap="sm" direction="row" align="center" justify="flex-start">

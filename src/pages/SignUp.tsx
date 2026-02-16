@@ -78,7 +78,6 @@ export const SignUp = () => {
   const { data: previousMemberInfo } = usePreviousMemberInfo(previousStudentId);
 
   useEffect(() => {
-    console.log(studentIdCheckData);
     if (studentId && /^[A-C]{1}[0-9]{6}$/.test(studentId)) {
       trigger('studentId');
     }
@@ -453,14 +452,6 @@ const ModalButtonGroup = styled.div`
   button {
     flex: 1;
   }
-`;
-
-const GitHubHandleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 24px;
 `;
 
 const GitHubHandleRow = styled.div`
