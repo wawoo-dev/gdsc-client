@@ -2,7 +2,7 @@ import { Flex, Text } from '@/components/common/Wrapper';
 import useSendVerifyEmail from '@/hooks/mutation/useSendVerifyEmail';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { color } from 'wowds-tokens';
@@ -21,6 +21,7 @@ export const EmailVerification = () => {
   const navigate = useNavigate();
   const state = location.state as EmailVerificationState;
   const { sendVerifyEmail } = useSendVerifyEmail();
+  const hasAutoSent = useRef(false);
 
   const isValidState =
     state?.email && state?.previousMemberId !== undefined && state?.previousMemberId !== null;
@@ -42,9 +43,10 @@ export const EmailVerification = () => {
       localStorage.setItem('currentGithubHandle', state.currentGithubHandle);
     }
 
-    // 페이지 접속 시 자동으로 인증 메일 전송
-    if (state.previousMemberId) {
+    // 처음 페이지에 접속했을 때만 자동으로 인증 메일 전송
+    if (state.previousMemberId && !hasAutoSent.current) {
       sendVerifyEmail(state.previousMemberId);
+      hasAutoSent.current = true;
     }
   }, [state, sendVerifyEmail, isValidState, navigate]);
 
