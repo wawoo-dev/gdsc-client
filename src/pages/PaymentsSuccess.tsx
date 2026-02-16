@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Flex, Text, Space } from '@/components/common/Wrapper';
+import { Flex, Space, Text } from '@/components/common/Wrapper';
 import { media } from '@/styles';
-import { useQueryClient } from '@tanstack/react-query';
 import styled from '@emotion/styled';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Button from 'wowds-ui/Button';
 
 import GlobalSize from '@/constants/globalSize';
-import RoutePath from '@/routes/routePath';
-import { color } from 'wowds-tokens';
 import usePostOrder from '@/hooks/mutation/usePostOrder';
+import RoutePath from '@/routes/routePath';
+import { useEffect } from 'react';
+import { color } from 'wowds-tokens';
 
 export function PaymentsSuccess() {
   const navigate = useNavigate();
@@ -50,13 +50,16 @@ export function PaymentsSuccess() {
 
   return (
     <Wrapper direction="column" justify="space-between">
-      <Flex direction="column" gap="lg">
+      <Flex direction="column" gap="lg" align="flex-start">
         <Heading typo="h1" color="black">
           회비 결제 완료
         </Heading>
         <Flex direction="column" align="start">
           <Text>이번 학기 회비 결제를 완료했어요.</Text>
-          <Text>이제 GDGoC 정회원으로 이번 학기에 활동하실 수 있어요!</Text>
+          <Text>
+            이제 <strong>GDG Hongik Univ. 정회원</strong>으로
+            <br /> 이번 학기에 활동하실 수 있어요!
+          </Text>
         </Flex>
       </Flex>
       <Flex direction="column">

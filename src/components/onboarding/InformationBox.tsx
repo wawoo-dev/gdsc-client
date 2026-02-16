@@ -6,11 +6,13 @@ import styled from '@emotion/styled';
 export const InformationBox = ({
   title,
   description,
-  description2
+  description2,
+  isFAQ
 }: {
   title: string;
   description: string;
   description2?: string;
+  isFAQ?: boolean;
 }) => {
   return (
     <Wrapper direction="column" align="flex-start" justify="flex-start">
@@ -28,16 +30,17 @@ export const InformationBox = ({
       <Space height={8} />
       <Text
         typo="body1"
-        color="black"
+        color="sub"
         css={css`
           word-break: keep-all;
           line-height: 160%;
+          font-weight: ${isFAQ ? 700 : 500};
         `}>
         {description}
       </Text>
       <Text
         typo="body1"
-        color="black"
+        color="sub"
         css={css`
           word-break: keep-all;
         `}>

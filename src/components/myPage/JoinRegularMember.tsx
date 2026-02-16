@@ -1,58 +1,91 @@
-import { Text, Flex } from '@/components/common/Wrapper';
+import { CurrentRecruitmentType } from '@/apis/member/memberType';
+import { Flex, Text } from '@/components/common/Wrapper';
+import useBottomSheet from '@/hooks/common/useBottomSheet';
 import RoutePath from '@/routes/routePath';
 import { Status } from '@/types/status';
-import { User } from '@/types/user';
+import { UserRoleType } from '@/types/user';
+import {
+  convertRecruitmentName,
+  convertRecruitmentPeriod
+} from '@/utils/mypage/recruitmentNameFormat';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Box from 'wowds-ui/Box';
+import CustomBox from './CustomBox';
+import StatusBadge from './StatusBadge';
 
 const JoinRegularMember = ({
+  role,
   paymentStatus,
-  member
+  currentRecruitment
 }: {
+  role: UserRoleType;
   paymentStatus?: Status;
-  member: User;
+  currentRecruitment: CurrentRecruitmentType;
 }) => {
   const navigate = useNavigate();
-
+  const [isApplying, setIsApplying] = useState(false);
+  const { handleBottomSheet } = useBottomSheet();
   const handleClickRoute = () => {
     if (paymentStatus !== 'UNSATISFIED') {
       return;
     }
     navigate(RoutePath.PaymentsCheckout);
   };
+  console.log(paymentStatus);
+  const statusMessage =
+    (paymentStatus === 'UNSATISFIED' || !paymentStatus) && role !== 'REGULAR'
+      ? '진행전'
+      : '완료';
   return (
-    <Flex
-      gap="sm"
-      justify="flex-start"
-      direction="column"
-      align="flex-start"
-      onClick={handleClickRoute}>
-      <Text typo="h2" color="textBlack">
-        정회원 가입 조건
-      </Text>
-      {paymentStatus ? (
-        <Box
-          text={
-            paymentStatus === 'UNSATISFIED'
-              ? '이번 학기 회비를 납부해주세요.'
-              : '이번 학기 회비를 납부했어요.'
-          }
-          variant={paymentStatus === 'UNSATISFIED' ? 'arrow' : 'text'}
-          status={paymentStatus === 'UNSATISFIED' ? 'error' : 'success'}
-          subText={
-            paymentStatus === 'UNSATISFIED'
-              ? '카드·계좌이체 등 여러 결제수단을 지원해요.'
-              : undefined
-          }
-        />
-      ) : (
-        member.role === 'REGULAR' && (
-          <Box
-            text="이번 학기 회비를 납부했어요."
-            variant="text"
-            status="success"
+    <Flex gap="sm" justify="flex-start" direction="column" align="flex-start">
+      <Flex gap="xs" justify="flex-start">
+        <Text typo="h2" color="textBlack">
+          활동 조건
+        </Text>
+        <StatusBadge statusMessage={statusMessage} />
+      </Flex>
+      {paymentStatus === 'UNSATISFIED' ? (
+        isApplying ? (
+          currentRecruitment ? (
+            <CustomBox
+              text={'이번 학기 회비를 납부해주세요.'}
+              variant={'arrow'}
+              status={'error'}
+              subTextContent={
+                <Text color="sub">
+                  카드·계좌이체 등 여러 결제수단을 지원해요.
+                </Text>
+              }
+              onClick={() => {
+                if (paymentStatus === 'UNSATISFIED') handleClickRoute();
+              }}
+            />
+          ) : (
+            <CustomBox
+              text="현재 정회원 모집 기간이 아니예요."
+              subTextContent={
+                <Text typo="body2" color="sub">
+                  정회원 모집 기간이 되면 버튼이 활성화 돼요.
+                </Text>
+              }
+              status="success"
+            />
+          )
+        ) : (
+          <CustomBox
+            text={`${convertRecruitmentName(currentRecruitment.name, currentRecruitment.roundTypeValue)}`}
+            subTextContent={`${convertRecruitmentPeriod(currentRecruitment.period)}`}
+            variant={'arrow'}
+            status="error"
+            onClick={() => handleBottomSheet(() => setIsApplying(true))}
           />
         )
+      ) : (
+        <CustomBox
+          text={'이번 학기 회비를 납부했어요.'}
+          variant={'text'}
+          status={'success'}
+        />
       )}
     </Flex>
   );
