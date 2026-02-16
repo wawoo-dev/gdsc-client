@@ -44,7 +44,7 @@ const Container = styled(Flex)`
   width: 100%;
   height: ${GlobalSize.header};
   gap: 16px;
-  background-color: ${color.white};
+  background-color: ${color.monoBackgroundPressed};
   border-bottom: 1px solid ${color.mono400};
   position: fixed;
   top: 0;
