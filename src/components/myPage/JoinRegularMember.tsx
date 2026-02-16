@@ -3,6 +3,7 @@ import { Flex, Text } from '@/components/common/Wrapper';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
 import RoutePath from '@/routes/routePath';
 import { Status } from '@/types/status';
+import { UserRoleType } from '@/types/user';
 import {
   convertRecruitmentName,
   convertRecruitmentPeriod
@@ -13,9 +14,11 @@ import CustomBox from './CustomBox';
 import StatusBadge from './StatusBadge';
 
 const JoinRegularMember = ({
+  role,
   paymentStatus,
   currentRecruitment
 }: {
+  role: UserRoleType;
   paymentStatus?: Status;
   currentRecruitment: CurrentRecruitmentType;
 }) => {
@@ -28,9 +31,11 @@ const JoinRegularMember = ({
     }
     navigate(RoutePath.PaymentsCheckout);
   };
-
+  console.log(paymentStatus);
   const statusMessage =
-    paymentStatus === 'UNSATISFIED' || !paymentStatus ? '진행전' : '완료';
+    (paymentStatus === 'UNSATISFIED' || !paymentStatus) && role !== 'REGULAR'
+      ? '진행전'
+      : '완료';
   return (
     <Flex gap="sm" justify="flex-start" direction="column" align="flex-start">
       <Flex gap="xs" justify="flex-start">

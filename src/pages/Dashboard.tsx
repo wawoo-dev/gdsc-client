@@ -40,6 +40,7 @@ export const Dashboard = () => {
         </Flex>
         {member.role !== 'GUEST' && (
           <JoinRegularMember
+            role={member.role}
             currentRecruitment={currentRecruitmentRound}
             paymentStatus={currentMembership?.regularRequirement.paymentStatus}
           />
