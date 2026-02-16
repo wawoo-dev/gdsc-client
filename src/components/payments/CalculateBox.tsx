@@ -1,8 +1,8 @@
 import { Flex, Text } from '@/components/common/Wrapper';
-import Box from 'wowds-ui/Box';
+import { useProduct } from '@/hooks/zustand/useProduct';
 import styled from '@emotion/styled';
 import { color } from 'wowds-tokens';
-import { useProduct } from '@/hooks/zustand/useProduct';
+import Box from 'wowds-ui/Box';
 
 export const CalculateBox = () => {
   const { strAmount, strDiscount, strTotalAmount } = useProduct();
@@ -32,7 +32,7 @@ export const CalculateBox = () => {
             <Text typo="body1" color="black">
               총 결제금액
             </Text>
-            <Text typo="h2" color="black">
+            <Text typo="h2" color="primary">
               {strTotalAmount}원
             </Text>
           </Flex>

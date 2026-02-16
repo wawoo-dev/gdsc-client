@@ -1,6 +1,6 @@
 import RoutePath from '@/routes/routePath';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PropsWithChildren, useEffect } from 'react';
 import memberApi from '@/apis/member/memberApi';
 import { useQuery } from '@tanstack/react-query';
@@ -17,6 +17,9 @@ export default function VerificationGuard({
   children
 }: VerificationGuardProps) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isReconnect = searchParams.get('reconnect') === 'true';
+
   const { data } = useQuery({
     queryKey: ['member'],
     queryFn: memberApi.GET_DASHBOARD
@@ -35,7 +38,8 @@ export default function VerificationGuard({
     }
     if (
       guardType === 'Discord' &&
-      data.member.associateRequirement.discordStatus === 'SATISFIED'
+      data.member.associateRequirement.discordStatus === 'SATISFIED' &&
+      !isReconnect
     ) {
       toast.error('디스코드 연동을 이미 완료했습니다.');
       navigate(RoutePath.Dashboard);
@@ -49,7 +53,7 @@ export default function VerificationGuard({
       navigate(RoutePath.Dashboard);
       return;
     }
-  }, [data, guardType, navigate]);
+  }, [data, guardType, navigate, isReconnect]);
 
   return children;
 }

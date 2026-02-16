@@ -9,12 +9,30 @@ const verifyStudentApi = {
     return response.data;
   },
   SEND_STUDENT_EMAIL: async (univEmail: string) => {
-    const response = await apiClient.post(`/onboarding/send-verify-email`, {
-      univEmail
-    });
+    const response = await apiClient.post(
+      `/onboarding/send-verify-univ-email`,
+      {
+        univEmail
+      }
+    );
     return response.data;
   },
   VERIFY_STUDENT_EMAIL: async (token: string) => {
+    const response = await apiClient.patch(`/onboarding/verify-univ-email`, {
+      token: token
+    });
+    return response.data;
+  },
+  SEND_VERIFY_EMAIL: async (previousMemberId: number): Promise<{ previousMemberId: number }> => {
+    const response = await apiClient.post(
+      `/onboarding/send-verify-email`,
+      {
+        previousMemberId
+      }
+    );
+    return response.data;
+  },
+  VERIFY_EMAIL: async (token: string): Promise<{ token: string }> => {
     const response = await apiClient.patch(`/onboarding/verify-email`, {
       token: token
     });

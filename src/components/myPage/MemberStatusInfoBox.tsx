@@ -1,21 +1,19 @@
-import { Flex, Text } from '../common/Wrapper';
-import { space, color } from 'wowds-tokens';
-import { forwardRef, useRef } from 'react';
-import styled from '@emotion/styled';
 import useClickOutside from '@/hooks/useClickOutSide';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { forwardRef, useRef } from 'react';
+import { color, space } from 'wowds-tokens';
+import { Flex, Text } from '../common/Wrapper';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MemberStatusInfoBox = forwardRef(
-  ({
-    setOpenInfo,
-    exceptRef
-  }: {
+const MemberStatusInfoBox = forwardRef<
+  HTMLDivElement,
+  {
     setOpenInfo: (value: React.SetStateAction<boolean>) => void;
     exceptRef: React.RefObject<HTMLElement>;
-  }) => {
-    const infoBoxRef = useRef<HTMLDivElement>(null);
-    useClickOutside(infoBoxRef, () => setOpenInfo(false), exceptRef);
+  }
+>(({ setOpenInfo, exceptRef }, _ref) => {
+  const infoBoxRef = useRef<HTMLDivElement>(null);
+  useClickOutside(infoBoxRef, () => setOpenInfo(false), exceptRef);
     return (
       <Wrapper
         direction="column"
@@ -27,11 +25,11 @@ const MemberStatusInfoBox = forwardRef(
           top: 30px;
         `}>
         <Text typo="h3" color="textWhite">
-          Q. 준회원, 정회원이 무엇이고, 어떤 차이인가요?
+          <strong>Q. 준회원, 정회원이 무엇이고, 어떤 차이인가요?</strong>
         </Text>
         <Text typo="body1" color="textWhite">
-          <strong>준회원</strong>은 가입 후 디스코드 연동, 재학생 인증을 완료한 회원이에요. 정회원 활동 기간이 끝나면, 다시 준회원으로
-          변경돼요.
+          <strong>준회원</strong>은 가입 후 디스코드 연동, 재학생 인증을 완료한
+          회원이에요. 정회원 활동 기간이 끝나면, 다시 준회원으로 변경돼요.
         </Text>
         <Text typo="body1" color="textWhite">
           <strong>정회원</strong>은 정회원 모집 신청을 통해 회비 납부까지 완료한
@@ -42,7 +40,7 @@ const MemberStatusInfoBox = forwardRef(
           회원 상태에 대한 자세한 정보는{' '}
           <u
             onClick={() => {
-              window.open('https://gdschongik.com/guide/member-status');
+              window.open('https://www.wawoo.dev/onboard-guide/member-status');
             }}
             style={{ cursor: 'pointer' }}>
             <strong>가이드라인</strong>
@@ -51,8 +49,7 @@ const MemberStatusInfoBox = forwardRef(
         </Text>
       </Wrapper>
     );
-  }
-);
+  });
 
 MemberStatusInfoBox.displayName = 'MemberStatusInfoBox';
 export default MemberStatusInfoBox;

@@ -1,15 +1,15 @@
 import { GitHubButton } from '@/components/auth/GitHubButton';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
+import GlobalSize from '@/constants/globalSize';
 import RoutePath from '@/routes/routePath';
-import { color, space } from 'wowds-tokens';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import GlobalSize from '@/constants/globalSize';
-import { Link } from 'react-router-dom';
-import Box from 'wowds-ui/Box';
-import { DownArrow } from 'wowds-icons';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { DownArrow } from 'wowds-icons';
+import { color, space } from 'wowds-tokens';
+import Box from 'wowds-ui/Box';
 
 /** 깃허브 로그인 및 가입하기 */
 export const Auth = () => {
@@ -27,20 +27,16 @@ export const Auth = () => {
 
   return (
     <Container>
-      <div>
-        <Text
-          typo="h1"
-          style={{ marginBottom: '1.25rem', textAlign: 'center' }}>
+      <Flex direction="column" align="flex-start">
+        <Text typo="h1" style={{ marginBottom: '1.25rem' }}>
           로그인 및 가입하기
         </Text>
-        <TextContainer>
-          <Text typo="body1">
-            GDGoC Hongik에서는 더 나은 커뮤니티 운영과 안전한 회원 정보 관리를
-            위해 Github 소셜 로그인을 사용하고 있어요. Github 계정이 없다면,
-            새로 가입해야 해요.
-          </Text>
-        </TextContainer>
-        <Space height={40} />
+        <Text typo="body2">
+          GDG Hongik Univ.에서는 더 나은 커뮤니티 운영과
+          <br /> 안전한 회원 정보 관리를 위해 Github 소셜 로그인을
+          <br /> 사용하고 있어요. Github 계정이 없다면, 새로 가입해야 해요.
+        </Text>
+        <Space height={32} />
         <Flex
           direction="column"
           align="flex-start"
@@ -50,12 +46,7 @@ export const Auth = () => {
           <Box
             text={
               <AccordionContainer>
-                <Text
-                  css={css`
-                    font-weight: 700;
-                  `}>
-                  Q. GitHub가 무엇인가요?
-                </Text>
+                <Text typo="h3">Q. GitHub가 무엇인가요?</Text>
                 <div
                   style={{
                     cursor: 'pointer',
@@ -75,10 +66,10 @@ export const Auth = () => {
                   />
                 </div>
                 {accordionState.githubInfo && (
-                  <Text color="sub">
+                  <Text color="sub" typo="body2">
                     GitHub는 Git을 이용하여 파일을 자유롭게 업로드 및 공유할 수
-                    있는 사이트예요. 개발자라면 누구나 이용하는 사이트로, GDGoC
-                    Hongik에서도 학회 운영을 위해 이용하고 있어요.
+                    있는 사이트예요. 개발자라면 누구나 이용하는 사이트로, GDG
+                    Hongik Univ.에서도 학회 운영을 위해 이용하고 있어요.
                   </Text>
                 )}
               </AccordionContainer>
@@ -87,12 +78,7 @@ export const Auth = () => {
           <Box
             text={
               <AccordionContainer>
-                <Text
-                  css={css`
-                    font-weight: 700;
-                  `}>
-                  Q. GitHub는 왜 사용하나요?
-                </Text>
+                <Text typo="h3">Q. GitHub는 왜 사용하나요?</Text>
                 <div
                   style={{
                     cursor: 'pointer',
@@ -112,10 +98,9 @@ export const Auth = () => {
                   />
                 </div>
                 {accordionState.githubDetail && (
-                  <Text color="sub">
-                    GDGoC Hongik에서는{' '}
-                    <strong>정규 스터디의 과제를 GitHub를 통해 관리</strong>
-                    해요. 매 스터디, 혹은 여러 학술 프로그램에서 이용하기에
+                  <Text color="sub" typo="body2">
+                    GDG Hongik Univ.에서는 정규 스터디의 과제를 GitHub를 통해
+                    관리해요. 매 스터디, 혹은 여러 학술 프로그램에서 이용하기에
                     GitHub를 통한 로그인 방식을 채택했어요.
                   </Text>
                 )}
@@ -123,7 +108,7 @@ export const Auth = () => {
             }
           />
         </Flex>
-      </div>
+      </Flex>
       <ButtonContainer>
         <GitHubButton onClick={handleClick}>
           GitHub 로그인/회원가입
@@ -148,7 +133,7 @@ export const Auth = () => {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  padding: 49px 16px 16px;
+  padding: 49px 16px 40px 16px;
   background-color: ${color.mono50};
   margin: 0px -16px;
   min-height: calc(100vh - 54px);
@@ -160,12 +145,6 @@ const Container = styled.div`
   ${media.mobile} {
     width: 100vw;
   }
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 `;
 
 const ButtonContainer = styled.div`

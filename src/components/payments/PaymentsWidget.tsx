@@ -6,17 +6,14 @@ import RoutePath from '@/routes/routePath';
 import { useQuery } from '@tanstack/react-query';
 
 import { Flex, Space } from '@/components/common/Wrapper';
-import { media } from '@/styles';
 import Button from 'wowds-ui/Button';
 
 import meApi from '@/apis/me/meApi';
 import memberApi from '@/apis/member/memberApi';
 import { CLIENT_KEY } from '@/constants/environment';
-import GlobalSize from '@/constants/globalSize';
 import usePostPrevOrder from '@/hooks/mutation/usePostPrevOrder';
 import { useProduct } from '@/hooks/zustand/useProduct';
 import styled from '@emotion/styled';
-import { color } from 'wowds-tokens';
 
 const clientKey = CLIENT_KEY;
 const customerKey = nanoid();
@@ -112,15 +109,15 @@ export function PaymentsWidget() {
 
   return (
     <Wrapper direction="column" justify="space-between">
-      <Contents className="box_section">
+      <div className="box_section">
         <div id="payment-method" />
         <div id="agreement" />
-      </Contents>
+      </div>
       <Flex direction="column">
+        <Space height={28} />
         <Button disabled={!ready} onClick={handleClickOpenPaymentWidget}>
           결제하기
         </Button>
-        <Space height={28} />
       </Flex>
     </Wrapper>
   );
@@ -128,18 +125,4 @@ export function PaymentsWidget() {
 
 const Wrapper = styled(Flex)`
   box-sizing: border-box;
-
-  height: calc(100vh - ${GlobalSize.header});
-  width: ${GlobalSize.width};
-  padding: 0px 16px;
-
-  background-color: ${color.backgroundAlternative};
-
-  ${media.mobile} {
-    width: 100vw;
-  }
-`;
-
-const Contents = styled.div`
-  width: 100%;
 `;

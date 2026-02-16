@@ -1,13 +1,13 @@
-import { Text, Flex } from '@/components/common/Wrapper';
-import { useVerifyStudentEmail } from '@/hooks/mutation';
-import { color } from 'wowds-tokens';
-import GlobalSize from '@/constants/globalSize';
-import { media } from '@/styles';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-import { useSearchParams } from 'react-router-dom';
-import { useLayoutEffect } from 'react';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Flex, Text } from '@/components/common/Wrapper';
+import GlobalSize from '@/constants/globalSize';
+import { useVerifyStudentEmail } from '@/hooks/mutation';
+import { media } from '@/styles';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { useLayoutEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { color } from 'wowds-tokens';
 
 export const StudentVerificationServerRedirect = () => {
   const [searchParams] = useSearchParams();
@@ -23,7 +23,7 @@ export const StudentVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column">
+        <Container direction="column" align="flex-start">
           <Text
             typo="h1"
             css={css`

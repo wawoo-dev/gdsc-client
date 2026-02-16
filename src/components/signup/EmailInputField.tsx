@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
+import { space } from 'wowds-tokens';
 import DropDown from 'wowds-ui/DropDown';
 import DropDownOption from 'wowds-ui/DropDownOption';
-import { space } from 'wowds-tokens';
 import TextField from 'wowds-ui/TextField';
 
 type DepartmentSelectProps = {
@@ -44,7 +44,7 @@ const EmailInputField = ({ control }: DepartmentSelectProps) => {
               ref={field.ref}
               onChange={field.onChange}
               onBlur={field.onBlur}
-              placeholder="내용을 입력하세요"
+              placeholder="이메일 주소"
               helperText={
                 fieldState.error
                   ? fieldState.error?.message

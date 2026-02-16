@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import { color, space } from 'wowds-tokens';
-import { media } from '@/styles';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ReactNode, useRef, useEffect } from 'react';
-import useClickOutside from '@/hooks/useClickOutSide';
-import { Close } from 'wowds-icons';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
+import useClickOutside from '@/hooks/useClickOutSide';
+import { media } from '@/styles';
+import styled from '@emotion/styled';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ReactNode, useEffect, useRef } from 'react';
+import { Close } from 'wowds-icons';
+import { color, space } from 'wowds-tokens';
 
 const BottomSheet = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -32,11 +32,11 @@ const BottomSheet = ({ children }: { children: ReactNode }) => {
           <Container>
             <Wrapper
               ref={ref}
-              animate={{ height: '35.43rem' }}
+              animate={{ height: '40.375rem' }}
               initial={{ height: 0 }}
               transition={{ type: 'spring', duration: 1 }}
               exit={{ height: 0 }}>
-              <BottomSheetActionArea onClick={handleBottomSheet}>
+              <BottomSheetActionArea onClick={() => handleBottomSheet()}>
                 <Close width={24} height={24} stroke="outline" />
               </BottomSheetActionArea>
               {children}
@@ -62,7 +62,7 @@ const Overlay = styled.div`
 const Container = styled.div`
   width: 100%;
   display: flex;
-  height: 35.43rem;
+  height: 40.375rem;
   display: relative;
   justify-content: center;
 `;
@@ -75,7 +75,7 @@ const Wrapper = styled(motion.div)`
   transform: translate(-50%, 0);
   z-index: 999;
   width: 600px;
-  height: 35.43rem;
+  height: 40.375rem;
   background-color: ${color.backgroundNormal};
   display: flex;
   flex-direction: column;
