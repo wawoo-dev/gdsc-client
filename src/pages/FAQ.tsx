@@ -1,18 +1,12 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
-import { color } from 'wowds-tokens';
-import { media } from '@/styles';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-import GlobalSize from '@/constants/globalSize';
-import { useNavigate } from 'react-router-dom';
-import RoutePath from '@/routes/routePath';
-import Button from 'wowds-ui/Button';
-import TextButton from 'wowds-ui/TextButton';
 import { InformationBox } from '@/components/onboarding/InformationBox';
+import GlobalSize from '@/constants/globalSize';
+import { media } from '@/styles';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { color } from 'wowds-tokens';
 
 export const FAQ = () => {
-  const navigate = useNavigate();
-
   return (
     <Wrapper direction="column" justify="flex-start" align="center">
       <Flex direction="column" gap="xxs">

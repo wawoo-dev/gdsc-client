@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import React, { useEffect, useRef, useState } from 'react';
 import { color } from 'wowds-tokens';
 
 const Bold = styled.span`
-  color: ${color.mono950};
+  color: ${color.textBlack};
 `;
 
 const slides = [
@@ -55,7 +55,7 @@ const slides = [
   }
 ];
 
-export default function DirectCarouselDemo() {
+export default function Carousel() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
   const slideCount = slides.length;
@@ -233,11 +233,6 @@ export default function DirectCarouselDemo() {
               />
             );
           })}
-        </div>
-
-        <div style={styles.tip}>
-          Tip: 모바일은 스와이프, 데스크톱은 트랙패드/휠 + 키보드(←/→)로도 넘길
-          수 있어요.
         </div>
       </Flex>
     </Flex>

@@ -5,6 +5,7 @@ import {
 } from '@/assets/Onboarding';
 import { OnboardingArrow } from '@/assets/OnboardingArrow';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
+
 import { InformationBox } from '@/components/onboarding/InformationBox';
 import GlobalSize from '@/constants/globalSize';
 import { media } from '@/styles';
@@ -14,9 +15,10 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { color, typography } from 'wowds-tokens';
-import RoutePath from './routes/routePath';
 import Button from 'wowds-ui/Button';
-import DirectCarouselDemo from '@/components/onboarding/carousel';
+
+import Carousel from './components/onboarding/Carousel';
+import RoutePath from './routes/routePath';
 
 function App() {
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ function App() {
             `}>
             <Text
               typo="display2"
-              color="mono50"
+              color="backgroundNormal"
               css={css`
                 width: 100%;
               `}>
@@ -56,7 +58,7 @@ function App() {
             </Text>
             <Text
               typo="h3"
-              color="mono50"
+              color="backgroundNormal"
               css={css`
                 width: 100%;
                 margin-top: 12px;
@@ -145,7 +147,7 @@ function App() {
             GDG에서는 이런 활동을 해요!
           </Text>
           <Space height={42} />
-          <DirectCarouselDemo />
+          <Carousel />
         </Flex>
         <Flex
           direction="column"
