@@ -129,9 +129,9 @@ const AssociateRequirementCheck = ({
             <Modal isOpen={discordModalOpen} onClose={handleClose}>
               <Flex direction="column" gap="md">
                 <Text typo="body1" align="center">
-                  디스코드 계정 연동을 해지하시겠습니까? <br />
-                  해지 이후에 다시 디스코드 계정을 연동해야 준회원으로 활동이
-                  가능합니다.
+                  디스코드 계정을 해지하고
+                  <br />
+                  새로운 계정으로 재연동하겠습니까?
                 </Text>
                 <Flex gap="xxs">
                   <Text typo="label2" color="sub">
@@ -152,12 +152,20 @@ const AssociateRequirementCheck = ({
                     </Text>
                   </div>
                 </Flex>
-                {/* //TODO: 백엔드 api 추가 이후 반영 필요 */}
                 <Flex gap="xs" style={{ marginTop: 8 }}>
-                  <Button variant="outline" onClick={handleClose}>
+                  <Button
+                    style={{ borderColor: color.outline, color: color.sub }}
+                    variant="outline"
+                    onClick={handleClose}>
                     취소하기
                   </Button>
-                  <Button>해지하기</Button>
+                  <Button
+                    onClick={() => {
+                      handleClose();
+                      navigate(`${RoutePath.Discord}?reconnect=true`);
+                    }}>
+                    재연동하기
+                  </Button>
                 </Flex>
               </Flex>
             </Modal>
@@ -170,16 +178,19 @@ const AssociateRequirementCheck = ({
             }
             subTextContent={
               discordStatus === 'UNSATISFIED' ? (
-                <Text color="sub">
+                <Flex
+                  direction="column"
+                  align="flex-start"
+                  justify="flex-start">
                   <Flex justify="flex-start">
                     <Discord width="20" height="20" />
-                    <Text as={'span'} color="discord" style={{ marginLeft: 3 }}>
+                    <Text color="discord" style={{ marginLeft: 3 }}>
                       GDG Hongik Univ.
-                    </Text>{' '}
-                    서버에
+                    </Text>
+                    <Text color="sub"> 서버에</Text>
                   </Flex>
-                  본인 계정을 연동하세요.
-                </Text>
+                  <Text color="sub">본인 계정을 연동하세요.</Text>
+                </Flex>
               ) : (
                 <Flex direction="column" gap="sm">
                   <Flex justify="flex-start" gap="xs">

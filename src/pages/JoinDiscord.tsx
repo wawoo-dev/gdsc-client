@@ -3,13 +3,15 @@ import GlobalSize from '@/constants/globalSize';
 import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { color } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 import TextButton from 'wowds-ui/TextButton';
 
 export const JoinDiscord = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isReconnect = searchParams.get('reconnect') === 'true';
 
   return (
     <Wrapper direction="column" justify="space-between">
@@ -34,7 +36,10 @@ export const JoinDiscord = () => {
       <Flex direction="column">
         <Button
           onClick={() => {
-            navigate(RoutePath.DiscordConnect);
+            const path = isReconnect
+              ? `${RoutePath.DiscordConnect}?reconnect=true`
+              : RoutePath.DiscordConnect;
+            navigate(path);
           }}
           style={{ maxWidth: '100%' }}>
           연동 정보 입력하기
@@ -43,7 +48,10 @@ export const JoinDiscord = () => {
         <TextButton
           text="디스코드 가이드라인↗︎"
           onClick={() => {
-            navigate(RoutePath.DiscordGuide);
+            const path = isReconnect
+              ? `${RoutePath.DiscordGuide}?reconnect=true`
+              : RoutePath.DiscordGuide;
+            navigate(path);
           }}
           style={{ color: color.discord }}
         />

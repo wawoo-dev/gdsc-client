@@ -5,7 +5,11 @@ import Button from 'wowds-ui/Button';
 import { Image } from '../common/Image';
 import DiscordImage from '/discord/discord-guide-account.png';
 
-export const AccountDescription = () => {
+export const AccountDescription = ({
+  isReconnect = false
+}: {
+  isReconnect?: boolean;
+}) => {
   const navigate = useNavigate();
   return (
     <>
@@ -31,7 +35,10 @@ export const AccountDescription = () => {
         </Button>
         <Button
           onClick={() => {
-            navigate(RoutePath.DiscordConnect);
+            const path = isReconnect
+              ? `${RoutePath.DiscordConnect}?reconnect=true`
+              : RoutePath.DiscordConnect;
+            navigate(path);
           }}>
           연동하기
         </Button>
