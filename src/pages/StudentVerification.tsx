@@ -1,16 +1,16 @@
-import TextField from 'wowds-ui/TextField';
-import Button from 'wowds-ui/Button';
-import { Flex, Space, Text } from '@/components/common/Wrapper';
-import RoutePath from '@/routes/routePath';
-import { color, space, typography } from 'wowds-tokens';
-import styled from '@emotion/styled';
-import { Link, useNavigate } from 'react-router-dom';
-import { useStudentVerification } from '@/hooks/auth';
-import { Controller } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { media } from '@/styles';
-import GlobalSize from '@/constants/globalSize';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Flex, Space, Text } from '@/components/common/Wrapper';
+import GlobalSize from '@/constants/globalSize';
+import { useStudentVerification } from '@/hooks/auth';
+import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
+import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
+import { Controller } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { color, space, typography } from 'wowds-tokens';
+import Button from 'wowds-ui/Button';
+import TextField from 'wowds-ui/TextField';
 
 /** 재학생 인증 페이지 */
 export const StudentVerification = () => {
@@ -127,7 +127,7 @@ export const StudentVerification = () => {
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   & > div {
     width: 100%;
     display: flex;
