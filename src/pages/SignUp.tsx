@@ -87,7 +87,11 @@ export const SignUp = () => {
 
   useEffect(() => {
     // previousMemberInfo 로딩이 완료되면 모달 열기
-    if (!isPreviousMemberInfoLoading && previousMemberInfo && previousStudentId) {
+    if (
+      !isPreviousMemberInfoLoading &&
+      previousMemberInfo &&
+      previousStudentId
+    ) {
       setIsModalOpen(true);
     }
   }, [isPreviousMemberInfoLoading, previousMemberInfo, previousStudentId]);
@@ -358,6 +362,19 @@ export const SignUp = () => {
             <br />
             기존 GitHub 계정과 연결을 끊고
             <br />새 GitHub 계정을 연결하시겠습니까?
+          </Text>
+          <Text typo="body3" color="sub">
+            <ul
+              style={{
+                listStyleType: 'disc',
+
+                listStylePosition: 'outside'
+              }}>
+              <li>
+                연결된 GitHub 계정을 변경하면 기존에 활동했던
+                <br /> 이력도 자동으로 새로운 계정에 반영돼요.
+              </li>
+            </ul>
           </Text>
           <Flex direction="column" gap="xs">
             <GitHubHandleRow>
