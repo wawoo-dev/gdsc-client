@@ -97,11 +97,24 @@ export const StudentVerification = () => {
 
         <Space height="xs" />
         <Text typo="body3" color="sub">
-          * 메일 전송이 최대 30분 가량 늦어질 수 있어요.
-          <br />* 메일 전송이 되지 않을 경우 카카오톡 채널을 통해 코어 멤버에게
-          문의해 주세요.
-          <br />* 인증메일이 스팸메일함에 전송될 수 있으니 확인해주세요.
+          <ul
+            style={{
+              listStyleType: 'disc',
+              listStylePosition: 'outside',
+              paddingLeft: '20px'
+            }}>
+            <li>메일 전송이 최대 30분 가량 늦어질 수 있어요.</li>
+            <li>
+              메일이 보이지 않는 경우 스팸 메일함을 확인해주시고, 스팸
+              메일함에도 없을 경우 카카오톡 채널로 문의해주세요.
+            </li>
+            <li>
+              만약 이메일 수신 이후에 인증 버튼을 눌렀음에도 제대로 인증이 되지
+              않는 경우, 해당 브라우저에서 다시 가입 절차를 진행해주세요.
+            </li>
+          </ul>
         </Text>
+
         <ButtonContainer>
           <Button
             disabled={!isValid}
