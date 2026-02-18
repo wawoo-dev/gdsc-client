@@ -26,9 +26,6 @@ const JoinRegularMember = ({
   const [isApplying, setIsApplying] = useState(false);
   const { handleBottomSheet } = useBottomSheet();
   const handleClickRoute = () => {
-    if (paymentStatus !== 'UNSATISFIED') {
-      return;
-    }
     navigate(RoutePath.PaymentsCheckout);
   };
   console.log(paymentStatus);
@@ -58,7 +55,8 @@ const JoinRegularMember = ({
                 </Text>
               }
               onClick={() => {
-                if (paymentStatus === 'UNSATISFIED') handleClickRoute();
+                if (paymentStatus === 'UNSATISFIED' || !paymentStatus)
+                  handleClickRoute();
               }}
             />
           ) : (
