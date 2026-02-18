@@ -1,17 +1,17 @@
-import { useFunnel } from '@/hooks/common/useFunnel';
-import styled from '@emotion/styled';
+import { Flex } from '@/components/common/Wrapper';
+import { CompleteDiscordConnect } from '@/components/discordConnect/CompleteDiscordConnect';
 import { DiscordName } from '@/components/discordConnect/DiscordName';
 import { DiscordNickName } from '@/components/discordConnect/DiscordNickName';
 import { JoinServer } from '@/components/discordConnect/JoinServer';
-import { Flex } from '@/components/common/Wrapper';
-import GlobalSize from '@/constants/globalSize';
-import { media } from '@/styles';
-import { color } from 'wowds-tokens';
 import { ServerConnect } from '@/components/discordConnect/ServerConnect';
-import { CompleteDiscordConnect } from '@/components/discordConnect/CompleteDiscordConnect';
-import { useForm, FormProvider } from 'react-hook-form';
-import { DiscordFormValues } from '@/types/discord';
+import GlobalSize from '@/constants/globalSize';
 import useCustomBack from '@/hooks/common/useCutomBack';
+import { useFunnel } from '@/hooks/common/useFunnel';
+import { media } from '@/styles';
+import { DiscordFormValues } from '@/types/discord';
+import styled from '@emotion/styled';
+import { FormProvider, useForm } from 'react-hook-form';
+import { color } from 'wowds-tokens';
 
 const steps = ['이름 설정', '별명 설정', '서버 합류', '서버 연동', '연동 완료'];
 
@@ -38,13 +38,12 @@ export const DiscordConnect = () => {
   useCustomBack(handleBack);
   return (
     <>
-      <Wrapper direction="column" justify="space-between">
+      <Wrapper direction="column" justify="flex-start">
         <FormProvider {...methods}>
           <Funnel>
             <Step name="이름 설정">
               <DiscordName onNext={() => nextClickHandler(steps[1])} />
             </Step>
-
             <Step name="별명 설정">
               <DiscordNickName onNext={() => nextClickHandler(steps[2])} />
             </Step>

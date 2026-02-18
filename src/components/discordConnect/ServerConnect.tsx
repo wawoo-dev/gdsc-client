@@ -86,8 +86,8 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
           })}
         />
       </Flex>
-      <Space height={200} />
-      <Flex direction="column">
+
+      <Flex direction="column" style={{ marginTop: 'auto' }}>
         <Button
           onClick={() => {
             handleLinkButtonClick();

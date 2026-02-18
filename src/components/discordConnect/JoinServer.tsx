@@ -46,7 +46,8 @@ export const JoinServer = ({ onNext }: { onNext: () => void }) => {
           서버 합류 후, 다시 돌아와서 연동 절차를 마무리해주세요.
         </Text>
       </Flex>
-      <Flex direction="column" gap="xs">
+
+      <Flex direction="column" gap="xs" style={{ marginTop: 'auto' }}>
         <TextButton
           text="GDG Hongik Univ. 공식 디스코드 서버↗︎"
           style={{ color: color.discord }}
