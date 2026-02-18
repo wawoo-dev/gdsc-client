@@ -37,7 +37,7 @@ const JoinRegularMember = ({
       ? '진행전'
       : '완료';
   return (
-    <Flex gap="sm" justify="flex-start" direction="column" align="flex-start">
+    <Flex gap="sm" direction="column">
       <Flex gap="xs" justify="flex-start">
         <Text typo="h2" color="textBlack">
           활동 조건
@@ -74,8 +74,19 @@ const JoinRegularMember = ({
           )
         ) : (
           <CustomBox
-            text={`${convertRecruitmentName(currentRecruitment.name, currentRecruitment.roundTypeValue)}`}
-            subTextContent={`${convertRecruitmentPeriod(currentRecruitment.period)}`}
+            text={
+              <Flex direction="column" align="flex-start" gap="sm">
+                <Text typo="h3">
+                  {convertRecruitmentName(
+                    currentRecruitment.name,
+                    currentRecruitment.roundTypeValue
+                  )}
+                </Text>
+                <Text color="sub">
+                  {convertRecruitmentPeriod(currentRecruitment.period)}
+                </Text>
+              </Flex>
+            }
             variant={'arrow'}
             status="error"
             onClick={() => handleBottomSheet(() => setIsApplying(true))}

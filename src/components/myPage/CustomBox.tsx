@@ -59,7 +59,7 @@ const CustomBox = <T extends BoxVariantType>({
     borderRadius: '8px',
     border: `1px solid ${getBorderColor()}`,
     width: '100%',
-    maxWidth: '652px',
+    maxWidth: '547px',
     minWidth: '316px',
     backgroundColor:
       disabled || status === 'success'

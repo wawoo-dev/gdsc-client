@@ -32,24 +32,31 @@ export const Dashboard = () => {
 
   return (
     <div style={{ height: '100%' }}>
-      <Wrapper direction="column" justify="flex-start">
-        <Space height={20} />
-        <Flex justify="flex-start" direction="column" align="flex-start">
-          <UserInfo member={member} />
-          <JoinStatus role={member.role} member={member} />
-        </Flex>
-        {member.role !== 'GUEST' && (
-          <JoinRegularMember
-            role={member.role}
-            currentRecruitment={currentRecruitmentRound}
-            paymentStatus={currentMembership?.regularRequirement.paymentStatus}
+      <Wrapper direction="column" justify="flex-start" align="center">
+        <div>
+          <Space height={20} />
+          <Flex justify="flex-start" direction="column" align="flex-start">
+            <UserInfo member={member} />
+            <JoinStatus role={member.role} member={member} />
+          </Flex>
+          {member.role === 'GUEST' && (
+            <>
+              <Space height={40} />
+              <JoinRegularMember
+                role={member.role}
+                currentRecruitment={currentRecruitmentRound}
+                paymentStatus={
+                  currentMembership?.regularRequirement.paymentStatus
+                }
+              />
+            </>
+          )}
+          <Space height={40} />
+          <AssociateRequirementCheck
+            associateRequirement={member.associateRequirement}
+            memberInfo={member.info}
           />
-        )}
-        <AssociateRequirementCheck
-          associateRequirement={member.associateRequirement}
-          memberInfo={member.info}
-        />
-
+        </div>
         <Space height={104} />
       </Wrapper>
       {isOpen && (
@@ -67,7 +74,7 @@ const Wrapper = styled(Flex)`
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
-  gap: 40px;
+
   background-color: ${color.mono50};
 
   ${media.mobile} {
