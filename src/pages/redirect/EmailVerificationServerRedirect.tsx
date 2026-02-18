@@ -56,8 +56,11 @@ export const EmailVerificationServerRedirect = () => {
             <TextContainer>
               {isSuccess ? (
                 <Text typo="body1">
-                  기존 계정({previousGithubHandle})의 내용을 삭제하고
-                  <br /> 새로운 계정({currentGithubHandle})으로 이전했어요.
+                  기존 계정{previousGithubHandle && `(${previousGithubHandle})`}
+                  의 내용을 삭제하고
+                  <br /> 새로운 계정
+                  {currentGithubHandle && `(${currentGithubHandle})`}으로
+                  이전했어요.
                   <br /> 가입 절차를 계속해서 진행해주세요.
                 </Text>
               ) : (
