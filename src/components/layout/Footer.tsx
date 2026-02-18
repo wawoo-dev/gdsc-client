@@ -20,12 +20,12 @@ const Footer = () => {
         </Link>
         <Link to={'https://www.gdschongik.com/onboarding/community-rule'}>
           <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            GDGoC Hongik 회칙
+            GDG Hongik Univ. 회칙
           </Text>
         </Link>
         <Link to={'https://www.gdschongik.com/onboarding/community-guideline'}>
           <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            GDGoC Hongik 가이드라인{' '}
+            GDG Hongik Univ. 가이드라인{' '}
           </Text>
         </Link>
       </Flex>

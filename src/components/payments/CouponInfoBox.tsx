@@ -34,7 +34,7 @@ function CouponInfoBox({ setOpenInfo, expectRef }: CouponInfoBoxProps) {
             listStylePosition: 'inside'
           }}>
           <li>지난 학기 정규 스터디 수료</li>
-          <li>GDGoC Hongik 코어 멤버</li>
+          <li>GDG Hongik Univ. 코어 멤버</li>
         </ul>
         <br />
         본인이 해당사항이 있음에도 쿠폰이 없는 경우 카카오톡 채널로
