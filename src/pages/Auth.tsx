@@ -136,7 +136,7 @@ const Container = styled.div`
   padding: 49px 16px 40px 16px;
   background-color: ${color.mono50};
   margin: 0px -16px;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   display: flex;
   flex-direction: column;

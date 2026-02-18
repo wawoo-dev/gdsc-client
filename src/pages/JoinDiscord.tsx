@@ -61,7 +61,7 @@ export const JoinDiscord = () => {
 };
 
 const Wrapper = styled(Flex)`
-  min-height: calc(100vh - ${GlobalSize.header});
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;

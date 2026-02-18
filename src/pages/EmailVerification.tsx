@@ -105,7 +105,7 @@ export const EmailVerification = () => {
 
 const Container = styled(Flex)`
   position: relative;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   background-color: ${color.backgroundAlternative};
   padding: 40px 16px;
   ${media.mobile} {

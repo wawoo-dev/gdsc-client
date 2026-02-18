@@ -52,8 +52,8 @@ export const DiscordName = ({ onNext }: { onNext: () => void }) => {
       <div style={{ width: '100%' }}>
         <NameField control={control} />
       </div>
-      <Space height={75} />
-      <Flex direction="column">
+
+      <Flex direction="column" style={{ marginTop: 'auto' }}>
         <Button onClick={handleNextClick} style={{ maxWidth: '100%' }}>
           다음으로
         </Button>

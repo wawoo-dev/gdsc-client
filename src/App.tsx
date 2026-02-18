@@ -197,7 +197,7 @@ const Wrapper = styled(Flex)`
 `;
 
 const BlueSection = styled(Flex)`
-  height: calc(100vh - ${GlobalSize.header});
+  height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   background-color: ${color.primary};
 

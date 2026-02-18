@@ -419,7 +419,7 @@ const Container = styled(Flex)`
   @media (max-height: 765px) {
     min-height: 105vh;
   }
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   justify-content: flex-start;
   align-items: flex-start;
   background-color: ${color.mono50};

@@ -155,7 +155,7 @@ const StudentGuideLink = styled(Link)`
 
 const Wrapper = styled(Flex)`
   position: relative;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 40px 16px 0px;

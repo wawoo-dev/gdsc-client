@@ -78,7 +78,7 @@ export const EmailVerificationServerRedirect = () => {
 };
 
 const Wrapper = styled(Flex)`
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
@@ -94,7 +94,7 @@ const Wrapper = styled(Flex)`
 const Container = styled(Flex)`
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   padding: 0 0 40px 0;
 `;
 
