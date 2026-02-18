@@ -11,10 +11,9 @@ function useCustomBack(customBack: () => boolean | void) {
       const shouldPrevent = customBackRef.current();
 
       if (shouldPrevent === false) {
-        // 실제 뒤로가기 허용 - 아무것도 안 함 (브라우저가 알아서 이동)
+        // 실제 뒤로가기 허용
         return;
       }
-      // 뒤로가기 막고 콜백 실행 완료 (setStep에서 pushState 안 함)
     };
 
     window.addEventListener('popstate', handler);

@@ -76,3 +76,16 @@ export const Text = styled.p<{
 
   ${({ css }) => css}
 `;
+
+export const GuideList = styled.ul<{
+  color?: colorKey;
+  listPosition?: 'inside' | 'outside';
+}>`
+  ${wowTypo.body3};
+  color: ${({ color = 'sub' }) => wowColor[color]};
+  list-style-type: disc;
+  list-style-position: ${({ listPosition = 'outside' }) => listPosition};
+  padding-left: ${({ listPosition = 'outside' }) =>
+    listPosition === 'outside' ? '20px' : '0'};
+  margin: 0;
+`;
