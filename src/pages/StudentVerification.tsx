@@ -41,7 +41,11 @@ export const StudentVerification = () => {
   };
 
   return (
-    <Wrapper direction="column" justify="flex-start" gap="lg">
+    <Wrapper
+      direction="column"
+      justify="flex-start"
+      align="flex-start"
+      gap="lg">
       {isPending && <LoadingSpinner />}
       <TextContainer>
         <Text typo="h1" style={{ marginBottom: '12px' }}>
