@@ -52,44 +52,48 @@ const Container = styled(Flex)`
   width: 100%;
   height: ${GlobalSize.header};
   gap: 16px;
-  background-color: ${color.monoBackgroundPressed};
+  background-color: ${color.white};
+  ${media.mobile} {
+    background-color: ${color.monoBackgroundPressed};
+  }
   position: fixed;
   top: 0;
   z-index: 99;
+  border-bottom: 1px solid ${color.outline};
 `;
 const LogoText = styled.div`
   @font-face {
-    font-family: 'Google Sans';
+    font-family: 'Google-Sans';
     src: url('/fonts/GoogleSans-Bold.ttf') format('truetype');
     font-style: normal;
   }
-  font-family: 'Google Sans', sans-serif;
+  font-family: 'Google-Sans', sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: ${color.black};
 `;
 const SubLogoText = styled.div`
   @font-face {
-    font-family: 'Google Sans';
+    font-family: 'Google-Sans';
     src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
     font-style: normal;
   }
-  font-family: 'Google Sans', sans-serif;
+  font-family: 'Google-Sans', sans-serif;
   font-size: 14px;
   color: ${color.primary};
 `;
 
 const HeaderContainter = styled(Flex)`
-  width: ${GlobalSize.width};
+  width: 100%;
+  justify-content: space-around;
   padding: 0 16px;
-
+  margin: 0 auto;
   ${media.mobile} {
     width: 100vw;
   }
 `;
 const LogoContainer = styled.button`
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: flex-start;
   gap: 6px;

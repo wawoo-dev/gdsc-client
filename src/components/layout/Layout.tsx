@@ -53,7 +53,6 @@ const Container = styled(Flex)`
 `;
 
 const Wrapper = styled(Flex)<{ $hasHeader: boolean }>`
-  width: ${GlobalSize.width};
   margin-top: ${({ $hasHeader }) => ($hasHeader ? GlobalSize.header : '0')};
   min-height: ${({ $hasHeader }) =>
     $hasHeader ? `calc(100vh - ${GlobalSize.header})` : '100vh'};

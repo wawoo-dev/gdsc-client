@@ -7,7 +7,6 @@ import { OnboardingArrow } from '@/assets/OnboardingArrow';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 
 import { InformationBox } from '@/components/onboarding/InformationBox';
-import GlobalSize from '@/constants/globalSize';
 import { media } from '@/styles';
 import { isAuthenticated } from '@/utils/auth';
 import { css } from '@emotion/react';
@@ -27,44 +26,96 @@ function App() {
     <Wrapper direction="column" justify="flex-start" align="center">
       <BlueSection
         direction="column"
-        justify="space-between"
         align="flex-start"
         css={css`
           padding: 16px 0px;
           height: 100dvh;
+          justify-content: flex-end;
+          ${media.mobile} {
+            justify-content: space-between;
+          }
         `}>
-        <Flex direction="column" justify="flex-start" align="flex-end">
+        <Flex
+          justify="flex-start"
+          css={css`
+            flex-direction: row-reverse;
+            align-items: center;
+            padding: 0px 50px;
+            ${media.mobile} {
+              flex-direction: column;
+              align-items: flex-end;
+              padding: 0px;
+            }
+          `}>
           <Flex
             css={css`
               width: 100dvw;
-              max-width: 400px;
+              max-width: 700px;
+              ${media.mobile} {
+                max-width: 400px;
+              }
             `}>
             <OnboardingLogo1 />
           </Flex>
           <Flex
-            direction="column"
             css={css`
-              padding: 16px;
+              padding: 0px 16px;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              ${media.mobile} {
+                flex-direction: column;
+                align-items: flex-start;
+              }
             `}>
             <Text
-              typo="display2"
               color="backgroundNormal"
               css={css`
-                width: 100%;
+                ${typography.display1};
+                font-weight: 800;
+                font-size: 50px;
+
+                ${media.mobile} {
+                  ${typography.display2};
+                  width: 100%;
+                }
               `}>
               Google Developer
               <br />
               Groups on Campus
             </Text>
             <Text
-              typo="h3"
               color="backgroundNormal"
               css={css`
-                width: 100%;
-                margin-top: 12px;
+                ${typography.display1};
+                font-weight: 800;
+                font-size: 50px;
+                ${media.mobile} {
+                  margin-top: 12px;
+                  ${typography.h2};
+                  width: 100%;
+                }
               `}>
               Hongik University
             </Text>
+            <Flex
+              css={css`
+                display: flex;
+                width: 328px;
+                margin-top: 46px;
+                ${media.mobile} {
+                  display: none;
+                }
+              `}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  if (isAuthenticated()) navigate(RoutePath.Dashboard);
+                  else navigate(RoutePath.GithubSignin);
+                }}>
+                지금 지원하기
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
         <Flex
@@ -74,30 +125,52 @@ function App() {
           css={css`
             padding: 0px 16px;
           `}>
-          <Button
-            variant="outline"
-            onClick={() => {
-              if (isAuthenticated()) navigate(RoutePath.Dashboard);
-              else navigate(RoutePath.GithubSignin);
-            }}>
-            지금 지원하기
-          </Button>
+          <Flex
+            css={css`
+              display: none;
+              ${media.mobile} {
+                display: flex;
+              }
+            `}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (isAuthenticated()) navigate(RoutePath.Dashboard);
+                else navigate(RoutePath.GithubSignin);
+              }}>
+              지금 지원하기
+            </Button>
+          </Flex>
           <OnboardingArrow />
         </Flex>
       </BlueSection>
       <Flex
         direction="column"
-        align="flex-start"
         css={css`
           background-color: white;
           width: 100%;
           height: 411px;
           padding: 16px;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          ${media.mobile} {
+            align-items: flex-start;
+          }
         `}>
-        <Text typo="h1" color="primary">
+        <Text
+          color="primary"
+          css={css`
+            text-align: center;
+            ${typography.display1};
+            ${media.mobile} {
+              text-align: left;
+              ${typography.h1};
+            }
+          `}>
           모두에게 성장의 기회를 제공하는
           <br />
-          홍익대학교 최대 규모의 <br />
+          홍익대학교 최대 규모의 <DisplayBreak />
           IT 커뮤니티
         </Text>
         <Space height={32} />
@@ -106,20 +179,38 @@ function App() {
           color="black"
           css={css`
             word-break: keep-all;
+            text-align: center;
+            line-height: 160%;
+            ${media.mobile} {
+              text-align: left;
+            }
           `}>
           GDG는 Google Developers에서 제공되는 프로그램과 함께 운영되는 개발자
-          커뮤니티 그룹이에요. 특히 GDG Hongik Univ.는 개발자에 관심이 있는
-          홍익대학교 학생이라면 누구나 참여할 수 있어요!
+          커뮤니티 그룹이에요. <br />
+          특히 GDG Hongik Univ.는 개발자에 관심이 있는 홍익대학교 학생이라면
+          누구나 참여할 수 있어요!
         </Text>
       </Flex>
       <Flex
         direction="column"
         css={css`
-          padding: 100px 16px;
-          gap: 100px;
+          padding: 200px 16px;
+          gap: 200px;
+          ${media.mobile} {
+            gap: 100px;
+            padding: 100px 16px;
+          }
         `}>
         <Flex direction="column">
-          <Text typo="h1" color="black">
+          <Text
+            color="black"
+            css={css`
+              text-align: center;
+              ${typography.display2};
+              ${media.mobile} {
+                ${typography.h1};
+              }
+            `}>
             GDG와 함께 해요!
           </Text>
           <Space height={42} />
@@ -143,7 +234,15 @@ function App() {
           </Flex>
         </Flex>
         <Flex direction="column" align="center">
-          <Text typo="h1" color="black">
+          <Text
+            color="black"
+            css={css`
+              text-align: center;
+              ${typography.display2};
+              ${media.mobile} {
+                ${typography.h1};
+              }
+            `}>
             GDG에서는 이런 활동을 해요!
           </Text>
           <Space height={42} />
@@ -153,20 +252,41 @@ function App() {
           direction="column"
           align="center"
           css={css`
-            gap: 16px;
+            gap: 78px;
+            ${media.mobile} {
+              gap: 16px;
+            }
           `}>
-          <Text typo="h1" color="black">
+          <Text
+            color="black"
+            css={css`
+              text-align: center;
+              ${typography.display2};
+              ${media.mobile} {
+                ${typography.h1};
+              }
+            `}>
             GDG에 대해 궁금한 점이 있나요?
           </Text>
-          <Button size="sm" onClick={() => navigate(RoutePath.FAQ)}>
+          <SubButton size="sm" onClick={() => navigate(RoutePath.FAQ)}>
             FAQ 바로가기
-          </Button>
+          </SubButton>
         </Flex>
       </Flex>
       <BlueSection direction="column" justify="space-between">
         <Space height={60} />
-        <JoinText />
-        <OnboardingLogo2 />
+        <Flex
+          direction="column"
+          align="center"
+          gap="md"
+          css={css`
+            padding: 0 16px;
+            max-width: 700px;
+            max-height: 600px;
+          `}>
+          <JoinText />
+          <OnboardingLogo2 />
+        </Flex>
         <Space height={25} />
         <ApplyButton
           onClick={() => {
@@ -187,18 +307,21 @@ export default App;
 const Wrapper = styled(Flex)`
   text-align: center;
   box-sizing: border-box;
-
-  width: ${GlobalSize.width};
+  width: 100%;
   background-color: #f8f8f8;
 
   ${media.mobile} {
     width: 100vw;
   }
 `;
-
+const DisplayBreak = styled.br`
+  display: none;
+  ${media.mobile} {
+    display: block;
+  }
+`;
 const BlueSection = styled(Flex)`
   height: calc(100vh - var(--header-height, 0px));
-  width: ${GlobalSize.width};
   background-color: ${color.primary};
 
   box-sizing: border-box;
@@ -212,6 +335,7 @@ const ApplyButton = styled.button`
   height: 44px;
   width: calc(100% - 32px);
   border-radius: 8px;
+  max-width: 328px;
 
   background-color: ${color.white};
   color: ${color.primary};
@@ -222,5 +346,17 @@ const ApplyButton = styled.button`
   :disabled {
     background-color: ${color.mono400};
     color: ${color.mono100};
+  }
+`;
+const SubButton = styled(Button)`
+  width: 328px;
+  background-color: ${color.primary};
+  color: ${color.white};
+  border-radius: 20px;
+  padding: 16px 0;
+
+  ${media.mobile} {
+    width: 150px;
+    padding: 12px 0;
   }
 `;
