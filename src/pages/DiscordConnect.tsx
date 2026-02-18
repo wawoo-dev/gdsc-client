@@ -31,8 +31,10 @@ export const DiscordConnect = () => {
 
   const handleBack = () => {
     const currentStepIndex = steps.indexOf(currentStep);
-    if (currentStepIndex === 0) return;
-    setStep(steps[currentStepIndex - 1]);
+    if (currentStepIndex === 0) {
+      return false; // 실제 뒤로가기 허용
+    }
+    setStep(steps[currentStepIndex - 1], true); // isBack = true
   };
 
   useCustomBack(handleBack);
