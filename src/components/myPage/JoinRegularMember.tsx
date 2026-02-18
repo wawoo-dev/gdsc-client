@@ -44,7 +44,8 @@ const JoinRegularMember = ({
         </Text>
         <StatusBadge statusMessage={statusMessage} />
       </Flex>
-      {paymentStatus === 'UNSATISFIED' ? (
+      {(paymentStatus === 'UNSATISFIED' || !paymentStatus) &&
+      role !== 'REGULAR' ? (
         isApplying ? (
           currentRecruitment ? (
             <CustomBox
