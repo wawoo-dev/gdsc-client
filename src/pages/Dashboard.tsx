@@ -39,7 +39,7 @@ export const Dashboard = () => {
             <UserInfo member={member} />
             <JoinStatus role={member.role} member={member} />
           </Flex>
-          {member.role === 'GUEST' && (
+          {member.role !== 'GUEST' && (
             <>
               <Space height={40} />
               <JoinRegularMember
