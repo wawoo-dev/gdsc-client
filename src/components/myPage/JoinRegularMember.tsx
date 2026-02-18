@@ -28,7 +28,7 @@ const JoinRegularMember = ({
   const handleClickRoute = () => {
     navigate(RoutePath.PaymentsCheckout);
   };
-  console.log(paymentStatus);
+
   const statusMessage =
     (paymentStatus === 'UNSATISFIED' || !paymentStatus) && role !== 'REGULAR'
       ? '진행전'
@@ -43,33 +43,31 @@ const JoinRegularMember = ({
       </Flex>
       {(paymentStatus === 'UNSATISFIED' || !paymentStatus) &&
       role !== 'REGULAR' ? (
-        isApplying ? (
-          currentRecruitment ? (
-            <CustomBox
-              text={'이번 학기 회비를 납부해주세요.'}
-              variant={'arrow'}
-              status={'error'}
-              subTextContent={
-                <Text color="sub">
-                  카드·계좌이체 등 여러 결제수단을 지원해요.
-                </Text>
-              }
-              onClick={() => {
-                if (paymentStatus === 'UNSATISFIED' || !paymentStatus)
-                  handleClickRoute();
-              }}
-            />
-          ) : (
-            <CustomBox
-              text="현재 정회원 모집 기간이 아니예요."
-              subTextContent={
-                <Text typo="body2" color="sub">
-                  정회원 모집 기간이 되면 버튼이 활성화 돼요.
-                </Text>
-              }
-              status="success"
-            />
-          )
+        !currentRecruitment ? (
+          <CustomBox
+            text="현재 정회원 모집 기간이 아니예요."
+            subTextContent={
+              <Text typo="body2" color="sub">
+                정회원 모집 기간이 되면 버튼이 활성화 돼요.
+              </Text>
+            }
+            status="success"
+          />
+        ) : isApplying ? (
+          <CustomBox
+            text={'이번 학기 회비를 납부해주세요.'}
+            variant={'arrow'}
+            status={'error'}
+            subTextContent={
+              <Text color="sub">
+                카드·계좌이체 등 여러 결제수단을 지원해요.
+              </Text>
+            }
+            onClick={() => {
+              if (paymentStatus === 'UNSATISFIED' || !paymentStatus)
+                handleClickRoute();
+            }}
+          />
         ) : (
           <CustomBox
             text={
