@@ -111,7 +111,7 @@ const NameField = ({ control }: { control: Control<DiscordFormValues> }) => {
                   'noopener,noreferrer'
                 );
               }}>
-              <u>GDG Hongik 가이드라인</u>
+              <u>GDG Hongik Univ. 가이드라인</u>
             </button>
             에 어긋나지 않게 작성
           </li>
