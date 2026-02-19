@@ -1,4 +1,4 @@
-import { Flex, Space, Text } from '@/components/common/Wrapper';
+import { Flex, GuideList, Space, Text } from '@/components/common/Wrapper';
 import DepartmentSelect from '@/components/signup/DepartmentSelect';
 import GlobalSize from '@/constants/globalSize';
 import { media } from '@/styles';
@@ -363,19 +363,12 @@ export const SignUp = () => {
             기존 GitHub 계정과 연결을 끊고
             <br />새 GitHub 계정을 연결하시겠습니까?
           </Text>
-          <Text typo="body3" color="sub">
-            <ul
-              style={{
-                listStyleType: 'disc',
-
-                listStylePosition: 'outside'
-              }}>
-              <li>
-                연결된 GitHub 계정을 변경하면 기존에 활동했던
-                <br /> 이력도 자동으로 새로운 계정에 반영돼요.
-              </li>
-            </ul>
-          </Text>
+          <GuideList>
+            <li>
+              연결된 GitHub 계정을 변경하면 기존에 활동했던
+              <br /> 이력도 자동으로 새로운 계정에 반영돼요.
+            </li>
+          </GuideList>
           <Flex direction="column" gap="xs">
             <GitHubHandleRow>
               <Text typo="label2" color="sub">
@@ -419,7 +412,7 @@ const Container = styled(Flex)`
   @media (max-height: 765px) {
     min-height: 105vh;
   }
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   justify-content: flex-start;
   align-items: flex-start;
   background-color: ${color.mono50};

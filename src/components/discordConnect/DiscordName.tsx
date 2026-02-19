@@ -52,8 +52,8 @@ export const DiscordName = ({ onNext }: { onNext: () => void }) => {
       <div style={{ width: '100%' }}>
         <NameField control={control} />
       </div>
-      <Space height={75} />
-      <Flex direction="column">
+
+      <Flex direction="column" style={{ marginTop: 'auto' }}>
         <Button onClick={handleNextClick} style={{ maxWidth: '100%' }}>
           다음으로
         </Button>
@@ -76,7 +76,7 @@ const TextSection = memo(() => {
         <Text typo="h1">사용자명을 알려주세요.</Text>
         <Space height="sm" />
         <Text typo="body1">
-          GDGoC Hongik 디스코드 서버에서는 사용자명을 통해 멤버를 구분해요.
+          GDG Hongik Univ. 디스코드 서버에서는 사용자명을 통해 멤버를 구분해요.
         </Text>
       </div>
       <Image src={DiscordImage} alt="discord-name" align="center" />

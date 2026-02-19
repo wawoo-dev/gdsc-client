@@ -1,22 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-function useCustomBack(customBack: () => void) {
-  const browserPreventEvent = (event: () => void) => {
-    history.pushState(null, '', location.href);
-    event();
-  };
+function useCustomBack(customBack: () => boolean | void) {
+  const customBackRef = useRef(customBack);
+
+  // 항상 최신 customBack 참조 유지
+  customBackRef.current = customBack;
 
   useEffect(() => {
-    history.pushState(null, '', location.href);
-    window.addEventListener('popstate', () => {
-      browserPreventEvent(customBack);
-    });
-    return () => {
-      window.removeEventListener('popstate', () => {
-        browserPreventEvent(customBack);
-      });
+    const handler = () => {
+      const shouldPrevent = customBackRef.current();
+
+      if (shouldPrevent === false) {
+        // 실제 뒤로가기 허용
+        return;
+      }
     };
-  }, [customBack]);
+
+    window.addEventListener('popstate', handler);
+    return () => {
+      window.removeEventListener('popstate', handler);
+    };
+  }, []);
 }
 
 export default useCustomBack;

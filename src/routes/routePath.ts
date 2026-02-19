@@ -24,14 +24,16 @@ const RoutePath = {
   GDSCHongikLink: 'https://www.wawoo.dev',
   GDSCHongikDiscord: 'https://discord.gg/dSV6vSEuGU',
   GitHubGuideLink: 'https://www.wawoo.dev/onboard-guide/github',
-  StudentEmailLinkGuideLink: 'https://www.wawoo.dev/guide/student-email',
+  StudentEmailLinkGuideLink:
+    'https://www.wawoo.dev/onboard-guide/student-email',
   CommunityGuideLink: 'https://www.wawoo.dev/onboard-guide/community-guideline',
   TermsLink: 'https://www.wawoo.dev/onboard-guide/community-rule',
   PersonalPrivacyLink: 'https://www.wawoo.dev/onboard-guide/privacy-policy',
 
   InstagramLink: 'https://www.instagram.com/gdsc.hongik/',
   DiscordRegisterLink: 'https://discord.com/register',
-  DiscordCodeLink: 'https://discord.gg/dSV6vSEuGU',
+  DiscordCodeLink:
+    'https://discord.com/channels/1001436927699980359/1082704130361004063',
 
   PaymentsCheckout: '/payments/checkout',
   PaymentsSuccess: '/payments/success',

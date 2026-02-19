@@ -4,6 +4,11 @@ import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from 'react';
 import { color } from 'wowds-tokens';
 
+import image1 from '/onboarding/image.png';
+import image2 from '/onboarding/image-2.png';
+import image3 from '/onboarding/image-3.png';
+import image4 from '/onboarding/image-4.png';
+
 const Bold = styled.span`
   color: ${color.textBlack};
 `;
@@ -17,7 +22,7 @@ const slides = [
         기회를 제공하기 위해 기초적인 내용 위주로 진행돼요.
       </>
     ),
-    color: '#d9d9d9'
+    image: image1
   },
   {
     chip: '파트 스터디',
@@ -29,7 +34,7 @@ const slides = [
         활동이 열려요.
       </>
     ),
-    color: '#e6e6e6'
+    image: image2
   },
   {
     chip: '프로젝트 트랙',
@@ -40,7 +45,7 @@ const slides = [
         개발의 전 과정을 경험하며 함께 멋진 개발자로 성장해 봐요.
       </>
     ),
-    color: '#d0d0d0'
+    image: image3
   },
   {
     chip: 'GDG 연합 활동',
@@ -51,7 +56,7 @@ const slides = [
         있어요.
       </>
     ),
-    color: '#ededed'
+    image: image4
   }
 ];
 
@@ -204,9 +209,13 @@ export default function Carousel() {
               key={i}
               style={styles.slide}
               aria-label={`${i + 1} / ${slideCount}`}>
-              <div style={{ ...styles.card, background: s.color }}>
-                <div style={styles.cardInnerHint}>이미지/콘텐츠 영역</div>
-              </div>
+              <div
+                style={{
+                  ...styles.card,
+                  backgroundImage: `url(${s.image})`,
+                  backgroundSize: 'cover'
+                }}
+              />
             </div>
           ))}
         </div>
@@ -248,14 +257,17 @@ const styles: Record<string, React.CSSProperties> = {
     scrollbarWidth: 'none',
     msOverflowStyle: 'none',
     borderRadius: 18,
-    outline: 'none'
+    outline: 'none',
+    width: '100%'
   },
   slide: {
     flex: '0 0 100%',
-    scrollSnapAlign: 'start'
+    scrollSnapAlign: 'start',
+    width: '100%'
   },
   card: {
     height: 210,
+    width: '100%',
     borderRadius: 18,
     display: 'grid',
     placeItems: 'center',
@@ -277,7 +289,7 @@ const styles: Record<string, React.CSSProperties> = {
     height: 10,
     borderRadius: 999,
     border: 'none',
-    background: '#3b82f6',
+    background: color.primary,
     cursor: 'pointer',
     transition: 'opacity 160ms ease, transform 160ms ease',
     padding: 0

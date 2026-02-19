@@ -41,7 +41,7 @@ const Heading = styled(Text)`
 const Wrapper = styled(Flex)`
   box-sizing: border-box;
 
-  height: calc(100vh - ${GlobalSize.header});
+  height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   padding: 0px 16px;
 

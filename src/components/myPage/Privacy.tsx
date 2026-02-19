@@ -13,8 +13,8 @@ export const Privacy = ({ info }: { info: UserInfo }) => {
       </Text>
       {studentId && (
         <Text color="sub" typo="body1">
-          이미 제출된 정보를 수정해야 할 경우, GDGoC Hongik 카카오톡 채널로 문의
-          주세요.
+          이미 제출된 정보를 수정해야 할 경우, GDG Hongik Univ. 카카오톡 채널로
+          문의 주세요.
         </Text>
       )}
       <Box

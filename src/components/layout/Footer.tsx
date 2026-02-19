@@ -1,5 +1,4 @@
 import { FooterGithubIcon, FooterInstagramIcon } from '@/assets/FooterIcons';
-import { FooterLogoIcon } from '@/assets/FooterLogoIcon';
 import { Logo } from '@/assets/LogoIcon';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
@@ -9,23 +8,31 @@ import { Flex, Text } from '../common/Wrapper';
 const Footer = () => {
   return (
     <Container>
-      <Logo />
-      <FooterLogoIcon />
+      <Flex direction="row" align="center" justify="flex-start" gap="xs">
+        <Logo />
+        <LogoText>GDG</LogoText>
+        <SubLogoText>Hongik Univ.</SubLogoText>
+      </Flex>
 
       <Flex direction="column" align="start" gap="md">
-        <Link to={'https://www.gdschongik.com/developer'}>
+        <Link to={'https://wawoo.dev/'}>
           <Text typo="label2" style={{ textDecoration: 'underline' }}>
             와우디벨로퍼스
           </Text>
         </Link>
-        <Link to={'https://www.gdschongik.com/onboarding/community-rule'}>
+        <Link to={'https://www.wawoo.dev/onboarding'}>
           <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            GDGoC Hongik 회칙
+            학회 소개
           </Text>
         </Link>
-        <Link to={'https://www.gdschongik.com/onboarding/community-guideline'}>
+        <Link to={'https://www.wawoo.dev/onboard-guide/community-rule'}>
           <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            GDGoC Hongik 가이드라인{' '}
+            GDG Hongik Univ. 회칙
+          </Text>
+        </Link>
+        <Link to={'https://www.wawoo.dev/onboard-guide/community-guideline'}>
+          <Text typo="label2" style={{ textDecoration: 'underline' }}>
+            GDG Hongik Univ. 가이드라인
           </Text>
         </Link>
       </Flex>
@@ -48,13 +55,27 @@ const Footer = () => {
           와우디벨로퍼스 | 서울특별시 동작구 상도로53길 8, 325동 606호
         </Text>
         <Text typo="body3" color="sub">
-          대표 안재현 | TEL 010-2816-5740 | 사업자등록번호 311-82-77953
+          대표 이혁 | TEL 010-2628-3439 | 사업자등록번호 311-82-77953
         </Text>
-        <Link to={'https://www.gdschongik.com/privacy-policy'}>
-          <Text typo="body3" color="black">
-            개인정보처리방침
-          </Text>
-        </Link>
+        <Flex justify="flex-start" gap="xxs">
+          <Link to={'https://www.wawoo.dev/wowdevelopers/privacy-policy'}>
+            <Text typo="body3" color="black">
+              개인정보처리방침
+            </Text>
+          </Link>
+          <Text typo="body3">|</Text>
+          <Link to={'https://www.wawoo.dev/wowdevelopers/term-of-use'}>
+            <Text typo="body3" color="black">
+              이용약관
+            </Text>
+          </Link>
+          <Text typo="body3">|</Text>
+          <Link to={'https://www.wawoo.dev/wowdevelopers/refund'}>
+            <Text typo="body3" color="black">
+              환불정책
+            </Text>
+          </Link>
+        </Flex>
         <Text typo="body3" color="sub">
           © 2024. 와우디벨로퍼스 all rights reserved.
         </Text>
@@ -73,6 +94,27 @@ const Container = styled.footer`
   gap: 1.5rem;
 
   background-color: ${color.backgroundAlternative};
+`;
+const LogoText = styled.div`
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('/fonts/GoogleSans-Bold.ttf') format('truetype');
+    font-style: normal;
+  }
+  font-family: 'Google Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: ${color.black};
+`;
+const SubLogoText = styled.div`
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+  font-family: 'Google Sans', sans-serif;
+  font-size: 14px;
+  color: ${color.primary};
 `;
 
 export default Footer;

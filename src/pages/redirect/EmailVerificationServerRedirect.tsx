@@ -56,8 +56,11 @@ export const EmailVerificationServerRedirect = () => {
             <TextContainer>
               {isSuccess ? (
                 <Text typo="body1">
-                  기존 계정({previousGithubHandle})의 내용을 삭제하고
-                  <br /> 새로운 계정({currentGithubHandle})으로 이전했어요.
+                  기존 계정{previousGithubHandle && `(${previousGithubHandle})`}
+                  의 내용을 삭제하고
+                  <br /> 새로운 계정
+                  {currentGithubHandle && `(${currentGithubHandle})`}으로
+                  이전했어요.
                   <br /> 가입 절차를 계속해서 진행해주세요.
                 </Text>
               ) : (
@@ -78,7 +81,7 @@ export const EmailVerificationServerRedirect = () => {
 };
 
 const Wrapper = styled(Flex)`
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
@@ -94,7 +97,7 @@ const Wrapper = styled(Flex)`
 const Container = styled(Flex)`
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   padding: 0 0 40px 0;
 `;
 
