@@ -1,7 +1,7 @@
 import { User, UserRoleType } from '@/types/user';
 import styled from '@emotion/styled';
 import { color } from 'wowds-tokens';
-import { Text } from '../common/Wrapper';
+import { Flex, Text } from '../common/Wrapper';
 
 const MemberStatusStepper = ({ member }: { member: User }) => {
   const { role } = member;
@@ -27,23 +27,25 @@ const MemberStatusStepper = ({ member }: { member: User }) => {
   const progressWidth = ((currentStep - 1) / (steps.length - 1)) * 100;
 
   return (
-    <StepperContainer>
-      <ProgressBarContainer>
-        <ProgressBar />
-        <ProgressFill width={progressWidth} />
-        <StepCircle left={progressWidth} />
-      </ProgressBarContainer>
-      <LabelsContainer>
-        {steps.map((step) => (
-          <Text
-            key={step.value}
-            typo="label3"
-            color={step.value === currentStep ? 'textBlack' : 'sub'}>
-            {step.label}
-          </Text>
-        ))}
-      </LabelsContainer>
-    </StepperContainer>
+    <Flex>
+      <StepperContainer>
+        <ProgressBarContainer>
+          <ProgressBar />
+          <ProgressFill width={progressWidth} />
+          <StepCircle left={progressWidth} />
+        </ProgressBarContainer>
+        <LabelsContainer>
+          {steps.map((step) => (
+            <Text
+              key={step.value}
+              typo="label3"
+              color={step.value === currentStep ? 'textBlack' : 'sub'}>
+              {step.label}
+            </Text>
+          ))}
+        </LabelsContainer>
+      </StepperContainer>
+    </Flex>
   );
 };
 
@@ -59,7 +61,6 @@ const StepperContainer = styled.div`
 
 const ProgressBarContainer = styled.div`
   position: relative;
-
   width: 91%;
   height: 6px;
 `;

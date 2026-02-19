@@ -81,19 +81,16 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
           error={error}
           {...(error && {
             helperText: (
-              <li>번호가 올바르지 않아요. 다시 발급받아 진행해주세요.</li>
+              <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+                <li>번호가 올바르지 않아요. 다시 발급받아 진행해주세요.</li>
+              </ul>
             )
           })}
         />
       </Flex>
-      <Space height={200} />
-      <Flex direction="column">
-        <Button
-          onClick={() => {
-            handleLinkButtonClick();
-            onNext();
-          }}
-          style={{ maxWidth: '100%' }}>
+
+      <Flex direction="column" style={{ marginTop: 'auto' }}>
+        <Button onClick={handleLinkButtonClick} style={{ maxWidth: '100%' }}>
           다음으로
         </Button>
       </Flex>

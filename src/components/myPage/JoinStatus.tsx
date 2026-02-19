@@ -21,7 +21,7 @@ const JoinStatus = ({
   const [openInfo, setOpenInfo] = useState(false);
   const helpButtonRef = useRef<HTMLDivElement>(null);
   return (
-    <Flex justify="flex-start" direction="column" align="center">
+    <Flex justify="flex-start" direction="column" align="flex-start">
       <Space height={40} />
       <Container>
         <Text typo="label1" color="textBlack">
@@ -48,6 +48,7 @@ const JoinStatus = ({
         )}
       </Container>
       <Space height={40} />
+
       <MemberStatusStepper member={member} />
       <Space height={20} />
       <StatusBox role={role} />

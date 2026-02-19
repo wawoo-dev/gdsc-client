@@ -126,8 +126,8 @@ function App() {
           <Flex direction="column" gap="sm">
             <InformationBox
               title="모집 기간"
-              description="1차 지원 기간: 2월 27일 ~ 3월 1일"
-              description2="2차 지원 기간: 3월 4일 ~ 3월 8일"
+              description="1차 지원 기간: 2월 19일 ~ 2월 28일"
+              description2="2차 지원 기간: 3월 1일 ~ 3월 7일"
             />
             <InformationBox
               title="지원 자격"
@@ -136,7 +136,7 @@ function App() {
             />
             <InformationBox
               title="지원 시 유의사항"
-              description="GDGoC 커뮤니티 가이드라인 및 오픈 커뮤니티 
+              description="GDG Hongik Univ. 커뮤니티 가이드라인 및 오픈 커뮤니티 
 가이드라인을 준수해야 해요. 또한, 학기 당 
 2만원의 회비가 있어요."
             />
@@ -197,7 +197,7 @@ const Wrapper = styled(Flex)`
 `;
 
 const BlueSection = styled(Flex)`
-  height: calc(100vh - ${GlobalSize.header});
+  height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   background-color: ${color.primary};
 

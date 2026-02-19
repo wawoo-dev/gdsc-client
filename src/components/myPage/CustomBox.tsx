@@ -16,6 +16,7 @@ export interface CustomBoxProps<T extends BoxVariantType> {
   centered?: boolean;
 }
 
+// TODO: 디자인시스템 Box에 업데이트
 const CustomBox = <T extends BoxVariantType>({
   leftElement,
   variant,
@@ -59,7 +60,7 @@ const CustomBox = <T extends BoxVariantType>({
     borderRadius: '8px',
     border: `1px solid ${getBorderColor()}`,
     width: '100%',
-    maxWidth: '652px',
+    maxWidth: '547px',
     minWidth: '316px',
     backgroundColor:
       disabled || status === 'success'
@@ -88,7 +89,7 @@ const CustomBox = <T extends BoxVariantType>({
         gap="xs"
         style={{ width: centered ? 'auto' : '100%' }}>
         {leftElement}
-        <Flex direction="column" gap="sm">
+        <Flex direction="column" gap="sm" align="flex-start">
           {typeof text === 'string' ? (
             <Text
               typo="h3"
