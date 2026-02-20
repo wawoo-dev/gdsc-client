@@ -9,9 +9,9 @@ import Button from 'wowds-ui/Button';
 import GlobalSize from '@/constants/globalSize';
 import usePostOrder from '@/hooks/mutation/usePostOrder';
 import RoutePath from '@/routes/routePath';
+import axios from 'axios';
 import { useEffect, useRef } from 'react';
 import { color } from 'wowds-tokens';
-import axios from 'axios';
 
 export function PaymentsSuccess() {
   const navigate = useNavigate();
@@ -69,7 +69,8 @@ export function PaymentsSuccess() {
           <Text>이번 학기 회비 결제를 완료했어요.</Text>
           <Text>
             이제 <strong>GDG Hongik Univ. 정회원</strong>으로
-            <br /> 이번 학기에 활동하실 수 있어요!
+            <br />
+            이번 학기에 활동하실 수 있어요!
           </Text>
         </Flex>
       </Flex>
