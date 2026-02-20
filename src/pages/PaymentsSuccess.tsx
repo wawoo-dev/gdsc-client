@@ -9,44 +9,55 @@ import Button from 'wowds-ui/Button';
 import GlobalSize from '@/constants/globalSize';
 import usePostOrder from '@/hooks/mutation/usePostOrder';
 import RoutePath from '@/routes/routePath';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { color } from 'wowds-tokens';
+import axios from 'axios';
 
 export function PaymentsSuccess() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
+  const isCalledRef = useRef(false);
 
-  const { postOrder } = usePostOrder();
-
-  const confirm = async () => {
-    const requestData = {
-      orderId: searchParams.get('orderId'),
-      amount: searchParams.get('amount'),
-      paymentType: searchParams.get('paymentType'),
-      paymentKey: searchParams.get('paymentKey')
-    };
-
-    if (!requestData.orderId || !requestData.amount || !requestData.paymentKey)
-      throw new Error('Invalid payment information');
-
-    postOrder({
-      paymentKey: requestData.paymentKey,
-      orderNanoId: requestData.orderId,
-      amount: +requestData.amount
-    });
-  };
+  const { postOrderAsync } = usePostOrder();
 
   useEffect(() => {
+    if (isCalledRef.current) return;
+    isCalledRef.current = true;
+
     const executeConfirm = async () => {
+      const requestData = {
+        orderId: searchParams.get('orderId'),
+        amount: searchParams.get('amount'),
+        paymentKey: searchParams.get('paymentKey')
+      };
+
+      if (
+        !requestData.orderId ||
+        !requestData.amount ||
+        !requestData.paymentKey
+      ) {
+        navigate(RoutePath.PaymentsFail);
+        return;
+      }
+
       try {
-        await confirm();
+        await postOrderAsync({
+          paymentKey: requestData.paymentKey,
+          orderNanoId: requestData.orderId,
+          amount: +requestData.amount
+        });
       } catch (error) {
+        // 409 Conflict는 이미 처리된 요청이므로 성공으로 간주
+        if (axios.isAxiosError(error) && error.response?.status === 409) {
+          return;
+        }
         navigate(RoutePath.PaymentsFail);
       }
     };
+
     executeConfirm();
-  }, [searchParams]);
+  }, []);
 
   return (
     <Wrapper direction="column" justify="space-between">

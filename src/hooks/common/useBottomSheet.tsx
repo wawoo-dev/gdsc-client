@@ -1,14 +1,14 @@
 import BottomSheet from '@/components/common/BottomSheet';
-import { useContext, ReactNode } from 'react';
 import { BottomSheetContext } from '@/context/BottomSheetContext';
+import { ReactNode, useContext } from 'react';
 
 const useBottomSheet = () => {
-  const { isOpen, handleBottomSheet, onApply } = useContext(BottomSheetContext);
+  const { isOpen, handleBottomSheet } = useContext(BottomSheetContext);
 
   const BottomSheetElement = ({ children }: { children: ReactNode }) => {
     return <BottomSheet>{children}</BottomSheet>;
   };
-  return { isOpen, BottomSheetElement, handleBottomSheet, onApply };
+  return { isOpen, BottomSheetElement, handleBottomSheet };
 };
 
 export default useBottomSheet;

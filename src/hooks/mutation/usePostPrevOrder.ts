@@ -8,7 +8,11 @@ import { toast } from 'react-toastify';
 const usePostPrevOrder = (amount: number) => {
   const navigate = useNavigate();
 
-  const { mutate: postPrevOrder, ...rest } = useMutation({
+  const {
+    mutate: postPrevOrder,
+    mutateAsync: postPrevOrderAsync,
+    ...rest
+  } = useMutation({
     onMutate: () => {
       if (!amount) toast('결제를 실패했어요. 문제가 지속되면 문의해주세요.');
     },
@@ -16,7 +20,7 @@ const usePostPrevOrder = (amount: number) => {
     onError: () => navigate(RoutePath.PaymentsCheckout)
   });
 
-  return { postPrevOrder, ...rest };
+  return { postPrevOrder, postPrevOrderAsync, ...rest };
 };
 
 export default usePostPrevOrder;

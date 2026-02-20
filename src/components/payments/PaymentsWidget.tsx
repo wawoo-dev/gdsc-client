@@ -31,7 +31,7 @@ export function PaymentsWidget() {
 
   const { name, amount, discount, issuedCouponId, totalAmount } = useProduct();
 
-  const { postPrevOrder } = usePostPrevOrder(totalAmount);
+  const { postPrevOrderAsync } = usePostPrevOrder(totalAmount);
 
   const [ready, setReady] = useState(false);
 
@@ -84,7 +84,7 @@ export function PaymentsWidget() {
     try {
       if (!dashboard) throw new Error();
 
-      postPrevOrder({
+      await postPrevOrderAsync({
         orderNanoId: id,
         membershipId: dashboard.currentMembership.membershipId,
         issuedCouponId: issuedCouponId,
