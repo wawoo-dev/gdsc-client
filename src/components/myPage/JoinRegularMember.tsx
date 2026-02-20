@@ -1,4 +1,7 @@
-import { CurrentRecruitmentType } from '@/apis/member/memberType';
+import {
+  CurrentMembershipType,
+  CurrentRecruitmentType
+} from '@/apis/member/memberType';
 import { Flex, Text } from '@/components/common/Wrapper';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
 import RoutePath from '@/routes/routePath';
@@ -8,7 +11,6 @@ import {
   convertRecruitmentName,
   convertRecruitmentPeriod
 } from '@/utils/mypage/recruitmentNameFormat';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomBox from './CustomBox';
 import StatusBadge from './StatusBadge';
@@ -16,14 +18,15 @@ import StatusBadge from './StatusBadge';
 const JoinRegularMember = ({
   role,
   paymentStatus,
+  currentMembership,
   currentRecruitment
 }: {
   role: UserRoleType;
   paymentStatus?: Status;
+  currentMembership: CurrentMembershipType | null;
   currentRecruitment: CurrentRecruitmentType;
 }) => {
   const navigate = useNavigate();
-  const [isApplying, setIsApplying] = useState(false);
   const { handleBottomSheet } = useBottomSheet();
   const handleClickRoute = () => {
     navigate(RoutePath.PaymentsCheckout);
@@ -53,7 +56,7 @@ const JoinRegularMember = ({
             }
             status="success"
           />
-        ) : isApplying ? (
+        ) : currentMembership ? (
           <CustomBox
             text={'이번 학기 회비를 납부해주세요.'}
             variant={'arrow'}
@@ -85,7 +88,7 @@ const JoinRegularMember = ({
             }
             variant={'arrow'}
             status="error"
-            onClick={() => handleBottomSheet(() => setIsApplying(true))}
+            onClick={() => handleBottomSheet()}
           />
         )
       ) : (
