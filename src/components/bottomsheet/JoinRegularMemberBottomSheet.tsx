@@ -1,11 +1,8 @@
-import {
-  CurrentMembershipType,
-  CurrentRecruitmentType
-} from '@/apis/member/memberType';
+import { CurrentRecruitmentType } from '@/apis/member/memberType';
 import BottomSheet from '@/components/common/BottomSheet';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import CustomBox from '@/components/myPage/CustomBox';
-import useBottomSheet from '@/hooks/common/useBottomSheet';
+import useJoinRegularMember from '@/hooks/mutation/useJoinRegularMember';
 import RoutePath from '@/routes/routePath';
 import {
   convertRecruitmentName,
@@ -17,13 +14,11 @@ import { color } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 
 const JoinRegularMemberBottomSheet = ({
-  currentRecruitment,
-  currentMembership
+  currentRecruitment
 }: {
   currentRecruitment: CurrentRecruitmentType;
-  currentMembership: CurrentMembershipType | null;
 }) => {
-  const { onApply, handleBottomSheet } = useBottomSheet();
+  const { joinRegularMember } = useJoinRegularMember();
   const bottomSheetTitle = convertRecruitmentName(
     currentRecruitment.name,
     currentRecruitment.roundTypeValue
@@ -89,17 +84,10 @@ const JoinRegularMemberBottomSheet = ({
           {recruitmentPeriod}
         </Text>
         <Button
-          // disabled={currentMembership ? true : false}
           onClick={() => {
-            // joinRegularMember(currentRecruitment.recruitmentId);
-            if (onApply) {
-              onApply();
-            }
-            handleBottomSheet();
+            joinRegularMember(currentRecruitment.recruitmentId);
           }}>
-          {currentMembership
-            ? '정회원 가입 조건을 완료해주세요.'
-            : '지원하러 가기'}
+          {'지원하러 가기'}
         </Button>
       </BottomSheetContent>
     </BottomSheet>
