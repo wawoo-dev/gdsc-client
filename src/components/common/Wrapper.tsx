@@ -1,14 +1,14 @@
 import { css } from '@emotion/react';
 import type {
   color as colorType,
-  typography as typographyType,
-  space as spaceType
+  space as spaceType,
+  typography as typographyType
 } from 'wowds-tokens';
 
 import {
   color as wowColor,
-  typography as wowTypo,
-  space as wowSpace
+  space as wowSpace,
+  typography as wowTypo
 } from 'wowds-tokens';
 
 import styled from '@emotion/styled';
@@ -61,11 +61,12 @@ export const Text = styled.p<{
   typo?: typoKey;
   color?: colorKey;
   css?: ReturnType<typeof css>;
+  align?: 'start' | 'center';
 }>`
   font-family: 'SUIT', 'Apple SD Gothic Neo';
   ${({ typo = 'body1' }) => wowTypo[typo]};
   color: ${({ color = 'textBlack' }) => wowColor[color]};
-  text-align: start;
+  text-align: ${({ align }) => (align ? `${align}` : 'start')};
 
   white-space: pre-wrap;
   word-break: keep-all;
@@ -74,4 +75,17 @@ export const Text = styled.p<{
   padding: 0;
 
   ${({ css }) => css}
+`;
+
+export const GuideList = styled.ul<{
+  color?: colorKey;
+  listPosition?: 'inside' | 'outside';
+}>`
+  ${wowTypo.body3};
+  color: ${({ color = 'sub' }) => wowColor[color]};
+  list-style-type: disc;
+  list-style-position: ${({ listPosition = 'outside' }) => listPosition};
+  padding-left: ${({ listPosition = 'outside' }) =>
+    listPosition === 'outside' ? '20px' : '0'};
+  margin: 0;
 `;

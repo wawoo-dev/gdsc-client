@@ -1,9 +1,9 @@
 import useClickOutside from '@/hooks/useClickOutSide';
-import { SetStateAction, useRef } from 'react';
-import styled from '@emotion/styled';
-import { Flex, Text } from '../common/Wrapper';
-import { space, color } from 'wowds-tokens';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { SetStateAction, useRef } from 'react';
+import { color, space } from 'wowds-tokens';
+import { Flex, GuideList, Text } from '../common/Wrapper';
 
 interface CouponInfoBoxProps {
   setOpenInfo: (value: SetStateAction<boolean>) => void;
@@ -27,10 +27,11 @@ function CouponInfoBox({ setOpenInfo, expectRef }: CouponInfoBoxProps) {
       <Text typo="body1" color="textWhite">
         회비 할인 쿠폰은 다음과 같은 경로로 발급받을 수 있어요.
       </Text>
-      <Text typo="body1" color="textWhite">
+      <GuideList color="textWhite" listPosition="inside">
         <li>지난 학기 정규 스터디 수료</li>
-        <li>GDGoC Hongik 코어 멤버</li>
-        <br />
+        <li>GDG Hongik Univ. 코어 멤버</li>
+      </GuideList>
+      <Text typo="body1" color="textWhite">
         본인이 해당사항이 있음에도 쿠폰이 없는 경우 카카오톡 채널로
         문의해주세요.
       </Text>

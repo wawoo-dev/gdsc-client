@@ -1,13 +1,13 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
-import Button from 'wowds-ui/Button';
-import DiscordImage from '/discord/discord-nickname.png';
-import TextField from 'wowds-ui/TextField';
-import { useCallback, memo, useEffect } from 'react';
-import { Control, useController, useFormContext } from 'react-hook-form';
-import { DiscordFormValues } from '@/types/discord';
-import { Image } from '../common/Image';
 import { usePostDiscordNickname } from '@/hooks/mutation/usePostDiscordNickname';
+import { DiscordFormValues } from '@/types/discord';
+import { memo, useCallback, useEffect } from 'react';
+import { Control, useController, useFormContext } from 'react-hook-form';
+import Button from 'wowds-ui/Button';
 import Divider from 'wowds-ui/Divider';
+import TextField from 'wowds-ui/TextField';
+import { Image } from '../common/Image';
+import DiscordImage from '/discord/discord-nickname.png';
 
 export const DiscordNickName = ({ onNext }: { onNext: () => void }) => {
   const { getValues, control, setError, clearErrors, trigger } =
@@ -49,8 +49,8 @@ export const DiscordNickName = ({ onNext }: { onNext: () => void }) => {
       <div style={{ width: '100%' }}>
         <NameField control={control} />
       </div>
-      <Space height={146} />
-      <Flex direction="column">
+
+      <Flex direction="column" style={{ marginTop: 'auto' }}>
         <Button onClick={handleNextClick} style={{ maxWidth: '100%' }}>
           다음으로
         </Button>
@@ -65,10 +65,10 @@ const TextSection = memo(() => (
       <Text typo="h1">별명을 설정하세요.</Text>
       <Space height="sm" />
       <Text typo="body1">
-        GDGoC Hongik 디스코드 서버에서 사용할 별명을 설정해주세요.
+        GDG Hongik Univ. 디스코드 서버에서 사용할 별명을 설정해주세요.
       </Text>
     </div>
-    <Image src={DiscordImage} alt="discord-nickname" width={325} height={157} />
+    <Image src={DiscordImage} alt="discord-nickname" />
     <Text typo="body1">
       가입이 완료되면 가입 신청서에 제출하신 별명으로 자동으로 수정될 거예요.
       추후 별명을 수정하고 싶다면 카카오톡 채널로 코어멤버에게 연락 주세요.
@@ -103,7 +103,17 @@ const NameField = ({ control }: { control: Control<DiscordFormValues> }) => {
           )}
           <li>최소 2자, 최대 6자의 한글만 작성 가능</li>
           <li>
-            <u>GDGoC Hongik 가이드라인</u>에 어긋나지 않게 작성
+            <button
+              onClick={() => {
+                window.open(
+                  'https://www.wawoo.dev/onboard-guide/community-guideline',
+                  '_blank',
+                  'noopener,noreferrer'
+                );
+              }}>
+              <u>GDG Hongik Univ. 가이드라인</u>
+            </button>
+            에 어긋나지 않게 작성
           </li>
         </ul>
       }

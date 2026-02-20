@@ -8,11 +8,14 @@ import { DiscordDescription } from '@/components/discordGuide/DiscordDescription
 import { AccountDescription } from '@/components/discordGuide/AccountDescription';
 import { NameDescription } from '@/components/discordGuide/NameDescription';
 import useCustomBack from '@/hooks/common/useCutomBack';
+import { useSearchParams } from 'react-router-dom';
 
 const steps = ['디스코드 설명', '이름 설명', '계정 생성 설명'];
 
 export const DiscordGuide = () => {
   const { Funnel, Step, setStep, currentStep } = useFunnel(steps[0]);
+  const [searchParams] = useSearchParams();
+  const isReconnect = searchParams.get('reconnect') === 'true';
 
   const nextClickHandler = (step: string) => {
     setStep(step);
@@ -20,8 +23,10 @@ export const DiscordGuide = () => {
 
   const handleBack = () => {
     const currentStepIndex = steps.indexOf(currentStep);
-    if (currentStepIndex === 0) return;
-    setStep(steps[currentStepIndex - 1]);
+    if (currentStepIndex === 0) {
+      return false; // 실제 뒤로가기 허용
+    }
+    setStep(steps[currentStepIndex - 1], true); // isBack = true
   };
 
   useCustomBack(handleBack);
@@ -38,7 +43,7 @@ export const DiscordGuide = () => {
             <NameDescription onNext={() => nextClickHandler(steps[2])} />
           </Step>
           <Step name="계정 생성 설명">
-            <AccountDescription />
+            <AccountDescription isReconnect={isReconnect} />
           </Step>
         </Funnel>
       </Wrapper>
@@ -47,7 +52,7 @@ export const DiscordGuide = () => {
 };
 
 const Wrapper = styled(Flex)`
-  min-height: calc(100vh - ${GlobalSize.header});
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;

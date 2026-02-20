@@ -1,13 +1,13 @@
-import { Text, Flex } from '@/components/common/Wrapper';
-import { useVerifyStudentEmail } from '@/hooks/mutation';
-import { color } from 'wowds-tokens';
-import GlobalSize from '@/constants/globalSize';
-import { media } from '@/styles';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-import { useSearchParams } from 'react-router-dom';
-import { useLayoutEffect } from 'react';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Flex, Text } from '@/components/common/Wrapper';
+import GlobalSize from '@/constants/globalSize';
+import { useVerifyStudentEmail } from '@/hooks/mutation';
+import { media } from '@/styles';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { useLayoutEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { color } from 'wowds-tokens';
 
 export const StudentVerificationServerRedirect = () => {
   const [searchParams] = useSearchParams();
@@ -23,7 +23,7 @@ export const StudentVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column">
+        <Container direction="column" align="flex-start">
           <Text
             typo="h1"
             css={css`
@@ -49,7 +49,7 @@ export const StudentVerificationServerRedirect = () => {
 };
 
 const Wrapper = styled(Flex)`
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
@@ -68,7 +68,7 @@ const Container = styled(Flex)`
   position: relative;
   justify-content: flex-start;
   width: 100%;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
 `;
 
 const TextContainer = styled.div`

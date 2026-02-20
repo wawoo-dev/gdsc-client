@@ -19,7 +19,7 @@ export const convertRecruitmentName = (
     return `정회원 지원하기`;
   }
   if (roundValueType === undefined) {
-    return `${year}년 ${semester}학기 정회원 지원하기`;
+    return `[${year}학년도 ${semester}학기 정회원 모집] 지원하기`;
   }
-  return `${year}년 ${semester}학기 ${roundValueType} 정회원 지원하기`;
+  return `[${year}학년도 ${semester}학기 ${roundValueType} 정회원 모집] 지원하기`;
 };

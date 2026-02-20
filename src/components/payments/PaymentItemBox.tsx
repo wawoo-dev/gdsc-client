@@ -1,10 +1,10 @@
-import { Flex, Text } from '@/components/common/Wrapper';
-import Box from 'wowds-ui/Box';
-import { useProductBase } from '@/hooks/zustand/useProduct';
 import memberApi from '@/apis/member/memberApi';
+import { Flex, Text } from '@/components/common/Wrapper';
+import { useProductBase } from '@/hooks/zustand/useProduct';
 import { useQuery } from '@tanstack/react-query';
-import LoadingSpinner from '../common/LoadingSpinner';
 import { useEffect } from 'react';
+import Box from 'wowds-ui/Box';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 export const PaymentItemBox = () => {
   const { name, strAmount, setName, setAmount } = useProductBase();
@@ -14,7 +14,7 @@ export const PaymentItemBox = () => {
   });
 
   useEffect(() => {
-    if (member) {
+    if (member?.currentRecruitmentRound) {
       setName(member.currentRecruitmentRound.feeName);
       setAmount(member.currentRecruitmentRound.fee);
     }
@@ -30,7 +30,7 @@ export const PaymentItemBox = () => {
           direction="column"
           align="flex-start"
           gap="sm">
-          <Text typo="h2" color="black">
+          <Text typo="label1" color="black">
             결제 항목
           </Text>
           <Box text={name} subText={`금액 ${strAmount}원`} status="success" />

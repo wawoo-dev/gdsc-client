@@ -1,16 +1,16 @@
-import TextField from 'wowds-ui/TextField';
-import Button from 'wowds-ui/Button';
-import { Flex, Space, Text } from '@/components/common/Wrapper';
-import RoutePath from '@/routes/routePath';
-import { color, space, typography } from 'wowds-tokens';
-import styled from '@emotion/styled';
-import { Link, useNavigate } from 'react-router-dom';
-import { useStudentVerification } from '@/hooks/auth';
-import { Controller } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { media } from '@/styles';
-import GlobalSize from '@/constants/globalSize';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Flex, GuideList, Space, Text } from '@/components/common/Wrapper';
+import GlobalSize from '@/constants/globalSize';
+import { useStudentVerification } from '@/hooks/auth';
+import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
+import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
+import { Controller } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { color, space, typography } from 'wowds-tokens';
+import Button from 'wowds-ui/Button';
+import TextField from 'wowds-ui/TextField';
 
 /** 재학생 인증 페이지 */
 export const StudentVerification = () => {
@@ -41,7 +41,11 @@ export const StudentVerification = () => {
   };
 
   return (
-    <Wrapper direction="column" justify="flex-start" gap="lg">
+    <Wrapper
+      direction="column"
+      justify="flex-start"
+      align="flex-start"
+      gap="lg">
       {isPending && <LoadingSpinner />}
       <TextContainer>
         <Text typo="h1" style={{ marginBottom: '12px' }}>
@@ -96,12 +100,18 @@ export const StudentVerification = () => {
         />
 
         <Space height="xs" />
-        <Text typo="body3" color="sub">
-          * 메일 전송이 최대 30분 가량 늦어질 수 있어요.
-          <br />* 메일 전송이 되지 않을 경우 카카오톡 채널을 통해 코어 멤버에게
-          문의해 주세요.
-          <br />* 인증메일이 스팸메일함에 전송될 수 있으니 확인해주세요.
-        </Text>
+        <GuideList>
+          <li>메일 전송이 최대 30분 가량 늦어질 수 있어요.</li>
+          <li>
+            메일이 보이지 않는 경우 스팸 메일함을 확인해주시고, 스팸 메일함에도
+            없을 경우 카카오톡 채널로 문의해주세요.
+          </li>
+          <li>
+            만약 이메일 수신 이후에 인증 버튼을 눌렀음에도 제대로 인증이 되지
+            않는 경우, 해당 브라우저에서 다시 가입 절차를 진행해주세요.
+          </li>
+        </GuideList>
+
         <ButtonContainer>
           <Button
             disabled={!isValid}
@@ -127,7 +137,7 @@ export const StudentVerification = () => {
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   & > div {
     width: 100%;
     display: flex;
@@ -155,7 +165,7 @@ const StudentGuideLink = styled(Link)`
 
 const Wrapper = styled(Flex)`
   position: relative;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 40px 16px 0px;

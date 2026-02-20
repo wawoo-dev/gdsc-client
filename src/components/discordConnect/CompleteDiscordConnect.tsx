@@ -11,7 +11,7 @@ export const CompleteDiscordConnect = () => {
         <Text typo="h1">디스코드 연동이 완료되었어요!</Text>
         <Space height="lg" />
         <Text typo="body1">
-          재학생 인증 및 회비 납부과 완료되면
+          다른 가입 조건과 활동 조건을 모두 만족하면
           <br />
           커뮤니티 멤버로 디스코드에서 활동할 수 있어요.
         </Text>
@@ -20,7 +20,7 @@ export const CompleteDiscordConnect = () => {
         onClick={() => {
           navigate(RoutePath.Dashboard);
         }}
-        style={{ maxWidth: '100%' }}>
+        style={{ maxWidth: '100%', marginTop: 'auto' }}>
         완료하기
       </Button>
     </>

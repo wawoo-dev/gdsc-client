@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
+import styled from '@emotion/styled';
 import Button from 'wowds-ui/Button';
 
-import RoutePath from '@/routes/routePath';
-import { useNavigate } from 'react-router-dom';
 import GlobalSize from '@/constants/globalSize';
+import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
+import { useNavigate } from 'react-router-dom';
 import { color } from 'wowds-tokens';
 
 export function PaymentsFail() {
@@ -17,7 +17,7 @@ export function PaymentsFail() {
 
   return (
     <Wrapper direction="column" justify="space-between">
-      <Flex direction="column" gap="lg">
+      <Flex direction="column" gap="lg" align="flex-start">
         <Heading typo="h1" color="black">
           회비 결제 실패
         </Heading>
@@ -41,7 +41,7 @@ const Heading = styled(Text)`
 const Wrapper = styled(Flex)`
   box-sizing: border-box;
 
-  height: calc(100vh - ${GlobalSize.header});
+  height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   padding: 0px 16px;
 

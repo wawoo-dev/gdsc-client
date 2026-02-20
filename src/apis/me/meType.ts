@@ -8,3 +8,8 @@ export interface MeResponse {
   discordUsername: string;
   nickname: string;
 }
+
+export interface AccountInfoResponse {
+  name: string;
+  githubHandle: string;
+}

@@ -1,16 +1,16 @@
-import { Flex, Space, Text } from '@/components/common/Wrapper';
-import Button from 'wowds-ui/Button';
-import TextButton from 'wowds-ui/TextButton';
-import { color } from 'wowds-tokens';
-import DiscordImage from '/discord/discord-server-connect.png';
-import TextField from 'wowds-ui/TextField';
-import { useController, useFormContext } from 'react-hook-form';
 import { DiscordLinkRequest } from '@/apis/discord/discordType';
+import { Flex, Space, Text } from '@/components/common/Wrapper';
+import { usePostDiscordLink } from '@/hooks/mutation/usePostDiscordLink';
+import RoutePath from '@/routes/routePath';
 import { DiscordFormValues } from '@/types/discord';
 import { useEffect, useState } from 'react';
-import { usePostDiscordLink } from '@/hooks/mutation/usePostDiscordLink';
+import { useController, useFormContext } from 'react-hook-form';
+import { color } from 'wowds-tokens';
+import Button from 'wowds-ui/Button';
 import Divider from 'wowds-ui/Divider';
-import RoutePath from '@/routes/routePath';
+import TextButton from 'wowds-ui/TextButton';
+import TextField from 'wowds-ui/TextField';
+import DiscordImage from '/discord/discord-server-connect.png';
 
 export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
   const { getValues, control } = useFormContext<DiscordFormValues>();
@@ -53,17 +53,13 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
           </Text>
           <Space height="sm" />
           <Text typo="body1">
-            명령어 채널에서 /인증코드 명령어를 통해 고유한 인증번호를 받을 수
-            있어요. 인증코드를 아래에 입력함으로써 연동할 수 있어요.
+            #명령어 채널에서 /인증코드 명령어를 통해 <br />
+            연동을 위한 인증코드를 받을 수 있어요. <br />
+            인증코드를 아래에 입력해주세요.
           </Text>
         </div>
         <Flex direction="column" align="center">
-          <img
-            src={DiscordImage}
-            alt="discord-server-connect"
-            width={325}
-            height={157}
-          />
+          <img src={DiscordImage} alt="discord-server-connect" />
           <Space height="lg" />
           <Divider />
           <Space height="lg" />
@@ -85,18 +81,16 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
           error={error}
           {...(error && {
             helperText: (
-              <li>번호가 올바르지 않아요. 다시 발급받아 진행해주세요.</li>
+              <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+                <li>번호가 올바르지 않아요. 다시 발급받아 진행해주세요.</li>
+              </ul>
             )
           })}
         />
       </Flex>
-      <Space height={200} />
-      <Flex direction="column">
-        <Button
-          onClick={() => {
-            handleLinkButtonClick();
-          }}
-          style={{ maxWidth: '100%' }}>
+
+      <Flex direction="column" style={{ marginTop: 'auto' }}>
+        <Button onClick={handleLinkButtonClick} style={{ maxWidth: '100%' }}>
           다음으로
         </Button>
       </Flex>

@@ -1,15 +1,17 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
-import { color } from 'wowds-tokens';
+import GlobalSize from '@/constants/globalSize';
+import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
-import GlobalSize from '@/constants/globalSize';
-import { useNavigate } from 'react-router-dom';
-import RoutePath from '@/routes/routePath';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { color } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 import TextButton from 'wowds-ui/TextButton';
 
 export const JoinDiscord = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isReconnect = searchParams.get('reconnect') === 'true';
 
   return (
     <Wrapper direction="column" justify="space-between">
@@ -20,7 +22,7 @@ export const JoinDiscord = () => {
         </Text>
         <Space height="lg" />
         <Text typo="body1">
-          현재 GDGoC Hongik은 디스코드를 <br />
+          현재 GDG Hongik Univ.는 디스코드를 <br />
           메인 커뮤니케이션 플랫폼으로 사용하고 있어요. <br />
           따라서 반드시 연동 절차를 완료해야만 <br />
           정상적인 활동이 가능해요.
@@ -32,28 +34,34 @@ export const JoinDiscord = () => {
         </Text>
       </Flex>
       <Flex direction="column">
-        <TextButton
-          text="디스코드 가이드라인↗︎"
-          onClick={() => {
-            navigate(RoutePath.DiscordGuide);
-          }}
-          style={{ color: color.discord }}
-        />
-        <Space height="xs" />
         <Button
           onClick={() => {
-            navigate(RoutePath.DiscordConnect);
+            const path = isReconnect
+              ? `${RoutePath.DiscordConnect}?reconnect=true`
+              : RoutePath.DiscordConnect;
+            navigate(path);
           }}
           style={{ maxWidth: '100%' }}>
           연동 정보 입력하기
         </Button>
+        <Space height="xs" />
+        <TextButton
+          text="디스코드 가이드라인↗︎"
+          onClick={() => {
+            const path = isReconnect
+              ? `${RoutePath.DiscordGuide}?reconnect=true`
+              : RoutePath.DiscordGuide;
+            navigate(path);
+          }}
+          style={{ color: color.discord }}
+        />
       </Flex>
     </Wrapper>
   );
 };
 
 const Wrapper = styled(Flex)`
-  min-height: calc(100vh - ${GlobalSize.header});
+  min-height: calc(100vh - var(--header-height, 0px));
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;

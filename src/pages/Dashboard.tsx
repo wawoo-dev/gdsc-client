@@ -4,7 +4,6 @@ import { Flex, Space } from '@/components/common/Wrapper';
 import AssociateRequirementCheck from '@/components/myPage/AssociateRequirementCheck';
 import JoinRegularMember from '@/components/myPage/JoinRegularMember';
 import JoinStatus from '@/components/myPage/JoinStatus';
-import { Privacy } from '@/components/myPage/Privacy';
 import UserInfo from '@/components/myPage/UserInfo';
 import GlobalSize from '@/constants/globalSize';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
@@ -33,32 +32,36 @@ export const Dashboard = () => {
 
   return (
     <div style={{ height: '100%' }}>
-      <Wrapper direction="column" justify="flex-start">
-        <Space height={20} />
-        <Flex justify="flex-start" direction="column" align="flex-start">
-          <UserInfo member={member} />
-          <JoinStatus
-            role={member.role}
-            currentRecruitmentRound={currentRecruitmentRound}
-            currentMembership={currentMembership}
-            member={member}
+      <Wrapper direction="column" justify="flex-start" align="center">
+        <div>
+          <Space height={20} />
+          <Flex justify="flex-start" direction="column" align="flex-start">
+            <UserInfo member={member} />
+            <JoinStatus role={member.role} member={member} />
+          </Flex>
+          {member.role !== 'GUEST' && (
+            <>
+              <Space height={40} />
+              <JoinRegularMember
+                role={member.role}
+                currentMembership={currentMembership}
+                currentRecruitment={currentRecruitmentRound}
+                paymentStatus={
+                  currentMembership?.regularRequirement.paymentStatus
+                }
+              />
+            </>
+          )}
+          <Space height={40} />
+          <AssociateRequirementCheck
+            associateRequirement={member.associateRequirement}
+            memberInfo={member.info}
           />
-        </Flex>
-        {(currentMembership || member.role === 'REGULAR') && (
-          <JoinRegularMember
-            member={member}
-            paymentStatus={currentMembership?.regularRequirement.paymentStatus}
-          />
-        )}
-        <AssociateRequirementCheck
-          associateRequirement={member.associateRequirement}
-        />
-        <Privacy info={member.info} />
+        </div>
         <Space height={104} />
       </Wrapper>
       {isOpen && (
         <JoinRegularMemberBottomSheet
-          currentMembership={currentMembership}
           currentRecruitment={currentRecruitmentRound}
         />
       )}
@@ -71,7 +74,7 @@ const Wrapper = styled(Flex)`
   width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
-  gap: 40px;
+
   background-color: ${color.mono50};
 
   ${media.mobile} {
