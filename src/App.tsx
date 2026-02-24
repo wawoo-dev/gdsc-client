@@ -28,19 +28,20 @@ function App() {
         direction="column"
         align="flex-start"
         css={css`
+          position: relative;
           padding: 16px 0px;
           height: 100dvh;
-          justify-content: flex-end;
+          justify-content: center;
           ${media.mobile} {
             justify-content: space-between;
           }
         `}>
         <Flex
-          justify="flex-start"
           css={css`
             flex-direction: row-reverse;
             align-items: center;
             padding: 0px 50px;
+            justify-content: center;
             ${media.mobile} {
               flex-direction: column;
               align-items: flex-end;
@@ -63,41 +64,45 @@ function App() {
               flex-direction: column;
               align-items: center;
               justify-content: center;
+              max-width: 480px;
               ${media.mobile} {
                 flex-direction: column;
                 align-items: flex-start;
               }
             `}>
-            <Text
-              color="backgroundNormal"
-              css={css`
-                ${typography.display1};
-                font-weight: 800;
-                font-size: 50px;
+            <Flex direction="column" align="flex-start">
+              <Text
+                color="backgroundNormal"
+                css={css`
+                  ${typography.display1};
+                  font-weight: 800;
+                  font-size: 50px;
 
-                ${media.mobile} {
-                  ${typography.display2};
-                  width: 100%;
-                }
-              `}>
-              Google Developer
-              <br />
-              Groups on Campus
-            </Text>
-            <Text
-              color="backgroundNormal"
-              css={css`
-                ${typography.display1};
-                font-weight: 800;
-                font-size: 50px;
-                ${media.mobile} {
-                  margin-top: 12px;
-                  ${typography.h2};
-                  width: 100%;
-                }
-              `}>
-              Hongik University
-            </Text>
+                  ${media.mobile} {
+                    ${typography.display2};
+                    width: 100%;
+                  }
+                  white-space: nowrap;
+                `}>
+                Google Developer
+                <br />
+                Groups on Campus
+              </Text>
+              <Text
+                color="backgroundNormal"
+                css={css`
+                  ${typography.display1};
+                  font-weight: 800;
+                  font-size: 50px;
+                  ${media.mobile} {
+                    margin-top: 12px;
+                    ${typography.h2};
+                    width: 100%;
+                  }
+                `}>
+                Hongik University
+              </Text>
+            </Flex>
             <Flex
               css={css`
                 display: flex;
@@ -124,6 +129,14 @@ function App() {
           gap="xl"
           css={css`
             padding: 0px 16px;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            ${media.mobile} {
+              position: static;
+              padding: 0px 16px;
+            }
           `}>
           <Flex
             css={css`
@@ -144,6 +157,9 @@ function App() {
           <OnboardingArrow />
         </Flex>
       </BlueSection>
+      {
+        // ----초반 블루 섹션 끝----
+      }
       <Flex
         direction="column"
         css={css`
@@ -233,7 +249,14 @@ function App() {
             />
           </Flex>
         </Flex>
-        <Flex direction="column" align="center">
+        <Flex
+          direction="column"
+          align="center"
+          css={css`
+            ${media.mobile} {
+              max-width: 400px;
+            }
+          `}>
           <Text
             color="black"
             css={css`
@@ -282,7 +305,7 @@ function App() {
           css={css`
             padding: 0 16px;
             max-width: 700px;
-            max-height: 600px;
+            max-height: 550px;
           `}>
           <JoinText />
           <OnboardingLogo2 />
@@ -312,6 +335,7 @@ const Wrapper = styled(Flex)`
 
   ${media.mobile} {
     width: 100vw;
+    max-width: 475px;
   }
 `;
 const DisplayBreak = styled.br`
@@ -328,6 +352,8 @@ const BlueSection = styled(Flex)`
 
   ${media.mobile} {
     width: 100vw;
+    max-width: 475px;
+    overflow: hidden;
   }
 `;
 

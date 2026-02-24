@@ -29,7 +29,9 @@ const slides = [
     desc: (
       <>
         GDG의 <Bold>파트</Bold> 스터디는 파트 리드를 필두로 더 깊게 공부하고
-        싶은 분야를 함께 공부하는 <Bold>심화 학습</Bold> 스터디예요.
+        싶은 분야를 함께 공부하는 <Bold>심화 학습</Bold> 스터디예요. 파트
+        멤버들과 함께하는 스터디 외에도 세미나 등 다양한 시각에서 배우고 교류할
+        활동이 열려요.
       </>
     ),
     image: image2
@@ -38,8 +40,9 @@ const slides = [
     chip: '프로젝트 트랙',
     desc: (
       <>
-        프로젝트가 처음이신 분들! <Bold>프로젝트 트랙</Bold>에서 아이디어
-        구상부터 배포까지 전 과정을 경험해요.
+        프로젝트가 처음이신 분들, 혹은 이제 막 개발에 입문하신 분들!{' '}
+        <Bold>프로젝트 트랙</Bold>에서 아이디어 구상부터 실제 서비스 배포까지
+        개발의 전 과정을 경험하며 함께 멋진 개발자로 성장해 봐요.
       </>
     ),
     image: image3
@@ -48,8 +51,9 @@ const slides = [
     chip: 'GDG 연합 활동',
     desc: (
       <>
-        각 GDG는 개별 활동뿐만 아니라 연합 활동에도 관심이 많고, 매년 다양한
-        행사가 열려요.
+        한국에는 2025년도 44개의 GDG 챕터가 있어요. 각 GDG는 개별 활동뿐만
+        아니라 연합 활동에도 큰 관심을 보이며, 매년 많은 연합 행사가 기획되고
+        있어요.
       </>
     ),
     image: image4
@@ -67,7 +71,7 @@ export default function CarouselInfiniteDesktop3() {
   // ---- responsive ----
   const [desktop, setDesktop] = useState(false);
   useEffect(() => {
-    const mql = window.matchMedia('(min-width: 1024px)');
+    const mql = window.matchMedia('(min-width: 900px)');
     const handler = () => setDesktop(mql.matches);
     handler();
     mql.addEventListener?.('change', handler);
@@ -322,6 +326,7 @@ export default function CarouselInfiniteDesktop3() {
               color="sub"
               css={css`
                 line-height: 160%;
+                height: 110px;
               `}>
               {s.desc}
             </Text>

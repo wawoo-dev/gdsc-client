@@ -1,5 +1,13 @@
+import { useEffect, useState } from 'react';
 export const OnboardingArrow = () => {
-  if (window.innerWidth > 900) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (windowWidth >= 900) {
     return (
       <>
         {' '}
