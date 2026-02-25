@@ -14,9 +14,11 @@ export const PaymentItemBox = () => {
   });
 
   useEffect(() => {
-    setName('만원');
-    setAmount(10000);
-  }, [setAmount, setName]);
+    if (member?.currentRecruitmentRound) {
+      setName(member.currentRecruitmentRound.feeName);
+      setAmount(member.currentRecruitmentRound.fee);
+    }
+  }, [member, setAmount, setName]);
 
   return (
     <>

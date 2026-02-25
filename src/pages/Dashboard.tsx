@@ -44,6 +44,7 @@ export const Dashboard = () => {
               <Space height={40} />
               <JoinRegularMember
                 role={member.role}
+                currentMembership={currentMembership}
                 currentRecruitment={currentRecruitmentRound}
                 paymentStatus={
                   currentMembership?.regularRequirement.paymentStatus
@@ -61,7 +62,6 @@ export const Dashboard = () => {
       </Wrapper>
       {isOpen && (
         <JoinRegularMemberBottomSheet
-          currentMembership={currentMembership}
           currentRecruitment={currentRecruitmentRound}
         />
       )}
