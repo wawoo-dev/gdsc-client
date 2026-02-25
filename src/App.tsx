@@ -66,7 +66,6 @@ function App() {
               justify-content: center;
               max-width: 480px;
               ${media.mobile} {
-                flex-direction: column;
                 align-items: flex-start;
               }
             `}>
@@ -105,7 +104,6 @@ function App() {
             </Flex>
             <Flex
               css={css`
-                display: flex;
                 width: 328px;
                 margin-top: 46px;
                 ${media.mobile} {
@@ -163,7 +161,7 @@ function App() {
       <Flex
         direction="column"
         css={css`
-          background-color: white;
+          background-color: ${color.white};
           width: 100%;
           height: 411px;
           padding: 16px;
