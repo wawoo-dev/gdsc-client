@@ -1,5 +1,8 @@
 import { Logo } from '@/assets/LogoIcon';
 import { UserRoleType } from '@/types/user';
+import { css } from '@emotion/react';
+import { typography } from 'wowds-tokens';
+import { media } from '@/styles';
 import { Text } from '../common/Wrapper';
 import CustomBox from './CustomBox';
 
@@ -37,7 +40,14 @@ export const StatusBox = ({ role }: { role: UserRoleType }) => {
       variant="text"
       text={convertRoleToTitle(role)}
       subTextContent={
-        <Text typo="body2" color="sub">
+        <Text
+          typo="body2"
+          color="sub"
+          css={css`
+            ${media.pc} {
+              ${typography.body1}
+            }
+          `}>
           {convertRoleToSub(role)}
         </Text>
       }

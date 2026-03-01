@@ -5,7 +5,9 @@ import { UnivEmailStatus } from '@/types/status';
 import { AssociateRequirement, UserInfo } from '@/types/user';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { color } from 'wowds-tokens';
+import { css } from '@emotion/react';
+import { color, typography } from 'wowds-tokens';
+import { media } from '@/styles';
 import Button from 'wowds-ui/Button';
 import { Modal } from '../common/Modal';
 import CustomBox from './CustomBox';
@@ -37,7 +39,14 @@ const AssociateRequirementCheck = ({
           <Text typo="h3" color="textBlack">
             재학생 이메일 인증이 필요해요.
           </Text>
-          <Text typo="body1" color="sub">
+          <Text
+            typo="body1"
+            color="sub"
+            css={css`
+              ${media.pc} {
+                ${typography.body1}
+              }
+            `}>
             홍익대학교 재학생인지 알려주세요.
             <br />
             학교 Gmail을 통해 인증할 수 있어요.
@@ -54,7 +63,14 @@ const AssociateRequirementCheck = ({
           <Text typo="h3" color="textBlack">
             재학생 이메일 인증이 진행 중이에요.
           </Text>
-          <Text typo="body1" color="sub">
+          <Text
+            typo="body1"
+            color="sub"
+            css={css`
+              ${media.pc} {
+                ${typography.body1}
+              }
+            `}>
             메일함을 확인해주세요.
           </Text>
         </Flex>
@@ -70,7 +86,7 @@ const AssociateRequirementCheck = ({
   return (
     <Flex justify="flex-start" direction="column" align="flex-start" gap="sm">
       <Flex gap="xs" justify="flex-start">
-        <Text typo="h2" color="textBlack">
+        <Text typo="label1" color="textBlack">
           신청 조건
         </Text>
         <StatusBadge statusMessage={statusMessage} />
@@ -84,7 +100,14 @@ const AssociateRequirementCheck = ({
                 <Text color="outline" typo="label2">
                   학번
                 </Text>
-                <Text color="sub" typo="body2">
+                <Text
+                  color="sub"
+                  typo="body2"
+                  css={css`
+                    ${media.pc} {
+                      ${typography.body1}
+                    }
+                  `}>
                   {memberInfo.studentId}
                 </Text>
               </Flex>
@@ -92,7 +115,14 @@ const AssociateRequirementCheck = ({
                 <Text color="outline" typo="label2">
                   학과
                 </Text>
-                <Text color="sub" typo="body2">
+                <Text
+                  color="sub"
+                  typo="body2"
+                  css={css`
+                    ${media.pc} {
+                      ${typography.body1}
+                    }
+                  `}>
                   {memberInfo.department}
                 </Text>
               </Flex>
@@ -100,7 +130,14 @@ const AssociateRequirementCheck = ({
                 <Text color="outline" typo="label2">
                   전화번호
                 </Text>
-                <Text color="sub" typo="body2">
+                <Text
+                  color="sub"
+                  typo="body2"
+                  css={css`
+                    ${media.pc} {
+                      ${typography.body1}
+                    }
+                  `}>
                   {memberInfo.phone}
                 </Text>
               </Flex>
@@ -108,7 +145,14 @@ const AssociateRequirementCheck = ({
                 <Text color="outline" typo="label2">
                   이메일
                 </Text>
-                <Text color="sub" typo="body2">
+                <Text
+                  color="sub"
+                  typo="body2"
+                  css={css`
+                    ${media.pc} {
+                      ${typography.body1}
+                    }
+                  `}>
                   {memberInfo.email}
                 </Text>
               </Flex>
@@ -184,12 +228,36 @@ const AssociateRequirementCheck = ({
                   justify="flex-start">
                   <Flex justify="flex-start">
                     <Discord width="20" height="20" />
-                    <Text color="discord" style={{ marginLeft: 3 }}>
+                    <Text
+                      color="discord"
+                      style={{ marginLeft: 3 }}
+                      css={css`
+                        ${media.pc} {
+                          ${typography.body1}
+                        }
+                      `}>
                       GDG Hongik Univ.
                     </Text>
-                    <Text color="sub"> 서버에</Text>
+                    <Text
+                      color="sub"
+                      css={css`
+                        ${media.pc} {
+                          ${typography.body1}
+                        }
+                      `}>
+                      {' '}
+                      서버에
+                    </Text>
                   </Flex>
-                  <Text color="sub">본인 계정을 연동하세요.</Text>
+                  <Text
+                    color="sub"
+                    css={css`
+                      ${media.pc} {
+                        ${typography.body1}
+                      }
+                    `}>
+                    본인 계정을 연동하세요.
+                  </Text>
                 </Flex>
               ) : (
                 <Flex direction="column" gap="sm">
@@ -197,7 +265,14 @@ const AssociateRequirementCheck = ({
                     <Text color="outline" typo="label2">
                       디스코드 닉네임
                     </Text>
-                    <Text color="sub" typo="body2">
+                    <Text
+                      color="sub"
+                      typo="body2"
+                      css={css`
+                        ${media.pc} {
+                          ${typography.body1}
+                        }
+                      `}>
                       {memberInfo.nickname}
                     </Text>
                   </Flex>
@@ -205,7 +280,14 @@ const AssociateRequirementCheck = ({
                     <Text color="outline" typo="label2">
                       디스코드 사용자명
                     </Text>
-                    <Text color="sub" typo="body2">
+                    <Text
+                      color="sub"
+                      typo="body2"
+                      css={css`
+                        ${media.pc} {
+                          ${typography.body1}
+                        }
+                      `}>
                       {memberInfo.discordUsername}
                     </Text>
                   </Flex>
