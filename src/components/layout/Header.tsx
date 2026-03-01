@@ -7,12 +7,13 @@ import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import { isAuthenticated } from '@/utils/auth';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { color } from 'wowds-tokens';
 
 //TODO: 백엔드 로그인 로직 수정 이후 반영 필요
 export default function Header() {
   const navigation = useNavigate();
+  const location = useLocation();
   const { mutate } = useLogout();
   const handleLogoutClick = () => {
     mutate();
@@ -24,6 +25,8 @@ export default function Header() {
     }
   };
 
+  const isGithubSigninPage = location.pathname === RoutePath.GithubSignin;
+
   return (
     <Container>
       <HeaderContainter>
@@ -34,15 +37,17 @@ export default function Header() {
             <SubLogoText>Hongik Univ.</SubLogoText>
           </Flex>
         </LogoContainer>
-        {isAuthenticated() ? (
-          <button onClick={handleLogoutClick}>
-            <Text color="sub" typo="label2">
-              <u>로그아웃</u>
-            </Text>
-          </button>
-        ) : (
-          <JoinButton onClick={handleClick}>로그인/가입하기</JoinButton>
-        )}
+        <ButtonWrapper $isVisible={!isGithubSigninPage}>
+          {isAuthenticated() ? (
+            <button onClick={handleLogoutClick}>
+              <Text color="sub" typo="label2">
+                <u>로그아웃</u>
+              </Text>
+            </button>
+          ) : (
+            <JoinButton onClick={handleClick}>로그인/가입하기</JoinButton>
+          )}
+        </ButtonWrapper>
       </HeaderContainter>
     </Container>
   );
@@ -97,4 +102,7 @@ const LogoContainer = styled.button`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+`;
+const ButtonWrapper = styled.div<{ $isVisible: boolean }>`
+  visibility: ${({ $isVisible }) => ($isVisible ? 'visible' : 'hidden')};
 `;

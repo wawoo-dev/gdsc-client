@@ -1,18 +1,19 @@
-import styled from '@emotion/styled';
-import { Flex } from '../common/Wrapper';
-import { media } from '@/styles';
-import { color } from 'wowds-tokens';
-import Header from '@/components/layout/Header';
+import ApiErrorBoundary from '@/components/ApiErrorBoundary';
 import Footer from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
+import GlobalSize from '@/constants/globalSize';
+import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
+import styled from '@emotion/styled';
 import { useLayoutEffect, useMemo } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import GlobalSize from '@/constants/globalSize';
-import ApiErrorBoundary from '@/components/ApiErrorBoundary';
-import RoutePath from '@/routes/routePath';
+import { color } from 'wowds-tokens';
+import { Flex } from '../common/Wrapper';
 
 const PATHS_WITH_HEADER_FOOTER: Set<string> = new Set([
   RoutePath.Index,
   RoutePath.FAQ,
+  RoutePath.GithubSignin,
   RoutePath.Dashboard
 ]);
 

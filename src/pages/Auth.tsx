@@ -1,6 +1,5 @@
 import { GitHubButton } from '@/components/auth/GitHubButton';
 import { Flex, Space, Text } from '@/components/common/Wrapper';
-import GlobalSize from '@/constants/globalSize';
 import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
@@ -8,7 +7,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DownArrow } from 'wowds-icons';
-import { color, space } from 'wowds-tokens';
+import { color, space, typography } from 'wowds-tokens';
 import Box from 'wowds-ui/Box';
 
 /** 깃허브 로그인 및 가입하기 */
@@ -27,32 +26,49 @@ export const Auth = () => {
 
   return (
     <Container>
-      <Flex direction="column" align="flex-start">
-        <Text typo="h1" style={{ marginBottom: '1.25rem' }}>
+      <Flex
+        direction="column"
+        align="center"
+        css={css`
+          ${media.mobile} {
+            align-items: flex-start;
+          }
+        `}>
+        <Text
+          css={css`
+            ${typography.display2};
+            margin-bottom: 1.25rem;
+            ${media.mobile} {
+              ${typography.h1};
+            }
+          `}>
           로그인 및 가입하기
         </Text>
-        <Text typo="body2">
+        <Text
+          align="center"
+          css={css`
+            ${typography.body1};
+            line-height: 160%;
+            ${media.mobile} {
+              text-align: start;
+              ${typography.body2};
+            }
+          `}>
           GDG Hongik Univ.에서는 더 나은 커뮤니티 운영과
           <br /> 안전한 회원 정보 관리를 위해 Github 소셜 로그인을
           <br /> 사용하고 있어요. Github 계정이 없다면, 새로 가입해야 해요.
         </Text>
         <Space height={32} />
-        <Flex
+        <AccordionWrapper
           direction="column"
           align="flex-start"
           justify="flex-start"
-          gap="lg"
-          style={{ position: 'relative' }}>
+          gap="lg">
           <Box
             text={
               <AccordionContainer>
                 <Text typo="h3">Q. GitHub가 무엇인가요?</Text>
-                <div
-                  style={{
-                    cursor: 'pointer',
-                    position: 'absolute',
-                    right: '24px'
-                  }}>
+                <ArrowIconWrapper>
                   <DownArrow
                     width={20}
                     height={20}
@@ -64,7 +80,7 @@ export const Auth = () => {
                       });
                     }}
                   />
-                </div>
+                </ArrowIconWrapper>
                 {accordionState.githubInfo && (
                   <Text color="sub" typo="body2">
                     GitHub는 Git을 이용하여 파일을 자유롭게 업로드 및 공유할 수
@@ -79,12 +95,7 @@ export const Auth = () => {
             text={
               <AccordionContainer>
                 <Text typo="h3">Q. GitHub는 왜 사용하나요?</Text>
-                <div
-                  style={{
-                    cursor: 'pointer',
-                    position: 'absolute',
-                    right: '24px'
-                  }}>
+                <ArrowIconWrapper>
                   <DownArrow
                     width={20}
                     height={20}
@@ -96,7 +107,7 @@ export const Auth = () => {
                       });
                     }}
                   />
-                </div>
+                </ArrowIconWrapper>
                 {accordionState.githubDetail && (
                   <Text color="sub" typo="body2">
                     GDG Hongik Univ.에서는 정규 스터디의 과제를 GitHub를 통해
@@ -107,7 +118,7 @@ export const Auth = () => {
               </AccordionContainer>
             }
           />
-        </Flex>
+        </AccordionWrapper>
       </Flex>
       <ButtonContainer>
         <GitHubButton onClick={handleClick}>
@@ -133,27 +144,35 @@ export const Auth = () => {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  padding: 49px 16px 40px 16px;
+  padding: 49px 16px;
+  padding-bottom: 15dvh;
   background-color: ${color.mono50};
   margin: 0px -16px;
   min-height: calc(100vh - var(--header-height, 0px));
-  width: ${GlobalSize.width};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 44px;
   ${media.mobile} {
     width: 100vw;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 `;
 
 const ButtonContainer = styled.div`
   padding-top: 1rem;
   width: 100%;
+  max-width: 358px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${space.xs};
+
+  ${media.mobile} {
+    max-width: 100%;
+  }
 `;
 
 const GithubGuideLink = styled(Link)`
@@ -170,9 +189,24 @@ const GithubGuideLink = styled(Link)`
   }
 `;
 
+const AccordionWrapper = styled(Flex)`
+  position: relative;
+  width: 100%;
+  max-width: 358px;
+  ${media.mobile} {
+    max-width: 100%;
+  }
+`;
+
 const AccordionContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: ${space.sm};
+`;
+
+const ArrowIconWrapper = styled.div`
+  cursor: pointer;
+  position: absolute;
+  right: 24px;
 `;
