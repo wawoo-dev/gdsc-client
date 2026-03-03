@@ -14,7 +14,8 @@ const PATHS_WITH_HEADER_FOOTER: Set<string> = new Set([
   RoutePath.Index,
   RoutePath.FAQ,
   RoutePath.GithubSignin,
-  RoutePath.Dashboard
+  RoutePath.Dashboard,
+  RoutePath.Discord
 ]);
 
 const Layout = () => {
@@ -33,13 +34,15 @@ const Layout = () => {
       <Container
         style={
           {
-            '--header-height': showHeaderFooter ? GlobalSize.header : '0px'
+            '--header-height': GlobalSize.header
           } as React.CSSProperties
         }>
-        {showHeaderFooter && <Header />}
+        <HeaderWrapper $showOnMobile={showHeaderFooter}>
+          <Header />
+        </HeaderWrapper>
         <Wrapper $hasHeader={showHeaderFooter}>
           <Outlet />
-          {showHeaderFooter && <Footer />}
+          <Footer />
         </Wrapper>
       </Container>
     </ApiErrorBoundary>
@@ -53,10 +56,17 @@ const Container = styled(Flex)`
   flex-direction: column;
 `;
 
+const HeaderWrapper = styled(Flex)<{ $showOnMobile: boolean }>`
+  display: block;
+
+  ${media.mobile} {
+    display: ${({ $showOnMobile }) => ($showOnMobile ? 'block' : 'none')};
+  }
+`;
+
 const Wrapper = styled(Flex)<{ $hasHeader: boolean }>`
-  margin-top: ${({ $hasHeader }) => ($hasHeader ? GlobalSize.header : '0')};
-  min-height: ${({ $hasHeader }) =>
-    $hasHeader ? `calc(100vh - ${GlobalSize.header})` : '100vh'};
+  margin-top: ${GlobalSize.header};
+  min-height: calc(100vh - ${GlobalSize.header});
   align-items: flex-start;
   overflow: hidden;
 
@@ -66,5 +76,8 @@ const Wrapper = styled(Flex)<{ $hasHeader: boolean }>`
 
   ${media.mobile} {
     width: 100vw;
+    margin-top: ${({ $hasHeader }) => ($hasHeader ? GlobalSize.header : '0')};
+    min-height: ${({ $hasHeader }) =>
+      $hasHeader ? `calc(100vh - ${GlobalSize.header})` : '100vh'};
   }
 `;
