@@ -6,11 +6,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Button from 'wowds-ui/Button';
 
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import GlobalSize from '@/constants/globalSize';
 import usePostOrder from '@/hooks/mutation/usePostOrder';
 import RoutePath from '@/routes/routePath';
 import axios from 'axios';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { color } from 'wowds-tokens';
 
 export function PaymentsSuccess() {
@@ -18,13 +19,11 @@ export function PaymentsSuccess() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const isCalledRef = useRef(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const { postOrderAsync } = usePostOrder();
 
   useEffect(() => {
-    if (isCalledRef.current) return;
-    isCalledRef.current = true;
-
     const executeConfirm = async () => {
       const requestData = {
         orderId: searchParams.get('orderId'),
@@ -40,6 +39,8 @@ export function PaymentsSuccess() {
         navigate(RoutePath.PaymentsFail);
         return;
       }
+      if (isCalledRef.current) return;
+      isCalledRef.current = true;
 
       try {
         await postOrderAsync({
@@ -47,9 +48,12 @@ export function PaymentsSuccess() {
           orderNanoId: requestData.orderId,
           amount: +requestData.amount
         });
+        queryClient.invalidateQueries({ queryKey: ['member'] });
+        setIsConfirmed(true);
       } catch (error) {
         // 409 Conflict는 이미 처리된 요청이므로 성공으로 간주
         if (axios.isAxiosError(error) && error.response?.status === 409) {
+          setIsConfirmed(true);
           return;
         }
         navigate(RoutePath.PaymentsFail);
@@ -58,6 +62,10 @@ export function PaymentsSuccess() {
 
     executeConfirm();
   }, []);
+
+  if (!isConfirmed) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Wrapper direction="column" justify="space-between">
@@ -78,7 +86,6 @@ export function PaymentsSuccess() {
         <Button
           onClick={() => {
             navigate(RoutePath.Dashboard);
-            queryClient.invalidateQueries({ queryKey: ['member'] });
           }}>
           완료하기
         </Button>
