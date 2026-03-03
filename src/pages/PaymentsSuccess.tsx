@@ -10,7 +10,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import GlobalSize from '@/constants/globalSize';
 import usePostOrder from '@/hooks/mutation/usePostOrder';
 import RoutePath from '@/routes/routePath';
-import axios from 'axios';
+import { isAxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { color } from 'wowds-tokens';
 
@@ -21,46 +21,48 @@ export function PaymentsSuccess() {
   const isCalledRef = useRef(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
 
-  const { postOrderAsync } = usePostOrder();
+  const { postOrder } = usePostOrder();
 
   useEffect(() => {
-    const executeConfirm = async () => {
-      const requestData = {
-        orderId: searchParams.get('orderId'),
-        amount: searchParams.get('amount'),
-        paymentKey: searchParams.get('paymentKey')
-      };
-
-      if (
-        !requestData.orderId ||
-        !requestData.amount ||
-        !requestData.paymentKey
-      ) {
-        navigate(RoutePath.PaymentsFail);
-        return;
-      }
-      if (isCalledRef.current) return;
-      isCalledRef.current = true;
-
-      try {
-        await postOrderAsync({
-          paymentKey: requestData.paymentKey,
-          orderNanoId: requestData.orderId,
-          amount: +requestData.amount
-        });
-        queryClient.invalidateQueries({ queryKey: ['member'] });
-        setIsConfirmed(true);
-      } catch (error) {
-        // 409 Conflict는 이미 처리된 요청이므로 성공으로 간주
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setIsConfirmed(true);
-          return;
-        }
-        navigate(RoutePath.PaymentsFail);
-      }
+    const requestData = {
+      orderId: searchParams.get('orderId'),
+      amount: searchParams.get('amount'),
+      paymentKey: searchParams.get('paymentKey')
     };
 
-    executeConfirm();
+    if (
+      !requestData.orderId ||
+      !requestData.amount ||
+      !requestData.paymentKey
+    ) {
+      navigate(RoutePath.PaymentsFail);
+      return;
+    }
+
+    if (isCalledRef.current) return;
+    isCalledRef.current = true;
+
+    postOrder(
+      {
+        paymentKey: requestData.paymentKey,
+        orderNanoId: requestData.orderId,
+        amount: +requestData.amount
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['member'] });
+          setIsConfirmed(true);
+        },
+        onError: (error) => {
+          // 409 Conflict는 이미 처리된 요청이므로 성공으로 간주
+          if (isAxiosError(error) && error.response?.status === 409) {
+            setIsConfirmed(true);
+            return;
+          }
+          navigate(RoutePath.PaymentsFail);
+        }
+      }
+    );
   }, []);
 
   if (!isConfirmed) {
