@@ -1,6 +1,11 @@
 import memberApi from '@/apis/member/memberApi';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { Flex, Space } from '@/components/common/Wrapper';
+import {
+  DesktopOnly,
+  Flex,
+  MobileOnly,
+  Space
+} from '@/components/common/Wrapper';
 import AssociateRequirementCheck from '@/components/myPage/AssociateRequirementCheck';
 import JoinRegularMember from '@/components/myPage/JoinRegularMember';
 import JoinStatus from '@/components/myPage/JoinStatus';
@@ -35,7 +40,7 @@ export const Dashboard = () => {
       <div>
         <HeaderRow justify="space-between" align="center">
           <UserInfo member={member} />
-          <DesktopOnly>
+          <DesktopOnly style={{ paddingTop: 16 }}>
             <MemberStatusStepper member={member} />
           </DesktopOnly>
         </HeaderRow>
@@ -91,21 +96,5 @@ const HeaderRow = styled(Flex)`
   ${media.mobile} {
     flex-direction: column;
     align-items: flex-start;
-  }
-`;
-
-const DesktopOnly = styled.div`
-  display: block;
-  padding-top: 16px;
-  ${media.mobile} {
-    display: none;
-  }
-`;
-
-const MobileOnly = styled.div`
-  display: none;
-
-  ${media.mobile} {
-    display: block;
   }
 `;
