@@ -1,11 +1,20 @@
-import { Flex, Space, Text } from '@/components/common/Wrapper';
+import {
+  DesktopOnly,
+  Flex,
+  MobileOnly,
+  Space,
+  Text
+} from '@/components/common/Wrapper';
 import useGetDiscordJoined from '@/hooks/query/useGetDiscordJoined';
 import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
 import { DiscordFormValues } from '@/types/discord';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { color } from 'wowds-tokens';
+import { color, typography } from 'wowds-tokens';
+import Box from 'wowds-ui/Box';
 import Button from 'wowds-ui/Button';
 import TextButton from 'wowds-ui/TextButton';
 
@@ -31,36 +40,85 @@ export const JoinServer = ({ onNext }: { onNext: () => void }) => {
   }, [data]);
 
   return (
-    <>
+    <Wrapper direction="column" justify="space-between">
       <Flex direction="column" align="flex-start">
-        <Text typo="h1">서버에 합류하세요.</Text>
-        <Space height="lg" />
-        <Text typo="body1">
-          아래 버튼을 통해 GDG Hongik Univ. 디스코드 서버로 이동해서 가입하세요.
-          <br />
-          <br />
-          서버에 가입 후 <strong>#명령어</strong> 채널에서 본인의 디스코드
-          계정을 연동할 수 있어요.
-          <br />
-          <br />
-          서버 합류 후, 다시 돌아와서 연동 절차를 마무리해주세요.
+        <Text
+          css={css`
+            ${media.mobile} {
+              ${typography.h1};
+            }
+            ${media.pc} {
+              ${typography.display2};
+              text-align: center;
+              width: 100%;
+            }
+          `}>
+          서버에 합류하세요.
         </Text>
+        <Space height="lg" />
+        <Text
+          typo="body1"
+          css={css`
+            ${media.pc} {
+              text-align: center;
+              width: 100%;
+            }
+          `}>
+          아래 버튼을 통해 GDG Hongik Univ. 디스코드 서버로 이동해서 가입하세요.
+        </Text>
+        <MobileOnly>
+          <Space height="lg" />
+          <Text typo="body1">
+            서버에 가입 후 <strong>#명령어</strong> 채널에서 본인의 디스코드
+            계정을 연동할 수 있어요.
+            <br />
+            <br />
+            서버 합류 후, 다시 돌아와서 연동 절차를 마무리해주세요.
+          </Text>
+        </MobileOnly>
       </Flex>
 
-      <Flex direction="column" gap="xs" style={{ marginTop: 'auto' }}>
-        <TextButton
-          text="GDG Hongik Univ. 공식 디스코드 서버↗︎"
-          style={{ color: color.discord }}
-          onClick={() => window.open(RoutePath.GDSCHongikDiscord, '_blank')}
+      <DesktopOnlyWrapper>
+        <Box
+          text={
+            <Flex direction="column" align="center" gap="md">
+              <Text
+                typo="body1"
+                css={css`
+                  text-align: center;
+                `}>
+                서버에 가입 후 <strong>#명령어</strong> 채널에서 본인의 디스코드
+                계정을 연동할 수 있어요.
+                <br />
+                서버 합류 후, 다시 돌아와서 연동 절차를 마무리해주세요.
+              </Text>
+              <TextButton
+                text="GDG Hongik Univ. 공식 디스코드 서버↗︎"
+                style={{ color: color.discord }}
+                onClick={() =>
+                  window.open(RoutePath.GDSCHongikDiscord, '_blank')
+                }
+              />
+            </Flex>
+          }
         />
+      </DesktopOnlyWrapper>
 
-        <Button
+      <Flex direction="column" gap="xs" style={{ marginTop: 'auto' }}>
+        <MobileOnly>
+          <TextButton
+            text="GDG Hongik Univ. 공식 디스코드 서버↗︎"
+            style={{ color: color.discord, margin: 'auto' }}
+            onClick={() => window.open(RoutePath.GDSCHongikDiscord, '_blank')}
+          />
+        </MobileOnly>
+
+        <StyledButton
           onClick={() => {
             onNext();
           }}
           disabled={!data?.isJoined}
           style={{
-            maxWidth: '100%',
             backgroundColor: callQuery
               ? color.darkDisabled
               : data?.isJoined
@@ -73,7 +131,7 @@ export const JoinServer = ({ onNext }: { onNext: () => void }) => {
             : data?.isJoined
               ? '서버 합류가 확인되었어요.'
               : '합류가 확인되면 넘어갈 수 있어요.'}
-        </Button>
+        </StyledButton>
 
         <Text
           typo="body2"
@@ -85,6 +143,31 @@ export const JoinServer = ({ onNext }: { onNext: () => void }) => {
           카카오톡 채널을 통해 코어멤버에게 문의해주세요!
         </Text>
       </Flex>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled(Flex)`
+  max-width: 650px;
+  ${media.mobile} {
+    height: 100%;
+  }
+  ${media.pc} {
+    margin-top: 60px;
+    gap: 100px;
+  }
+`;
+
+const DesktopOnlyWrapper = styled(DesktopOnly)`
+  ${media.pc} {
+    width: 100%;
+    max-width: 653px;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  ${media.pc} {
+    max-width: 328px;
+  }
+`;
