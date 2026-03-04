@@ -1,9 +1,7 @@
-import RainbowSpinner from 'wowds-ui/RainbowSpinner';
-import { media } from '@/styles';
-import GlobalSize from '@/constants/globalSize';
-import { Flex } from './Wrapper';
-import { color } from 'wowds-tokens';
 import styled from '@emotion/styled';
+import { color } from 'wowds-tokens';
+import RainbowSpinner from 'wowds-ui/RainbowSpinner';
+import { Flex } from './Wrapper';
 
 const LoadingSpinner = () => {
   return (
@@ -20,12 +18,9 @@ const Wrapper = styled(Flex)`
   position: fixed;
   top: 0;
   z-index: 999;
-  width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
   gap: 40px;
   background-color: ${color.blackOpacity40};
-  ${media.mobile} {
-    width: 100vw;
-  }
+  width: 100vw;
 `;
