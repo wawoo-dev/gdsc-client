@@ -90,7 +90,8 @@ const SubLogoText = styled.div`
 
 const HeaderContainter = styled(Flex)`
   width: 100%;
-  justify-content: space-around;
+  max-width: 984px;
+  justify-content: space-between;
   padding: 0 16px;
   margin: 0 auto;
   ${media.mobile} {
