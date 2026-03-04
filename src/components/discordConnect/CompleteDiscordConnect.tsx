@@ -35,13 +35,12 @@ export const CompleteDiscordConnect = () => {
           커뮤니티 멤버로 디스코드에서 활동할 수 있어요.
         </Text>
       </Flex>
-      <Button
+      <StyledButton
         onClick={() => {
           navigate(RoutePath.Dashboard);
-        }}
-        style={{ maxWidth: '100%', marginTop: 'auto' }}>
+        }}>
         완료하기
-      </Button>
+      </StyledButton>
     </Wrapper>
   );
 };
@@ -51,5 +50,11 @@ const Wrapper = styled(Flex)`
     padding: 50px;
     width: 100%;
     gap: 30px;
+  }
+`;
+const StyledButton = styled(Button)`
+  width: 100%;
+  ${media.pc} {
+    max-width: 328px;
   }
 `;

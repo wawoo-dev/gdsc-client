@@ -1,13 +1,13 @@
 import { Discord } from '@/assets/Discord';
 import { Flex, Text } from '@/components/common/Wrapper';
 import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
 import { UnivEmailStatus } from '@/types/status';
 import { AssociateRequirement, UserInfo } from '@/types/user';
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { css } from '@emotion/react';
 import { color, typography } from 'wowds-tokens';
-import { media } from '@/styles';
 import Button from 'wowds-ui/Button';
 import { Modal } from '../common/Modal';
 import CustomBox from './CustomBox';
@@ -171,8 +171,23 @@ const AssociateRequirementCheck = ({
           {
             // 디스코드 해지 모달 (연동된 상태에서 클릭 시)
             <Modal isOpen={discordModalOpen} onClose={handleClose}>
-              <Flex direction="column" gap="md">
-                <Text typo="body1" align="center">
+              <Flex
+                direction="column"
+                gap="md"
+                css={css`
+                  ${media.pc} {
+                    padding: 80px;
+                    gap: 40px;
+                  }
+                `}>
+                <Text
+                  typo="body1"
+                  align="center"
+                  css={css`
+                    ${typography.body1}${media.pc} {
+                      ${typography.h1}
+                    }
+                  `}>
                   디스코드 계정을 해지하고
                   <br />
                   새로운 계정으로 재연동하겠습니까?
