@@ -17,9 +17,8 @@ const Wrapper = styled(Flex)`
   min-height: 100vh;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 999;
-  margin: 0px -16px;
-  padding: 0px 16px;
   gap: 40px;
   background-color: ${color.blackOpacity40};
   width: 100vw;
