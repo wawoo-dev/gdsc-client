@@ -1,5 +1,6 @@
 import memberApi from '@/apis/member/memberApi';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Modal } from '@/components/common/Modal';
 import {
   DesktopOnly,
   Flex,
@@ -12,6 +13,7 @@ import JoinStatus from '@/components/myPage/JoinStatus';
 import MemberStatusStepper from '@/components/myPage/MemberStatusStepper';
 import UserInfo from '@/components/myPage/UserInfo';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
+import useIsPc from '@/hooks/common/useIsPc';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
@@ -19,7 +21,8 @@ import { color } from 'wowds-tokens';
 import JoinRegularMemberBottomSheet from '../components/bottomsheet/JoinRegularMemberBottomSheet';
 
 export const Dashboard = () => {
-  const { isOpen } = useBottomSheet();
+  const { isOpen, handleBottomSheet } = useBottomSheet();
+  const isPc = useIsPc();
   const { data } = useQuery({
     queryKey: ['member'],
     queryFn: memberApi.GET_DASHBOARD
@@ -69,10 +72,22 @@ export const Dashboard = () => {
           memberInfo={member.info}
         />
       </div>
-      {isOpen && (
-        <JoinRegularMemberBottomSheet
-          currentRecruitment={currentRecruitmentRound}
-        />
+      {isPc ? (
+        <Modal
+          isOpen={isOpen}
+          onClose={handleBottomSheet}
+          width={500}>
+          <JoinRegularMemberBottomSheet
+            currentRecruitment={currentRecruitmentRound}
+            variant="modal"
+          />
+        </Modal>
+      ) : (
+        isOpen && (
+          <JoinRegularMemberBottomSheet
+            currentRecruitment={currentRecruitmentRound}
+          />
+        )
       )}
     </Wrapper>
   );
