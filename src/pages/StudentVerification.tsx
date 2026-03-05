@@ -1,9 +1,9 @@
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Flex, GuideList, Space, Text } from '@/components/common/Wrapper';
-import GlobalSize from '@/constants/globalSize';
 import { useStudentVerification } from '@/hooks/auth';
 import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
@@ -41,108 +41,129 @@ export const StudentVerification = () => {
   };
 
   return (
-    <Wrapper
-      direction="column"
-      justify="flex-start"
-      align="flex-start"
-      gap="lg">
+    <Wrapper direction="column" justify="flex-start" align="flex-start">
       {isPending && <LoadingSpinner />}
-      <TextContainer>
-        <Text typo="h1" style={{ marginBottom: '12px' }}>
-          재학생 인증하기
-        </Text>
-        <div>
-          <Text>준회원으로 활동하기 위해서 재학생 인증 과정이 필요해요.</Text>
-          <Text>학교 이메일을 통해 재학생 인증을 마무리해주세요!</Text>
-        </div>
-      </TextContainer>
-      <form onSubmit={handleSubmit}>
-        <Controller
-          name="univEmail"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: {
-              value: true,
-              message: '* 이메일을 입력해주세요.'
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]/,
-              message: '* 이메일 형식을 지켜주세요.'
-            }
-          }}
-          render={({ field, fieldState }) => (
-            <EmailContainer>
-              <TextFieldWrapper>
-                <TextField
-                  style={{ minWidth: '100%' }}
-                  ref={field.ref}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  value={field.value}
-                  error={fieldState.invalid}
-                  placeholder="이메일 작성"
-                  label="학교 이메일"
-                  helperText={fieldState.error?.message}
-                />
-              </TextFieldWrapper>
-              <Text
-                typo="body1"
-                style={{
-                  height: '84.8px',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                @g.hongik.ac.kr
-              </Text>
-            </EmailContainer>
-          )}
-        />
+      <Flex
+        gap="xl"
+        direction="column"
+        justify="space-between"
+        css={css`
+          flex: 1;
+          ${media.pc} {
+            justify-content: center;
+            max-width: 500px;
+            gap: 60px;
+          }
+        `}>
+        <Flex direction="column" align="flex-start" gap="sm">
+          <StudentVerificationTitle>재학생 인증하기</StudentVerificationTitle>
+          <Text
+            typo="body1"
+            css={css`
+              ${media.pc} {
+                width: 100%;
+                text-align: center;
+              }
+            `}>
+            준회원으로 활동하기 위해서 재학생 인증 과정이 필요해요.
+            <br />
+            학교 이메일을 통해 재학생 인증을 마무리해주세요!
+          </Text>
+        </Flex>
 
-        <Space height="xs" />
-        <GuideList>
-          <li>메일 전송이 최대 30분 가량 늦어질 수 있어요.</li>
-          <li>
-            메일이 보이지 않는 경우 스팸 메일함을 확인해주시고, 스팸 메일함에도
-            없을 경우 카카오톡 채널로 문의해주세요.
-          </li>
-          <li>
-            만약 이메일 수신 이후에 인증 버튼을 눌렀음에도 제대로 인증이 되지
-            않는 경우, 해당 브라우저에서 다시 가입 절차를 진행해주세요.
-          </li>
-        </GuideList>
+        <form onSubmit={handleSubmit}>
+          <Flex
+            direction="column"
+            align="flex-start"
+            css={css`
+              ${media.pc} {
+                align-items: center;
+              }
+            `}>
+            <Controller
+              name="univEmail"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: {
+                  value: true,
+                  message: '* 이메일을 입력해주세요.'
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]/,
+                  message: '* 이메일 형식을 지켜주세요.'
+                }
+              }}
+              render={({ field, fieldState }) => (
+                <EmailContainer>
+                  <TextFieldWrapper>
+                    <TextField
+                      style={{ minWidth: '100%' }}
+                      ref={field.ref}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      value={field.value}
+                      error={fieldState.invalid}
+                      placeholder="이메일 작성"
+                      label="학교 이메일"
+                      helperText={fieldState.error?.message}
+                    />
+                  </TextFieldWrapper>
+                  <Text
+                    typo="body1"
+                    style={{
+                      height: '84.8px',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}>
+                    @g.hongik.ac.kr
+                  </Text>
+                </EmailContainer>
+              )}
+            />
 
-        <ButtonContainer>
-          <Button
-            disabled={!isValid}
-            style={{
-              maxWidth: '100%',
-              backgroundColor: isValid ? color.primary : color.darkDisabled,
-              color: 'white'
-            }}>
-            인증메일 받기
-          </Button>
-          <StudentGuideLink
-            color={color.sub}
-            to={RoutePath.StudentEmailLinkGuideLink}
-            target="_blank">
-            학교 이메일이 무엇인가요?
-          </StudentGuideLink>
-        </ButtonContainer>
-      </form>
+            <Space height="xs" />
+            <GuideList>
+              <li>메일 전송이 최대 30분 가량 늦어질 수 있어요.</li>
+              <li>
+                메일이 보이지 않는 경우 스팸 메일함을 확인해주시고, 스팸
+                메일함에도 없을 경우 카카오톡 채널로 문의해주세요.
+              </li>
+              <li>
+                만약 이메일 수신 이후에 인증 버튼을 눌렀음에도 제대로 인증이
+                되지 않는 경우, 해당 브라우저에서 다시 가입 절차를 진행해주세요.
+              </li>
+            </GuideList>
+          </Flex>
+
+          <ButtonContainer>
+            <StyledButton
+              disabled={!isValid}
+              style={{
+                backgroundColor: isValid ? color.primary : color.darkDisabled,
+                color: 'white'
+              }}>
+              인증메일 받기
+            </StyledButton>
+            <StudentGuideLink
+              color={color.sub}
+              to={RoutePath.StudentEmailLinkGuideLink}
+              target="_blank">
+              학교 이메일이 무엇인가요?
+            </StudentGuideLink>
+          </ButtonContainer>
+        </form>
+      </Flex>
     </Wrapper>
   );
 };
 
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  & > div {
+const StudentVerificationTitle = styled(Text)`
+  ${typography.h1}
+  ${media.pc} {
+    ${typography.display2}
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    text-align: center;
   }
 `;
 
@@ -166,31 +187,20 @@ const StudentGuideLink = styled(Link)`
 const Wrapper = styled(Flex)`
   position: relative;
   min-height: calc(100vh - var(--header-height, 0px));
-  width: ${GlobalSize.width};
+  width: 100vw;
   margin: 0px -16px;
-  padding: 40px 16px 0px;
+  padding: 40px 16px;
   background-color: ${color.mono50};
-  ${media.mobile} {
-    width: 100vw;
+  ${media.pc} {
+    min-height: calc(100vh - var(--header-height, 0px));
+    align-items: center;
   }
-`;
-
-const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 1.75rem;
-  padding: 0px 0.75rem;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: ${space.xs};
 `;
 
 const EmailContainer = styled.div`
   display: flex;
   flex-direction: row;
-  max-width: 260px;
+  width: 100%;
   align-items: center;
   gap: ${space.xs};
 `;
@@ -198,4 +208,23 @@ const EmailContainer = styled.div`
 const TextFieldWrapper = styled.div`
   flex: 1;
   height: 84.8px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${space.xs};
+  margin-top: ${space.xl};
+  ${media.pc} {
+    align-items: center;
+    margin-top: 60px;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  max-width: 100%;
+  ${media.pc} {
+    max-width: 328px;
+  }
 `;
