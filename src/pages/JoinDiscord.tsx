@@ -91,15 +91,18 @@ export const JoinDiscord = () => {
       </DesktopOnlyWrapper>
 
       <ButtonSection direction="column" gap="xs">
-        <StyledButton
-          onClick={() => {
-            const path = isReconnect
-              ? `${RoutePath.DiscordConnect}?reconnect=true`
-              : RoutePath.DiscordConnect;
-            navigate(path);
-          }}>
-          연동 정보 입력하기
-        </StyledButton>
+        <ButtonWrapper>
+          <Button
+            style={{ width: '100%' }}
+            onClick={() => {
+              const path = isReconnect
+                ? `${RoutePath.DiscordConnect}?reconnect=true`
+                : RoutePath.DiscordConnect;
+              navigate(path);
+            }}>
+            연동 정보 입력하기
+          </Button>
+        </ButtonWrapper>
         <MobileOnly>
           <TextButton
             text="디스코드 가이드라인↗︎"
@@ -144,7 +147,7 @@ const ButtonSection = styled(Flex)`
   width: 100%;
 `;
 
-const StyledButton = styled(Button)`
+const ButtonWrapper = styled.div`
   width: 100%;
 
   ${media.pc} {

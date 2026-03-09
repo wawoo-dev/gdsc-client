@@ -137,14 +137,17 @@ export const StudentVerification = () => {
           </Flex>
 
           <ButtonContainer>
-            <StyledButton
-              disabled={!isValid}
-              style={{
-                backgroundColor: isValid ? color.primary : color.darkDisabled,
-                color: 'white'
-              }}>
-              인증메일 받기
-            </StyledButton>
+            <ButtonWrapper>
+              <Button
+                disabled={!isValid}
+                style={{
+                  width: '100%',
+                  backgroundColor: isValid ? color.primary : color.darkDisabled,
+                  color: 'white'
+                }}>
+                인증메일 받기
+              </Button>
+            </ButtonWrapper>
             <StudentGuideLink
               color={color.sub}
               to={RoutePath.StudentEmailLinkGuideLink}
@@ -222,8 +225,8 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const StyledButton = styled(Button)`
-  max-width: 100%;
+const ButtonWrapper = styled.div`
+  width: 100%;
   ${media.pc} {
     max-width: 328px;
   }

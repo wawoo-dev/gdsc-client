@@ -1,8 +1,8 @@
 import { GitHubIcon } from '@/assets/GitHubIcon';
-import { color, typography } from 'wowds-tokens';
-import Button from 'wowds-ui/Button';
 import styled from '@emotion/styled';
 import { ButtonHTMLAttributes } from 'react';
+import { color, typography } from 'wowds-tokens';
+import Button from 'wowds-ui/Button';
 
 /**
  * @default {HTMLButtonElement}
@@ -20,7 +20,7 @@ export const GitHubButton = ({
         maxWidth: '100%'
       }}>
       <StyledButton>
-        <GitHubIcon />
+        <GitHubIcon fill="white" />
         {children}
       </StyledButton>
     </Button>

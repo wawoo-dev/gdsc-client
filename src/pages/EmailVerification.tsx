@@ -136,9 +136,11 @@ export const EmailVerification = () => {
           </Flex>
         </Flex>
 
-        <StyledButton onClick={handleResendEmail}>
-          인증메일 다시 받기
-        </StyledButton>
+        <ButtonWrapper>
+          <Button style={{ width: '100%' }} onClick={handleResendEmail}>
+            인증메일 다시 받기
+          </Button>
+        </ButtonWrapper>
       </Flex>
     </Container>
   );
@@ -165,8 +167,8 @@ const EmailVerificationTitle = styled(Text)`
   }
 `;
 
-const StyledButton = styled(Button)`
-  max-width: 100%;
+const ButtonWrapper = styled.div`
+  width: 100%;
   ${media.pc} {
     max-width: 328px;
   }

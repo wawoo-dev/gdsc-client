@@ -325,16 +325,19 @@ export const SignUp = () => {
               )}
             />
           </CheckboxContainer>
-          <SubmitButton
-            type="submit"
-            role="button"
-            disabled={!isValid}
-            style={{
-              backgroundColor: isValid ? color.primary : color.darkDisabled,
-              color: 'white'
-            }}>
-            가입 신청하기
-          </SubmitButton>
+          <SubmitButtonWrapper>
+            <Button
+              type="submit"
+              role="button"
+              disabled={!isValid}
+              style={{
+                width: '100%',
+                backgroundColor: isValid ? color.primary : color.darkDisabled,
+                color: 'white'
+              }}>
+              가입 신청하기
+            </Button>
+          </SubmitButtonWrapper>
         </BottomSection>
       </FormWrapper>
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
@@ -452,7 +455,7 @@ const FieldRow = styled.div`
   }
 `;
 
-const SubmitButton = styled(Button)`
+const SubmitButtonWrapper = styled.div`
   width: 100%;
   ${media.pc} {
     max-width: 328px;

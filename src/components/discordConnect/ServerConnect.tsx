@@ -120,7 +120,11 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
       </Flex>
 
       <Flex direction="column">
-        <StyledButton onClick={handleLinkButtonClick}>다음으로</StyledButton>
+        <ButtonWrapper>
+          <Button style={{ width: '100%' }} onClick={handleLinkButtonClick}>
+            다음으로
+          </Button>
+        </ButtonWrapper>
       </Flex>
     </Wrapper>
   );
@@ -134,7 +138,7 @@ const Wrapper = styled(Flex)`
   }
 `;
 
-const StyledButton = styled(Button)`
+const ButtonWrapper = styled.div`
   width: 100%;
   ${media.pc} {
     max-width: 328px;

@@ -113,25 +113,28 @@ export const JoinServer = ({ onNext }: { onNext: () => void }) => {
           />
         </MobileOnly>
 
-        <StyledButton
-          onClick={() => {
-            onNext();
-          }}
-          disabled={!data?.isJoined}
-          style={{
-            backgroundColor: callQuery
-              ? color.darkDisabled
+        <ButtonWrapper>
+          <Button
+            style={{
+              width: '100%',
+              backgroundColor: callQuery
+                ? color.darkDisabled
+                : data?.isJoined
+                  ? color.primary
+                  : color.darkDisabled,
+              color: 'white'
+            }}
+            onClick={() => {
+              onNext();
+            }}
+            disabled={!data?.isJoined}>
+            {callQuery
+              ? '합류 여부를 확인 중이에요.'
               : data?.isJoined
-                ? color.primary
-                : color.darkDisabled,
-            color: 'white'
-          }}>
-          {callQuery
-            ? '합류 여부를 확인 중이에요.'
-            : data?.isJoined
-              ? '서버 합류가 확인되었어요.'
-              : '합류가 확인되면 넘어갈 수 있어요.'}
-        </StyledButton>
+                ? '서버 합류가 확인되었어요.'
+                : '합류가 확인되면 넘어갈 수 있어요.'}
+          </Button>
+        </ButtonWrapper>
 
         <Text
           typo="body2"
@@ -165,7 +168,7 @@ const DesktopOnlyWrapper = styled(DesktopOnly)`
   }
 `;
 
-const StyledButton = styled(Button)`
+const ButtonWrapper = styled.div`
   width: 100%;
   ${media.pc} {
     max-width: 328px;

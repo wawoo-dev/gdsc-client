@@ -68,7 +68,7 @@ export const Auth = () => {
             text={
               <AccordionContainer>
                 <Text typo="h3">Q. GitHub가 무엇인가요?</Text>
-                <ArrowIconWrapper>
+                <ArrowIconWrapper open={accordionState.githubInfo}>
                   <DownArrow
                     width={20}
                     height={20}
@@ -95,7 +95,7 @@ export const Auth = () => {
             text={
               <AccordionContainer>
                 <Text typo="h3">Q. GitHub는 왜 사용하나요?</Text>
-                <ArrowIconWrapper>
+                <ArrowIconWrapper open={accordionState.githubDetail}>
                   <DownArrow
                     width={20}
                     height={20}
@@ -205,8 +205,10 @@ const AccordionContainer = styled.div`
   gap: ${space.sm};
 `;
 
-const ArrowIconWrapper = styled.div`
+const ArrowIconWrapper = styled.div<{ open: boolean }>`
   cursor: pointer;
   position: absolute;
   right: 24px;
+  transform: rotate(${({ open }) => (open ? '180deg' : '0deg')});
+  transition: transform 0.3s ease;
 `;
