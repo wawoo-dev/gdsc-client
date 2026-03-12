@@ -21,14 +21,15 @@ const RoutePath = {
   AuthServerRedirect: '/social-login/redirect',
   StudentVerificationServerRedirect: '/onboarding/verify-univ-email',
   EmailVerificationServerRedirect: '/onboarding/verify-email',
-  GDSCHongikLink: 'https://www.wawoo.dev',
+  GDSCHongikLink: 'https://www.gdghongik.com',
   GDSCHongikDiscord: 'https://discord.gg/dSV6vSEuGU',
-  GitHubGuideLink: 'https://www.wawoo.dev/onboard-guide/github',
+  GitHubGuideLink: 'https://www.gdghongik.com/onboard-guide/github',
   StudentEmailLinkGuideLink:
-    'https://www.wawoo.dev/onboard-guide/student-email',
-  CommunityGuideLink: 'https://www.wawoo.dev/onboard-guide/community-guideline',
-  TermsLink: 'https://www.wawoo.dev/onboard-guide/community-rule',
-  PersonalPrivacyLink: 'https://www.wawoo.dev/onboard-guide/privacy-policy',
+    'https://www.gdghongik.com/onboard-guide/student-email',
+  CommunityGuideLink:
+    'https://www.gdghongik.com/onboard-guide/community-guideline',
+  TermsLink: 'https://www.gdghongik.com/onboard-guide/community-rule',
+  PersonalPrivacyLink: 'https://www.gdghongik.com/onboard-guide/privacy-policy',
 
   InstagramLink: 'https://www.instagram.com/gdsc.hongik/',
   DiscordRegisterLink: 'https://discord.com/register',

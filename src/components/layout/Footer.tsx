@@ -1,10 +1,10 @@
 import { FooterGithubIcon, FooterInstagramIcon } from '@/assets/FooterIcons';
 import { Logo } from '@/assets/LogoIcon';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { media } from '@styles/theme';
 import { Link } from 'react-router-dom';
 import { color } from 'wowds-tokens';
-import { css } from '@emotion/react';
-import { media } from '@styles/theme';
 import { Flex, Text } from '../common/Wrapper';
 
 const Footer = () => {
@@ -45,17 +45,20 @@ const Footer = () => {
                 와우디벨로퍼스
               </Text>
             </Link>
-            <Link to={'https://www.wawoo.dev/onboarding'}>
+            <Link to={'https://www.gdghongik.com/onboarding'}>
               <Text typo="label2" style={{ textDecoration: 'underline' }}>
                 학회 소개
               </Text>
             </Link>
-            <Link to={'https://www.wawoo.dev/onboard-guide/community-rule'}>
+            <Link to={'https://www.gdghongik.com/onboard-guide/community-rule'}>
               <Text typo="label2" style={{ textDecoration: 'underline' }}>
                 GDG Hongik Univ. 회칙
               </Text>
             </Link>
-            <Link to={'https://www.wawoo.dev/onboard-guide/community-guideline'}>
+            <Link
+              to={
+                'https://www.gdghongik.com/onboard-guide/community-guideline'
+              }>
               <Text typo="label2" style={{ textDecoration: 'underline' }}>
                 GDG Hongik Univ. 가이드라인
               </Text>
@@ -73,7 +76,11 @@ const Footer = () => {
               gap: 1.25rem;
             }
           `}>
-          <Flex gap="md" align="start" justify="start" style={{ width: '100%' }}>
+          <Flex
+            gap="md"
+            align="start"
+            justify="start"
+            style={{ width: '100%' }}>
             <button
               onClick={() => {
                 window.location.href = 'https://github.com/gdg-hongik-univ';
@@ -82,7 +89,8 @@ const Footer = () => {
             </button>
             <button
               onClick={() => {
-                window.location.href = 'https://www.instagram.com/gdg.hongikuniv';
+                window.location.href =
+                  'https://www.instagram.com/gdg.hongikuniv';
               }}>
               <FooterInstagramIcon />
             </button>
@@ -95,19 +103,20 @@ const Footer = () => {
               대표 이혁 | TEL 010-2628-3439 | 사업자등록번호 311-82-77953
             </Text>
             <Flex justify="flex-start" gap="xxs">
-              <Link to={'https://www.wawoo.dev/wowdevelopers/privacy-policy'}>
+              <Link
+                to={'https://www.gdghongik.com/wowdevelopers/privacy-policy'}>
                 <Text typo="body3" color="black">
                   개인정보처리방침
                 </Text>
               </Link>
               <Text typo="body3">|</Text>
-              <Link to={'https://www.wawoo.dev/wowdevelopers/term-of-use'}>
+              <Link to={'https://www.gdghongik.com/wowdevelopers/term-of-use'}>
                 <Text typo="body3" color="black">
                   이용약관
                 </Text>
               </Link>
               <Text typo="body3">|</Text>
-              <Link to={'https://www.wawoo.dev/wowdevelopers/refund'}>
+              <Link to={'https://www.gdghongik.com/wowdevelopers/refund'}>
                 <Text typo="body3" color="black">
                   환불정책
                 </Text>
