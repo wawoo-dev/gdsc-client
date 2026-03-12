@@ -5,12 +5,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Button from 'wowds-ui/Button';
 
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import usePostOrder from '@/hooks/mutation/usePostOrder';
 import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
-import axios from 'axios';
-import { useEffect, useRef } from 'react';
+import { isAxiosError } from 'axios';
+import { useEffect, useRef, useState } from 'react';
 import { color, typography } from 'wowds-tokens';
 
 export function PaymentsSuccess() {
@@ -18,46 +19,55 @@ export function PaymentsSuccess() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const isCalledRef = useRef(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
-  const { postOrderAsync } = usePostOrder();
+  const { postOrder } = usePostOrder();
 
   useEffect(() => {
+    const requestData = {
+      orderId: searchParams.get('orderId'),
+      amount: searchParams.get('amount'),
+      paymentKey: searchParams.get('paymentKey')
+    };
+
+    if (
+      !requestData.orderId ||
+      !requestData.amount ||
+      !requestData.paymentKey
+    ) {
+      navigate(RoutePath.PaymentsFail);
+      return;
+    }
+
     if (isCalledRef.current) return;
     isCalledRef.current = true;
 
-    const executeConfirm = async () => {
-      const requestData = {
-        orderId: searchParams.get('orderId'),
-        amount: searchParams.get('amount'),
-        paymentKey: searchParams.get('paymentKey')
-      };
-
-      if (
-        !requestData.orderId ||
-        !requestData.amount ||
-        !requestData.paymentKey
-      ) {
-        navigate(RoutePath.PaymentsFail);
-        return;
-      }
-
-      try {
-        await postOrderAsync({
-          paymentKey: requestData.paymentKey,
-          orderNanoId: requestData.orderId,
-          amount: +requestData.amount
-        });
-      } catch (error) {
-        // 409 Conflict는 이미 처리된 요청이므로 성공으로 간주
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          return;
+    postOrder(
+      {
+        paymentKey: requestData.paymentKey,
+        orderNanoId: requestData.orderId,
+        amount: +requestData.amount
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['member'] });
+          setIsConfirmed(true);
+        },
+        onError: (error) => {
+          // 409 Conflict는 이미 처리된 요청이므로 성공으로 간주
+          if (isAxiosError(error) && error.response?.status === 409) {
+            setIsConfirmed(true);
+            return;
+          }
+          navigate(RoutePath.PaymentsFail);
         }
-        navigate(RoutePath.PaymentsFail);
       }
-    };
-
-    executeConfirm();
+    );
   }, []);
+
+  if (!isConfirmed) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Wrapper direction="column" justify="space-between">
