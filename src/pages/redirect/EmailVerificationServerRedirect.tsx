@@ -1,9 +1,7 @@
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Flex, Text } from '@/components/common/Wrapper';
-import GlobalSize from '@/constants/globalSize';
 import { useVerifyEmail } from '@/hooks/mutation';
 import RoutePath from '@/routes/routePath';
-import { media } from '@/styles';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useLayoutEffect, useState } from 'react';
@@ -82,16 +80,12 @@ export const EmailVerificationServerRedirect = () => {
 
 const Wrapper = styled(Flex)`
   min-height: calc(100vh - var(--header-height, 0px));
-  width: ${GlobalSize.width};
+  width: 100vw;
   margin: 0px -16px;
   padding: 0px 16px;
   justify-content: flex-start;
   align-items: flex-start;
   background-color: ${color.mono50};
-
-  ${media.mobile} {
-    width: 100vw;
-  }
 `;
 
 const Container = styled(Flex)`

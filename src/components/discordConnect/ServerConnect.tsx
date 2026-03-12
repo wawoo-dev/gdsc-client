@@ -1,11 +1,14 @@
 import { DiscordLinkRequest } from '@/apis/discord/discordType';
-import { Flex, Space, Text } from '@/components/common/Wrapper';
+import { Flex, MobileBreak, Space, Text } from '@/components/common/Wrapper';
 import { usePostDiscordLink } from '@/hooks/mutation/usePostDiscordLink';
 import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
 import { DiscordFormValues } from '@/types/discord';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { color } from 'wowds-tokens';
+import { color, typography } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 import Divider from 'wowds-ui/Divider';
 import TextButton from 'wowds-ui/TextButton';
@@ -44,20 +47,47 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
   });
 
   return (
-    <>
+    <Wrapper direction="column" justify="space-between">
       <Flex direction="column" align="flex-start" gap="lg">
-        <Text typo="h1">서버와 연동하세요.</Text>
-        <div>
-          <Text typo="label1" color="discord">
+        <Text
+          css={css`
+            ${media.mobile} {
+              ${typography.h1};
+            }
+            ${media.pc} {
+              ${typography.display2};
+              text-align: center;
+              width: 100%;
+            }
+          `}>
+          서버와 연동하세요.
+        </Text>
+        <Flex direction="column" align="flex-start">
+          <Text
+            typo="label1"
+            color="discord"
+            css={css`
+              ${media.pc} {
+                text-align: center;
+                width: 100%;
+              }
+            `}>
             /인증코드
           </Text>
           <Space height="sm" />
-          <Text typo="body1">
-            #명령어 채널에서 /인증코드 명령어를 통해 <br />
+          <Text
+            typo="body1"
+            css={css`
+              ${media.pc} {
+                text-align: center;
+                width: 100%;
+              }
+            `}>
+            #명령어 채널에서 /인증코드 명령어를 통해 <MobileBreak />
             연동을 위한 인증코드를 받을 수 있어요. <br />
             인증코드를 아래에 입력해주세요.
           </Text>
-        </div>
+        </Flex>
         <Flex direction="column" align="center">
           <img src={DiscordImage} alt="discord-server-connect" />
           <Space height="lg" />
@@ -89,11 +119,28 @@ export const ServerConnect = ({ onNext }: { onNext: () => void }) => {
         />
       </Flex>
 
-      <Flex direction="column" style={{ marginTop: 'auto' }}>
-        <Button onClick={handleLinkButtonClick} style={{ maxWidth: '100%' }}>
-          다음으로
-        </Button>
+      <Flex direction="column">
+        <ButtonWrapper>
+          <Button style={{ width: '100%' }} onClick={handleLinkButtonClick}>
+            다음으로
+          </Button>
+        </ButtonWrapper>
       </Flex>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled(Flex)`
+  max-width: 500px;
+  height: 100%;
+  ${media.pc} {
+    gap: 60px;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  ${media.pc} {
+    max-width: 328px;
+  }
+`;

@@ -1,8 +1,10 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 
-import { color } from 'wowds-tokens';
+import { color, typography } from 'wowds-tokens';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { media } from '@/styles';
+
 export const InformationBox = ({
   title,
   description,
@@ -15,15 +17,22 @@ export const InformationBox = ({
   isFAQ?: boolean;
 }) => {
   return (
-    <Wrapper direction="column" align="flex-start" justify="flex-start">
+    <Wrapper
+      direction="column"
+      align="flex-start"
+      justify="flex-start"
+      isFAQ={isFAQ}>
       <Text
-        typo="h3"
         color="black"
         css={css`
           word-break: keep-all;
           display: flex;
           justify-content: center;
           align-items: center;
+          ${typography.h1};
+          ${media.mobile} {
+            ${typography.h3};
+          }
         `}>
         {title}
       </Text>
@@ -50,9 +59,9 @@ export const InformationBox = ({
   );
 };
 
-const Wrapper = styled(Flex)`
+const Wrapper = styled(Flex)<{ isFAQ?: boolean }>`
   box-sizing: border-box;
-  padding: 20px 24px;
+  padding: 32px 40px;
   background-color: ${color.white};
   bottom: 10px;
   border-radius: 8px;
@@ -60,4 +69,9 @@ const Wrapper = styled(Flex)`
 
   text-align: start;
   height: fit-content;
+  max-width: 576px;
+  ${(props) => props.isFAQ && `max-width: 820px;`}
+  ${media.mobile} {
+    padding: 20px 24px;
+  }
 `;
