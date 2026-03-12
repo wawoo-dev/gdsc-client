@@ -1,4 +1,6 @@
+import { media } from '@/styles';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type {
   color as colorType,
   space as spaceType,
@@ -10,8 +12,6 @@ import {
   space as wowSpace,
   typography as wowTypo
 } from 'wowds-tokens';
-
-import styled from '@emotion/styled';
 
 type colorKey = keyof typeof colorType;
 type typoKey = keyof typeof typographyType;
@@ -88,4 +88,27 @@ export const GuideList = styled.ul<{
   padding-left: ${({ listPosition = 'outside' }) =>
     listPosition === 'outside' ? '20px' : '0'};
   margin: 0;
+`;
+
+export const MobileBreak = styled.br`
+  display: none;
+  ${media.mobile} {
+    display: block;
+  }
+`;
+
+export const DesktopOnly = styled.div`
+  display: none;
+  ${media.pc} {
+    display: block;
+    width: 100%;
+  }
+`;
+
+export const MobileOnly = styled.div`
+  display: block;
+  width: 100%;
+  ${media.pc} {
+    display: none;
+  }
 `;

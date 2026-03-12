@@ -1,8 +1,6 @@
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Flex, Text } from '@/components/common/Wrapper';
-import GlobalSize from '@/constants/globalSize';
 import { useVerifyStudentEmail } from '@/hooks/mutation';
-import { media } from '@/styles';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useLayoutEffect } from 'react';
@@ -50,7 +48,6 @@ export const StudentVerificationServerRedirect = () => {
 
 const Wrapper = styled(Flex)`
   min-height: calc(100vh - var(--header-height, 0px));
-  width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 0px 16px;
   direction: column;
@@ -58,10 +55,7 @@ const Wrapper = styled(Flex)`
   gap: '40px';
   align-items: flex-start;
   background-color: ${color.mono50};
-
-  ${media.mobile} {
-    width: 100vw;
-  }
+  width: 100vw;
 `;
 
 const Container = styled(Flex)`

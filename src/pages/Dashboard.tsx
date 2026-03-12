@@ -1,12 +1,19 @@
 import memberApi from '@/apis/member/memberApi';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { Flex, Space } from '@/components/common/Wrapper';
+import { Modal } from '@/components/common/Modal';
+import {
+  DesktopOnly,
+  Flex,
+  MobileOnly,
+  Space
+} from '@/components/common/Wrapper';
 import AssociateRequirementCheck from '@/components/myPage/AssociateRequirementCheck';
 import JoinRegularMember from '@/components/myPage/JoinRegularMember';
 import JoinStatus from '@/components/myPage/JoinStatus';
+import MemberStatusStepper from '@/components/myPage/MemberStatusStepper';
 import UserInfo from '@/components/myPage/UserInfo';
-import GlobalSize from '@/constants/globalSize';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
+import useIsPc from '@/hooks/common/useIsPc';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
@@ -14,7 +21,8 @@ import { color } from 'wowds-tokens';
 import JoinRegularMemberBottomSheet from '../components/bottomsheet/JoinRegularMemberBottomSheet';
 
 export const Dashboard = () => {
-  const { isOpen } = useBottomSheet();
+  const { isOpen, handleBottomSheet } = useBottomSheet();
+  const isPc = useIsPc();
   const { data } = useQuery({
     queryKey: ['member'],
     queryFn: memberApi.GET_DASHBOARD
@@ -31,53 +39,77 @@ export const Dashboard = () => {
   const { member, currentRecruitmentRound, currentMembership } = data;
 
   return (
-    <div style={{ height: '100%' }}>
-      <Wrapper direction="column" justify="flex-start" align="center">
-        <div>
-          <Space height={20} />
-          <Flex justify="flex-start" direction="column" align="flex-start">
-            <UserInfo member={member} />
-            <JoinStatus role={member.role} member={member} />
-          </Flex>
-          {member.role !== 'GUEST' && (
-            <>
-              <Space height={40} />
-              <JoinRegularMember
-                role={member.role}
-                currentMembership={currentMembership}
-                currentRecruitment={currentRecruitmentRound}
-                paymentStatus={
-                  currentMembership?.regularRequirement.paymentStatus
-                }
-              />
-            </>
-          )}
-          <Space height={40} />
-          <AssociateRequirementCheck
-            associateRequirement={member.associateRequirement}
-            memberInfo={member.info}
-          />
-        </div>
-        <Space height={104} />
-      </Wrapper>
-      {isOpen && (
-        <JoinRegularMemberBottomSheet
-          currentRecruitment={currentRecruitmentRound}
+    <Wrapper direction="column" justify="flex-start" align="center">
+      <div>
+        <HeaderRow justify="space-between" align="center">
+          <UserInfo member={member} />
+          <DesktopOnly style={{ paddingTop: 16 }}>
+            <MemberStatusStepper member={member} />
+          </DesktopOnly>
+        </HeaderRow>
+        <MobileOnly>
+          <JoinStatus role={member.role} member={member} showStepper={true} />
+        </MobileOnly>
+        <DesktopOnly>
+          <JoinStatus role={member.role} member={member} showStepper={false} />
+        </DesktopOnly>
+        {member.role !== 'GUEST' && (
+          <>
+            <Space height={40} />
+            <JoinRegularMember
+              role={member.role}
+              currentMembership={currentMembership}
+              currentRecruitment={currentRecruitmentRound}
+              paymentStatus={
+                currentMembership?.regularRequirement.paymentStatus
+              }
+            />
+          </>
+        )}
+        <Space height={40} />
+        <AssociateRequirementCheck
+          associateRequirement={member.associateRequirement}
+          memberInfo={member.info}
         />
+      </div>
+      {isPc ? (
+        <Modal
+          isOpen={isOpen}
+          onClose={handleBottomSheet}
+          width={500}>
+          <JoinRegularMemberBottomSheet
+            currentRecruitment={currentRecruitmentRound}
+            variant="modal"
+          />
+        </Modal>
+      ) : (
+        isOpen && (
+          <JoinRegularMemberBottomSheet
+            currentRecruitment={currentRecruitmentRound}
+          />
+        )
       )}
-    </div>
+    </Wrapper>
   );
 };
 
 const Wrapper = styled(Flex)`
   min-height: 100vh;
-  width: ${GlobalSize.width};
-  margin: 0px -16px;
-  padding: 0px 16px;
+  width: '100%';
+  padding: 100px 0px;
 
   background-color: ${color.mono50};
-
   ${media.mobile} {
     width: 100vw;
+    padding: 20px 16px 100px 16px;
+  }
+`;
+
+const HeaderRow = styled(Flex)`
+  width: 100%;
+  gap: 130px;
+  ${media.mobile} {
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;

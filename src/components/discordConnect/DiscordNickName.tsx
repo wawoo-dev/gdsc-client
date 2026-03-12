@@ -1,6 +1,8 @@
-import { Flex, Space, Text } from '@/components/common/Wrapper';
+import { Flex, MobileOnly, Space, Text } from '@/components/common/Wrapper';
 import { usePostDiscordNickname } from '@/hooks/mutation/usePostDiscordNickname';
+import { media } from '@/styles';
 import { DiscordFormValues } from '@/types/discord';
+import styled from '@emotion/styled';
 import { memo, useCallback, useEffect } from 'react';
 import { Control, useController, useFormContext } from 'react-hook-form';
 import Button from 'wowds-ui/Button';
@@ -41,11 +43,13 @@ export const DiscordNickName = ({ onNext }: { onNext: () => void }) => {
   }, [checkDuplicate, getValues, setError, trigger]);
 
   return (
-    <>
+    <Wrapper direction="column">
       <Flex direction="column" align="flex-start" gap="lg">
         <TextSection />
       </Flex>
-      <Space height="lg" />
+      <MobileOnly>
+        <Space height="lg" />
+      </MobileOnly>
       <div style={{ width: '100%' }}>
         <NameField control={control} />
       </div>
@@ -55,9 +59,17 @@ export const DiscordNickName = ({ onNext }: { onNext: () => void }) => {
           다음으로
         </Button>
       </Flex>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled(Flex)`
+  height: 100%;
+  ${media.pc} {
+    max-width: 500px;
+    gap: 60px;
+  }
+`;
 
 const TextSection = memo(() => (
   <>
@@ -68,12 +80,14 @@ const TextSection = memo(() => (
         GDG Hongik Univ. 디스코드 서버에서 사용할 별명을 설정해주세요.
       </Text>
     </div>
-    <Image src={DiscordImage} alt="discord-nickname" />
+    <Image src={DiscordImage} alt="discord-nickname" align="center" />
     <Text typo="body1">
       가입이 완료되면 가입 신청서에 제출하신 별명으로 자동으로 수정될 거예요.
       추후 별명을 수정하고 싶다면 카카오톡 채널로 코어멤버에게 연락 주세요.
     </Text>
-    <Divider />
+    <MobileOnly>
+      <Divider />
+    </MobileOnly>
   </>
 ));
 

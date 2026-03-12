@@ -3,82 +3,121 @@ import { Logo } from '@/assets/LogoIcon';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { color } from 'wowds-tokens';
+import { css } from '@emotion/react';
+import { media } from '@styles/theme';
 import { Flex, Text } from '../common/Wrapper';
 
 const Footer = () => {
   return (
     <Container>
-      <Flex direction="row" align="center" justify="flex-start" gap="xs">
-        <Logo />
-        <LogoText>GDG</LogoText>
-        <SubLogoText>Hongik Univ.</SubLogoText>
-      </Flex>
+      <Flex
+        direction="column"
+        align="start"
+        justify="flex-start"
+        css={css`
+          gap: 1.5rem;
+          ${media.pc} {
+            flex-direction: row;
+            justify-content: space-between;
+            width: 993px;
+            margin: 0 auto;
+          }
+        `}>
+        <Flex
+          direction="column"
+          align="start"
+          justify="flex-start"
+          css={css`
+            gap: 1.5rem;
+            ${media.pc} {
+              gap: 1.875rem;
+            }
+          `}>
+          <Flex direction="row" align="center" justify="flex-start" gap="xs">
+            <Logo />
+            <LogoText>GDG</LogoText>
+            <SubLogoText>Hongik Univ.</SubLogoText>
+          </Flex>
 
-      <Flex direction="column" align="start" gap="md">
-        <Link to={'https://wawoo.dev/'}>
-          <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            와우디벨로퍼스
-          </Text>
-        </Link>
-        <Link to={'https://www.wawoo.dev/onboarding'}>
-          <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            학회 소개
-          </Text>
-        </Link>
-        <Link to={'https://www.wawoo.dev/onboard-guide/community-rule'}>
-          <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            GDG Hongik Univ. 회칙
-          </Text>
-        </Link>
-        <Link to={'https://www.wawoo.dev/onboard-guide/community-guideline'}>
-          <Text typo="label2" style={{ textDecoration: 'underline' }}>
-            GDG Hongik Univ. 가이드라인
-          </Text>
-        </Link>
-      </Flex>
-      <Flex gap="md" align="start" justify="start" style={{ width: '100%' }}>
-        <button
-          onClick={() => {
-            window.location.href = 'https://github.com/gdg-hongik-univ';
-          }}>
-          <FooterGithubIcon />
-        </button>
-        <button
-          onClick={() => {
-            window.location.href = 'https://www.instagram.com/gdg.hongikuniv';
-          }}>
-          <FooterInstagramIcon />
-        </button>
-      </Flex>
-      <Flex direction="column" align="start">
-        <Text typo="body3" color="sub">
-          와우디벨로퍼스 | 서울특별시 동작구 상도로53길 8, 325동 606호
-        </Text>
-        <Text typo="body3" color="sub">
-          대표 이혁 | TEL 010-2628-3439 | 사업자등록번호 311-82-77953
-        </Text>
-        <Flex justify="flex-start" gap="xxs">
-          <Link to={'https://www.wawoo.dev/wowdevelopers/privacy-policy'}>
-            <Text typo="body3" color="black">
-              개인정보처리방침
-            </Text>
-          </Link>
-          <Text typo="body3">|</Text>
-          <Link to={'https://www.wawoo.dev/wowdevelopers/term-of-use'}>
-            <Text typo="body3" color="black">
-              이용약관
-            </Text>
-          </Link>
-          <Text typo="body3">|</Text>
-          <Link to={'https://www.wawoo.dev/wowdevelopers/refund'}>
-            <Text typo="body3" color="black">
-              환불정책
-            </Text>
-          </Link>
+          <Flex direction="column" align="start" gap="md">
+            <Link to={'https://wawoo.dev/'}>
+              <Text typo="label2" style={{ textDecoration: 'underline' }}>
+                와우디벨로퍼스
+              </Text>
+            </Link>
+            <Link to={'https://www.wawoo.dev/onboarding'}>
+              <Text typo="label2" style={{ textDecoration: 'underline' }}>
+                학회 소개
+              </Text>
+            </Link>
+            <Link to={'https://www.wawoo.dev/onboard-guide/community-rule'}>
+              <Text typo="label2" style={{ textDecoration: 'underline' }}>
+                GDG Hongik Univ. 회칙
+              </Text>
+            </Link>
+            <Link to={'https://www.wawoo.dev/onboard-guide/community-guideline'}>
+              <Text typo="label2" style={{ textDecoration: 'underline' }}>
+                GDG Hongik Univ. 가이드라인
+              </Text>
+            </Link>
+          </Flex>
         </Flex>
-        <Text typo="body3" color="sub">
-          © 2024. 와우디벨로퍼스 all rights reserved.
-        </Text>
+
+        <Flex
+          direction="column"
+          align="start"
+          justify="flex-start"
+          css={css`
+            gap: 1.5rem;
+            ${media.pc} {
+              gap: 1.25rem;
+            }
+          `}>
+          <Flex gap="md" align="start" justify="start" style={{ width: '100%' }}>
+            <button
+              onClick={() => {
+                window.location.href = 'https://github.com/gdg-hongik-univ';
+              }}>
+              <FooterGithubIcon />
+            </button>
+            <button
+              onClick={() => {
+                window.location.href = 'https://www.instagram.com/gdg.hongikuniv';
+              }}>
+              <FooterInstagramIcon />
+            </button>
+          </Flex>
+          <Flex direction="column" align="start">
+            <Text typo="body3" color="sub">
+              와우디벨로퍼스 | 서울특별시 동작구 상도로53길 8, 325동 606호
+            </Text>
+            <Text typo="body3" color="sub">
+              대표 이혁 | TEL 010-2628-3439 | 사업자등록번호 311-82-77953
+            </Text>
+            <Flex justify="flex-start" gap="xxs">
+              <Link to={'https://www.wawoo.dev/wowdevelopers/privacy-policy'}>
+                <Text typo="body3" color="black">
+                  개인정보처리방침
+                </Text>
+              </Link>
+              <Text typo="body3">|</Text>
+              <Link to={'https://www.wawoo.dev/wowdevelopers/term-of-use'}>
+                <Text typo="body3" color="black">
+                  이용약관
+                </Text>
+              </Link>
+              <Text typo="body3">|</Text>
+              <Link to={'https://www.wawoo.dev/wowdevelopers/refund'}>
+                <Text typo="body3" color="black">
+                  환불정책
+                </Text>
+              </Link>
+            </Flex>
+            <Text typo="body3" color="sub">
+              © 2024. 와우디벨로퍼스 all rights reserved.
+            </Text>
+          </Flex>
+        </Flex>
       </Flex>
     </Container>
   );
@@ -88,13 +127,13 @@ const Container = styled.footer`
   width: 100%;
   padding: 1.5rem 1rem;
 
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 1.5rem;
-
   background-color: ${color.backgroundAlternative};
+
+  ${media.pc} {
+    padding: 5.25rem 0;
+  }
 `;
+
 const LogoText = styled.div`
   @font-face {
     font-family: 'Google Sans';

@@ -11,12 +11,12 @@ import { StatusBox } from './StatusBox';
 
 const JoinStatus = ({
   role,
-
-  member
+  member,
+  showStepper = true
 }: {
   role: UserRoleType;
-
   member: User;
+  showStepper?: boolean;
 }) => {
   const [openInfo, setOpenInfo] = useState(false);
   const helpButtonRef = useRef<HTMLDivElement>(null);
@@ -47,9 +47,14 @@ const JoinStatus = ({
           />
         )}
       </Container>
-      <Space height={40} />
 
-      <MemberStatusStepper member={member} />
+      {showStepper && (
+        <>
+          <Space height={40} />
+          <MemberStatusStepper member={member} />
+        </>
+      )}
+
       <Space height={20} />
       <StatusBox role={role} />
     </Flex>

@@ -1,17 +1,40 @@
 import { Flex, Space, Text } from '@/components/common/Wrapper';
 import { InformationBox } from '@/components/onboarding/InformationBox';
-import GlobalSize from '@/constants/globalSize';
 import { media } from '@/styles';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { color } from 'wowds-tokens';
+import { color, typography } from 'wowds-tokens';
 
 export const FAQ = () => {
   return (
     <Wrapper direction="column" justify="flex-start" align="center">
-      <Flex direction="column" gap="xxs">
-        <Text typo="h1">FAQ</Text>
-        <Text typo="body1" color="sub">
+      <Flex
+        direction="column"
+        css={css`
+          gap: 24px;
+          ${media.mobile} {
+            gap: 8px;
+          }
+        `}>
+        <Text
+          typo="h1"
+          css={css`
+            ${typography.display2}
+            ${media.mobile} {
+              ${typography.h1}
+            }
+          `}>
+          FAQ
+        </Text>
+        <Text
+          color="sub"
+          css={css`
+            text-align: center;
+            ${typography.h1}
+            ${media.mobile} {
+              ${typography.body1};
+            }
+          `}>
           자주 묻는 질문
         </Text>
       </Flex>
@@ -36,17 +59,35 @@ export const FAQ = () => {
           isFAQ={true}
         />
       </Flex>
-      <Space height={48} />
-      <Flex direction="column" gap="md" align="center">
+      <Space
+        css={css`
+          height: 200px;
+          ${media.mobile} {
+            height: 48px;
+          }
+        `}
+      />
+      <Flex
+        direction="column"
+        align="center"
+        css={css`
+          gap: 30px;
+          ${media.mobile} {
+            gap: 16px;
+          }
+        `}>
         <Text
           color="black"
-          typo="body1"
           css={css`
             text-align: center;
             word-break: keep-all;
+            ${typography.h1};
+            ${media.mobile} {
+              ${typography.body1};
+            }
           `}>
-          추가 문의사항이 있다면
-          <br /> 카카오톡 플러스채널을 이용해주세요.
+          추가 문의사항이 있다면 <DisplayBreak />
+          카카오톡 플러스채널을 이용해주세요.
         </Text>
         <Text
           color="white"
@@ -70,7 +111,6 @@ export const FAQ = () => {
 
 const Wrapper = styled(Flex)`
   min-height: calc(100vh - var(--header-height, 0px));
-  width: ${GlobalSize.width};
   margin: 0px -16px;
   padding: 64px 16px;
   padding-top: 40px;
@@ -79,5 +119,11 @@ const Wrapper = styled(Flex)`
 
   ${media.mobile} {
     width: 100vw;
+  }
+`;
+const DisplayBreak = styled.br`
+  display: none;
+  ${media.mobile} {
+    display: block;
   }
 `;
