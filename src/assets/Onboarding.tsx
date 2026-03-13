@@ -2,10 +2,10 @@ export const OnboardingLogo1 = () => {
   return (
     <svg
       width="110%"
-      viewBox="17 0 390 400"
+      viewBox="17 0 410 400"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
-      <rect width="390" height="400" fill="#368FF7" />
+      <rect width="410" height="400" fill="#368FF7" />
       <rect
         x="68.3867"
         y="119.4"

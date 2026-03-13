@@ -60,7 +60,7 @@ export const CouponDropDown = () => {
         )}
       </Container>
       <DropDown
-        style={{ width: '100%' }}
+        style={{ width: '100%', maxWidth: '500px' }}
         placeholder="목록을 눌러 선택하세요"
         value={issuedCouponId?.toString()}
         onChange={handleChange}>

@@ -1,10 +1,10 @@
+import RoutePath from '@/routes/routePath';
 import * as Sentry from '@sentry/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import RoutePath from '@/routes/routePath';
-import { ReactNode } from 'react';
 
 type ErrorResponseType = {
   errorCodeName: string;
@@ -33,7 +33,7 @@ export default function ApiErrorBoundary({
       // eslint-disable-next-line import/namespace
       Sentry.captureException(errorResponse, {});
     }
-    const message = errorResponse.errorMessage;
+    const message = errorResponse?.errorMessage;
 
     switch (axiosError.response?.status) {
       case 401:
@@ -45,11 +45,6 @@ export default function ApiErrorBoundary({
       default:
         toast.error(message);
         break;
-    }
-
-    if (errorResponse) {
-      // eslint-disable-next-line import/namespace
-      Sentry.captureException(errorResponse, {});
     }
   }
 
