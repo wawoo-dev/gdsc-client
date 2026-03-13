@@ -1,7 +1,9 @@
-import { Flex, Space, Text } from '@/components/common/Wrapper';
+import { Flex, MobileOnly, Space, Text } from '@/components/common/Wrapper';
 import { usePostDiscordName } from '@/hooks/mutation/usePostDiscordName';
 import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
 import { DiscordFormValues } from '@/types/discord';
+import styled from '@emotion/styled';
 import { memo, useCallback, useEffect } from 'react';
 import { Control, useController, useFormContext } from 'react-hook-form';
 import Button from 'wowds-ui/Button';
@@ -44,11 +46,13 @@ export const DiscordName = ({ onNext }: { onNext: () => void }) => {
   }, [checkDuplicate, getValues, setError, trigger]);
 
   return (
-    <>
+    <Wrapper direction="column">
       <Flex direction="column" align="flex-start" gap="lg">
         <TextSection />
       </Flex>
-      <Space height="lg" />
+      <MobileOnly>
+        <Space height="lg" />
+      </MobileOnly>
       <div style={{ width: '100%' }}>
         <NameField control={control} />
       </div>
@@ -65,9 +69,17 @@ export const DiscordName = ({ onNext }: { onNext: () => void }) => {
           href={RoutePath.DiscordRegisterLink}
         />
       </Flex>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled(Flex)`
+  height: 100%;
+  ${media.pc} {
+    max-width: 500px;
+    gap: 60px;
+  }
+`;
 
 const TextSection = memo(() => {
   return (
@@ -83,7 +95,9 @@ const TextSection = memo(() => {
       <Text typo="body1">
         본인의 디스코드 사용자명을 아래 규정과 맞게 설정한 후 입력해주세요.
       </Text>
-      <Divider />
+      <MobileOnly>
+        <Divider />
+      </MobileOnly>
     </>
   );
 });

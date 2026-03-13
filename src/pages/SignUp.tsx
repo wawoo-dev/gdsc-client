@@ -2,10 +2,9 @@ import { Flex, GuideList, Space, Text } from '@/components/common/Wrapper';
 import DepartmentSelect from '@/components/signup/DepartmentSelect';
 import GlobalSize from '@/constants/globalSize';
 import { media } from '@/styles';
-import { css } from '@emotion/react';
 import { Controller, useForm } from 'react-hook-form';
 import type { color as colorType } from 'wowds-tokens';
-import { color, space, color as wowColor } from 'wowds-tokens';
+import { color, space, typography, color as wowColor } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 import Checkbox from 'wowds-ui/Checkbox';
 import TextField from 'wowds-ui/TextField';
@@ -135,150 +134,134 @@ export const SignUp = () => {
       {isPreviousMemberInfoLoading && previousStudentId !== '' && (
         <LoadingSpinner />
       )}
-      <Text typo="h1">기본 회원 정보 입력</Text>
+      <PageTitle>기본 회원 정보 입력</PageTitle>
       <Space height={24} />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          width: '100%'
-        }}>
-        <Controller
-          name="name"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: {
-              value: true,
-              message: '* 정보를 입력해주세요.'
-            },
-            minLength: {
-              value: 2,
-              message: '* 두 글자 이상 입력해주세요.'
-            }
-          }}
-          render={({ field, fieldState }) => (
-            <InputFormWrapper>
-              <TextField
-                label="이름"
-                error={fieldState.invalid}
-                ref={field.ref}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                helperText={fieldState.error?.message}
-                placeholder="김홍익"
-              />
-            </InputFormWrapper>
-          )}
-        />
-        <Controller
-          name="studentId"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: {
-              value: true,
-              message: '* 정보를 입력해주세요.'
-            },
-            pattern: {
-              value: /^[A-C]{1}[0-9]{6}$/,
-              message: '* C000000 형식으로 입력해주세요.'
-            },
-            validate: () => {
-              if (studentIdCheckData?.isDuplicate) {
-                return '* 이미 등록된 학번입니다.';
+      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FieldRow>
+          <Controller
+            name="name"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: {
+                value: true,
+                message: '* 정보를 입력해주세요.'
+              },
+              minLength: {
+                value: 2,
+                message: '* 두 글자 이상 입력해주세요.'
               }
-              return true;
-            }
-          }}
-          render={({ field, fieldState }) => {
-            const isDuplicateError =
-              studentIdCheckData?.isDuplicate &&
-              fieldState.error?.message?.includes('이미 등록된 학번입니다');
-
-            return (
+            }}
+            render={({ field, fieldState }) => (
               <InputFormWrapper>
                 <TextField
-                  label="학번"
+                  label="이름"
                   error={fieldState.invalid}
                   ref={field.ref}
                   value={field.value}
                   onChange={field.onChange}
                   onBlur={field.onBlur}
-                  helperText={
-                    isDuplicateError ? (
-                      <HelperTextWrapper>
-                        <span>{fieldState.error?.message}</span>
-                        <RegisterButton onClick={handleRegisterClick}>
-                          새로 가입하기
-                        </RegisterButton>
-                      </HelperTextWrapper>
-                    ) : (
-                      fieldState.error?.message
-                    )
-                  }
+                  helperText={fieldState.error?.message}
+                  placeholder="김홍익"
+                />
+              </InputFormWrapper>
+            )}
+          />
+          <Controller
+            name="studentId"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: {
+                value: true,
+                message: '* 정보를 입력해주세요.'
+              },
+              pattern: {
+                value: /^[A-C]{1}[0-9]{6}$/,
+                message: '* C000000 형식으로 입력해주세요.'
+              },
+              validate: () => {
+                if (studentIdCheckData?.isDuplicate) {
+                  return '* 이미 등록된 학번입니다.';
+                }
+                return true;
+              }
+            }}
+            render={({ field, fieldState }) => {
+              const isDuplicateError =
+                studentIdCheckData?.isDuplicate &&
+                fieldState.error?.message?.includes('이미 등록된 학번입니다');
+
+              return (
+                <InputFormWrapper>
+                  <TextField
+                    label="학번"
+                    error={fieldState.invalid}
+                    ref={field.ref}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    helperText={
+                      isDuplicateError ? (
+                        <HelperTextWrapper>
+                          <span>{fieldState.error?.message}</span>
+                          <RegisterButton onClick={handleRegisterClick}>
+                            새로 가입하기
+                          </RegisterButton>
+                        </HelperTextWrapper>
+                      ) : (
+                        fieldState.error?.message
+                      )
+                    }
+                    placeholder="내용을 입력하세요"
+                  />
+                </InputFormWrapper>
+              );
+            }}
+          />
+        </FieldRow>
+        <FieldRow>
+          <Controller
+            name="phone"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: {
+                value: true,
+                message: '* 정보를 입력해주세요.'
+              },
+              pattern: {
+                value: /^010[0-9]{8}$/,
+                message: '* 01000000000 형식으로 입력해주세요.'
+              },
+              maxLength: {
+                value: 13,
+                message: '* 13자 이하로 입력해주세요.'
+              }
+            }}
+            render={({ field, fieldState }) => (
+              <InputFormWrapper>
+                <TextField
+                  label="전화번호"
+                  error={fieldState.invalid}
+                  ref={field.ref}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  value={formatPhoneNumberInProgress(field.value)}
+                  helperText={fieldState.error?.message}
                   placeholder="내용을 입력하세요"
                 />
               </InputFormWrapper>
-            );
-          }}
-        />
-        <Controller
-          name="phone"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: {
-              value: true,
-              message: '* 정보를 입력해주세요.'
-            },
-            pattern: {
-              value: /^010[0-9]{8}$/,
-              message: '* 01000000000 형식으로 입력해주세요.'
-            },
-            maxLength: {
-              value: 13,
-              message: '* 13자 이하로 입력해주세요.'
-            }
-          }}
-          render={({ field, fieldState }) => (
-            <InputFormWrapper>
-              <TextField
-                label="전화번호"
-                error={fieldState.invalid}
-                ref={field.ref}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                value={formatPhoneNumberInProgress(field.value)}
-                helperText={fieldState.error?.message}
-                placeholder="내용을 입력하세요"
-              />
-            </InputFormWrapper>
-          )}
-        />
-        <Suspense fallback={<LoadingForm label="학과" />}>
-          <DepartmentSelect control={control} />
-        </Suspense>
+            )}
+          />
+          <SuspenseWrapper>
+            <Suspense fallback={<LoadingForm label="학과" />}>
+              <DepartmentSelect control={control} />
+            </Suspense>
+          </SuspenseWrapper>
+        </FieldRow>
         <EmailInputField control={control} />
-        <Flex
-          direction="column"
-          gap="lg"
-          justify="center"
-          align="center"
-          css={css`
-            margin-top: 16px;
-            @media (max-height: 750px) {
-              bottom: 0rem;
-            }
-            position: absolute;
-            bottom: 1.75rem;
-            width: 100%;
-            padding: 0px 0.75rem;
-            left: 0;
-          `}>
+        <BottomSection direction="column" gap="lg">
           <CheckboxContainer>
             <Controller
               control={control}
@@ -342,34 +325,39 @@ export const SignUp = () => {
               )}
             />
           </CheckboxContainer>
-          <Button
-            type="submit"
-            role="button"
-            disabled={!isValid}
-            style={{
-              maxWidth: '100%',
-              backgroundColor: isValid ? color.primary : color.darkDisabled,
-              color: 'white'
-            }}>
-            가입 신청하기
-          </Button>
-        </Flex>
-      </form>
+          <SubmitButtonWrapper>
+            <Button
+              type="submit"
+              role="button"
+              disabled={!isValid}
+              style={{
+                width: '100%',
+                backgroundColor: isValid ? color.primary : color.darkDisabled,
+                color: 'white'
+              }}>
+              가입 신청하기
+            </Button>
+          </SubmitButtonWrapper>
+        </BottomSection>
+      </FormWrapper>
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
         <Flex direction="column" gap="md">
-          <Text typo="body1" align="center">
-            기존에 가입한 회원과 중복되는 정보입니다.
-            <br />
-            기존 GitHub 계정과 연결을 끊고
-            <br />새 GitHub 계정을 연결하시겠습니까?
-          </Text>
+          <div>
+            <ModalTitle typo="body1" align="center">
+              기존에 가입한 회원과 중복되는 정보입니다.
+            </ModalTitle>
+            <Text typo="body1" align="center">
+              기존 GitHub 계정과 연결을 끊고
+              <br />새 GitHub 계정을 연결하시겠습니까?
+            </Text>
+          </div>
           <GuideList>
             <li>
               연결된 GitHub 계정을 변경하면 기존에 활동했던
               <br /> 이력도 자동으로 새로운 계정에 반영돼요.
             </li>
           </GuideList>
-          <Flex direction="column" gap="xs">
+          <GitHubHandleList direction="column" gap="xs">
             <GitHubHandleRow>
               <Text typo="label2" color="sub">
                 기존 GitHub
@@ -390,8 +378,8 @@ export const SignUp = () => {
                 <Text typo="label2">{currentGithubHandle || '-'}</Text>
               </GitHubHandleBadge>
             </GitHubHandleRow>
-          </Flex>
-          <ModalButtonGroup>
+          </GitHubHandleList>
+          <ModalButtonGroup gap="sm">
             <Button
               style={{ color: color.sub, borderColor: color.outline }}
               variant="outline"
@@ -412,14 +400,65 @@ const Container = styled(Flex)`
   @media (max-height: 765px) {
     min-height: 105vh;
   }
-  min-height: calc(100vh - var(--header-height, 0px));
+  min-height: 100vh;
   justify-content: flex-start;
   align-items: flex-start;
   background-color: ${color.mono50};
   width: ${GlobalSize.width};
   padding: 40px 16px;
-  ${media.mobile} {
-    width: 100vw;
+  width: 100vw;
+  ${media.pc} {
+    min-height: calc(100vh - var(--header-height, 0px));
+    align-items: center;
+    padding: 60px 16px;
+  }
+`;
+
+const PageTitle = styled(Text)`
+  ${typography.h1}
+  ${media.pc} {
+    text-align: center;
+    ${typography.display2}
+  }
+`;
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  flex-grow: 1;
+  ${media.pc} {
+    gap: 20px;
+    max-width: 658px;
+    flex-grow: 0;
+  }
+`;
+
+const BottomSection = styled(Flex)`
+  width: 100%;
+  margin-top: auto;
+  ${media.pc} {
+    margin-top: 80px;
+    gap: 80px;
+  }
+`;
+
+const FieldRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  ${media.pc} {
+    flex-direction: row;
+    gap: 20px;
+  }
+`;
+
+const SubmitButtonWrapper = styled.div`
+  width: 100%;
+  ${media.pc} {
+    max-width: 328px;
   }
 `;
 
@@ -446,6 +485,16 @@ const GuideLink = styled(Link)<{ color?: colorKey }>`
 const InputFormWrapper = styled.div`
   height: 84.8px;
   width: 100%;
+  ${media.pc} {
+    flex: 1;
+  }
+`;
+
+const SuspenseWrapper = styled.div`
+  width: 100%;
+  ${media.pc} {
+    flex: 1;
+  }
 `;
 
 const HelperTextWrapper = styled.div`
@@ -466,13 +515,24 @@ const RegisterButton = styled.a`
   }
 `;
 
-const ModalButtonGroup = styled.div`
-  display: flex;
-  gap: 12px;
-  width: 100%;
+const ModalTitle = styled(Text)`
+  ${typography.body1}
+  ${media.pc} {
+    ${typography.h1}
+    margin-bottom:10px;
+  }
+`;
 
-  button {
-    flex: 1;
+const ModalButtonGroup = styled(Flex)`
+  width: 100%;
+  ${media.pc} {
+    max-width: 358px;
+  }
+`;
+
+const GitHubHandleList = styled(Flex)`
+  ${media.pc} {
+    margin: 24px 0;
   }
 `;
 

@@ -5,13 +5,16 @@ import {
 import { Flex, Text } from '@/components/common/Wrapper';
 import useBottomSheet from '@/hooks/common/useBottomSheet';
 import RoutePath from '@/routes/routePath';
+import { media } from '@/styles';
 import { Status } from '@/types/status';
 import { UserRoleType } from '@/types/user';
 import {
   convertRecruitmentName,
   convertRecruitmentPeriod
 } from '@/utils/mypage/recruitmentNameFormat';
+import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
+import { typography } from 'wowds-tokens';
 import CustomBox from './CustomBox';
 import StatusBadge from './StatusBadge';
 
@@ -37,9 +40,9 @@ const JoinRegularMember = ({
       ? '진행전'
       : '완료';
   return (
-    <Flex gap="sm" direction="column">
+    <Flex gap="sm" direction="column" align="flex-start">
       <Flex gap="xs" justify="flex-start">
-        <Text typo="h2" color="textBlack">
+        <Text typo="label1" color="textBlack">
           활동 조건
         </Text>
         <StatusBadge statusMessage={statusMessage} />
@@ -50,7 +53,14 @@ const JoinRegularMember = ({
           <CustomBox
             text="현재 정회원 모집 기간이 아니예요."
             subTextContent={
-              <Text typo="body2" color="sub">
+              <Text
+                typo="body2"
+                color="sub"
+                css={css`
+                  ${media.pc} {
+                    ${typography.body1}
+                  }
+                `}>
                 정회원 모집 기간이 되면 버튼이 활성화 돼요.
               </Text>
             }
@@ -62,7 +72,13 @@ const JoinRegularMember = ({
             variant={'arrow'}
             status={'error'}
             subTextContent={
-              <Text color="sub">
+              <Text
+                color="sub"
+                css={css`
+                  ${media.pc} {
+                    ${typography.body1}
+                  }
+                `}>
                 카드·계좌이체 등 여러 결제수단을 지원해요.
               </Text>
             }
@@ -81,7 +97,13 @@ const JoinRegularMember = ({
                     currentRecruitment.roundTypeValue
                   )}
                 </Text>
-                <Text color="sub">
+                <Text
+                  color="sub"
+                  css={css`
+                    ${media.pc} {
+                      ${typography.body1}
+                    }
+                  `}>
                   {convertRecruitmentPeriod(currentRecruitment.period)}
                 </Text>
               </Flex>

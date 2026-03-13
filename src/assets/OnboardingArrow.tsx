@@ -1,8 +1,21 @@
+import { media } from '@/styles';
+import { css } from '@emotion/react';
+import { Flex } from '@/components/common/Wrapper';
+
 export const OnboardingArrow = () => {
   return (
     <>
-      <style>
-        {`
+      <Flex
+        justify="center"
+        align="center"
+        css={css`
+          width: 100%;
+          ${media.mobile} {
+            display: none;
+          }
+        `}>
+        <style>
+          {`
         @keyframes bounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-5px); }
@@ -12,30 +25,84 @@ export const OnboardingArrow = () => {
         animation: bounce 1s infinite;
       }
     `}
-      </style>
-      <svg
-        className="bounce"
-        width="30"
-        height="20"
-        viewBox="0 0 30 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M2 8  L16 13 L30 8"
-          stroke="white"
-          strokeOpacity="0.7"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M2 14 L16 19 L30 14"
-          stroke="white"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+        </style>
+        <svg
+          className="bounce"
+          width="58"
+          height="26"
+          viewBox="0 0 58 26"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 1L29 9L57 1"
+            stroke="white"
+            strokeOpacity="0.5"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M1 9L29 17L57 9"
+            stroke="white"
+            strokeOpacity="0.7"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M1 17L29 25L57 17"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </Flex>
+      <Flex
+        justify="center"
+        align="center"
+        css={css`
+          display: none;
+          ${media.mobile} {
+            display: flex;
+          }
+        `}>
+        <style>
+          {`
+        @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+
+      .bounce {
+        animation: bounce 1s infinite;
+      }
+    `}
+        </style>
+        <svg
+          className="bounce"
+          width="30"
+          height="20"
+          viewBox="0 0 30 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2 8  L16 13 L30 8"
+            stroke="white"
+            strokeOpacity="0.7"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M2 14 L16 19 L30 14"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </Flex>
     </>
   );
 };
