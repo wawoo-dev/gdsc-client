@@ -120,7 +120,7 @@ const NameField = ({ control }: { control: Control<DiscordFormValues> }) => {
             <button
               onClick={() => {
                 window.open(
-                  'https://www.wawoo.dev/onboard-guide/community-guideline',
+                  'https://www.gdghongik.com/onboard-guide/community-guideline',
                   '_blank',
                   'noopener,noreferrer'
                 );
