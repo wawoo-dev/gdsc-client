@@ -21,7 +21,7 @@ export const StudentVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column" align="flex-start">
+        <Container direction="column" align="center">
           <Text
             typo="h1"
             css={css`

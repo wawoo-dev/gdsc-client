@@ -39,11 +39,8 @@ export const EmailVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container
-          direction="column"
-          align="flex-start"
-          justify="space-between">
-          <Flex direction="column" align="flex-start" gap="xl">
+        <Container direction="column" align="center" justify="space-between">
+          <Flex direction="column" align="center" gap="xl">
             <Text
               typo="h1"
               css={css`
