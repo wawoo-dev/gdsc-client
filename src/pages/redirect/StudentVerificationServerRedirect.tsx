@@ -2,6 +2,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Flex, Text } from '@/components/common/Wrapper';
 import { useVerifyStudentEmail } from '@/hooks/mutation';
 import { css } from '@emotion/react';
+import { media } from '@/styles';
 import styled from '@emotion/styled';
 import { useLayoutEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -21,12 +22,15 @@ export const StudentVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column" align="center">
+        <Container direction="column" align-items="flex-start">
           <Text
             typo="h1"
             css={css`
               margin-bottom: 20px;
               margin-top: 40px;
+              ${media.pc} {
+                align-items: center;
+              }
             `}>
             {isSuccess ? '재학생 인증 성공' : '재학생 인증 실패'}
           </Text>

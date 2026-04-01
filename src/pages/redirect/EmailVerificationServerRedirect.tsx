@@ -3,6 +3,7 @@ import { Flex, Text } from '@/components/common/Wrapper';
 import { useVerifyEmail } from '@/hooks/mutation';
 import RoutePath from '@/routes/routePath';
 import { css } from '@emotion/react';
+import { media } from '@/styles';
 import styled from '@emotion/styled';
 import { useLayoutEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -39,12 +40,22 @@ export const EmailVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column" align="center" justify="space-between">
-          <Flex direction="column" align="center" gap="xl">
+        <Container direction="column" justify="space-between">
+          <Flex
+            direction="column"
+            gap="xl"
+            align-items="flex-start"
+            css={css`
+              ${media.pc}
+              align-items: center;
+            `}>
             <Text
               typo="h1"
               css={css`
                 margin-top: 40px;
+                ${media.pc} {
+                  align-items: center;
+                }
               `}>
               {isSuccess ? '본인 인증 성공' : '본인 인증 실패'}
             </Text>
