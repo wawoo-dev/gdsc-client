@@ -1,7 +1,6 @@
-export const customMediaQuery = (minWidth: number): string =>
-  `@media (min-width: ${minWidth}px)`;
+const BREAKPOINT = 993;
+
 export const media = {
-  custom: customMediaQuery,
-  pc: customMediaQuery(993),
-  mobile: `@media (max-width : 992px)`
+  pc: `@media (min-width: ${BREAKPOINT}px)`,
+  mobile: `@media (max-width : ${BREAKPOINT - 1}px)`
 };
