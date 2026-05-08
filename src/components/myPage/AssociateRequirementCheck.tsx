@@ -238,32 +238,28 @@ const AssociateRequirementCheck = ({
             subTextContent={
               discordStatus === 'UNSATISFIED' ? (
                 <Flex
-                  direction="column"
-                  align="flex-start"
-                  justify="flex-start">
-                  <Flex justify="flex-start">
-                    <Discord width="20" height="20" />
-                    <Text
-                      color="discord"
-                      style={{ marginLeft: 3 }}
-                      css={css`
-                        ${media.pc} {
-                          ${typography.body1}
-                        }
-                      `}>
+                  align="center"
+                  justify="flex-start"
+                  css={css`
+                    flex-wrap: wrap;
+                    ${media.pc} {
+                      flex-wrap: nowrap;
+                    }
+                  `}>
+                  <Discord width="20" height="20" />
+                  <Text
+                    color="sub"
+                    style={{ marginLeft: 3 }}
+                    css={css`
+                      ${media.pc} {
+                        ${typography.body1}
+                      }
+                    `}>
+                    <span style={{ color: color.discord }}>
                       GDG Hongik Univ.
-                    </Text>
-                    <Text
-                      color="sub"
-                      css={css`
-                        ${media.pc} {
-                          ${typography.body1}
-                        }
-                      `}>
-                      {' '}
-                      서버에
-                    </Text>
-                  </Flex>
+                    </span>{' '}
+                    서버에{' '}
+                  </Text>
                   <Text
                     color="sub"
                     css={css`

@@ -73,10 +73,7 @@ export const Dashboard = () => {
         />
       </div>
       {isPc ? (
-        <Modal
-          isOpen={isOpen}
-          onClose={handleBottomSheet}
-          width={500}>
+        <Modal isOpen={isOpen} onClose={handleBottomSheet} width={500}>
           <JoinRegularMemberBottomSheet
             currentRecruitment={currentRecruitmentRound}
             variant="modal"
@@ -107,7 +104,7 @@ const Wrapper = styled(Flex)`
 
 const HeaderRow = styled(Flex)`
   width: 100%;
-  gap: 130px;
+  gap: 50px;
   ${media.mobile} {
     flex-direction: column;
     align-items: flex-start;
