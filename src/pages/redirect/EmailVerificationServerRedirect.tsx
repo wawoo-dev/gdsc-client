@@ -44,7 +44,7 @@ export const EmailVerificationServerRedirect = () => {
           <Flex
             direction="column"
             gap="xl"
-            align-items="flex-start"
+            align="flex-start"
             css={css`
               ${media.pc}
               align-items: center;

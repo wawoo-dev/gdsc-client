@@ -22,28 +22,38 @@ export const StudentVerificationServerRedirect = () => {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <Container direction="column" align-items="flex-start">
-          <Text
-            typo="h1"
+        <Container direction="column" align="flex-start">
+          <Flex
+            direction="column"
+            gap="xl"
+            align="flex-start"
             css={css`
-              margin-bottom: 20px;
-              margin-top: 40px;
               ${media.pc} {
                 align-items: center;
               }
             `}>
-            {isSuccess ? '재학생 인증 성공' : '재학생 인증 실패'}
-          </Text>
-          <TextContainer>
-            {isSuccess ? (
-              <Text typo="body1">홍익대학교 재학생 인증에 성공했어요.</Text>
-            ) : (
-              <Text typo="body1">
-                유효하지 않거나 만료된 인증코드예요. 원래 페이지로 돌아가서 메일
-                재전송 버튼을 눌러주세요.
-              </Text>
-            )}
-          </TextContainer>
+            <Text
+              typo="h1"
+              css={css`
+                margin-bottom: 20px;
+                margin-top: 40px;
+                ${media.pc} {
+                  align-items: center;
+                }
+              `}>
+              {isSuccess ? '재학생 인증 성공' : '재학생 인증 실패'}
+            </Text>
+            <TextContainer>
+              {isSuccess ? (
+                <Text typo="body1">홍익대학교 재학생 인증에 성공했어요.</Text>
+              ) : (
+                <Text typo="body1">
+                  유효하지 않거나 만료된 인증코드예요. 원래 페이지로 돌아가서
+                  메일 재전송 버튼을 눌러주세요.
+                </Text>
+              )}
+            </TextContainer>
+          </Flex>
         </Container>
       )}
     </Wrapper>
