@@ -44,7 +44,10 @@ export const SignUp = () => {
   const { createInfo } = useCreateUserInfo();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [previousStudentId, setPreviousStudentId] = useState('');
+
+  // TODO: 깃허브 계정 변경 기능이 되면 돌려놓기
+  // const [previousStudentId, setPreviousStudentId] = useState('');
+  const [previousStudentId] = useState('');
 
   useGetAccountInfo();
   const currentGithubHandle = useAccountInfoStore(
@@ -95,11 +98,12 @@ export const SignUp = () => {
     }
   }, [isPreviousMemberInfoLoading, previousMemberInfo, previousStudentId]);
 
-  const handleRegisterClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setPreviousStudentId(studentId);
-    // 모달은 previousMemberInfo 로딩 완료 후 useEffect에서 열림
-  };
+  // TODO : 2차 모집때 다시 풀어줄 예정
+  // const handleRegisterClick = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   setPreviousStudentId(studentId);
+  //   // 모달은 previousMemberInfo 로딩 완료 후 useEffect에서 열림
+  // };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -205,9 +209,9 @@ export const SignUp = () => {
                       isDuplicateError ? (
                         <HelperTextWrapper>
                           <span>{fieldState.error?.message}</span>
-                          <RegisterButton onClick={handleRegisterClick}>
+                          {/* <RegisterButton onClick={handleRegisterClick}>
                             새로 가입하기
-                          </RegisterButton>
+                          </RegisterButton> */}
                         </HelperTextWrapper>
                       ) : (
                         fieldState.error?.message
@@ -503,17 +507,18 @@ const HelperTextWrapper = styled.div`
   gap: 4px;
 `;
 
-const RegisterButton = styled.a`
-  color: inherit;
-  text-decoration: underline;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.8;
-  }
-  &:visited {
-    color: inherit;
-  }
-`;
+// 2차 모집때 다시 풀어줄 예정
+// const RegisterButton = styled.a`
+//   color: inherit;
+//   text-decoration: underline;
+//   cursor: pointer;
+//   &:hover {
+//     opacity: 0.8;
+//   }
+//   &:visited {
+//     color: inherit;
+//   }
+// `;
 
 const ModalTitle = styled(Text)`
   ${typography.body1}

@@ -12,14 +12,20 @@ import { color, space, typography } from 'wowds-tokens';
 import Button from 'wowds-ui/Button';
 import TextField from 'wowds-ui/TextField';
 
-/** 재학생 인증 페이지 */
+/* 재학생 인증 페이지 */
 export const StudentVerification = () => {
   const navigate = useNavigate();
   //TODO: 추후 pending 상태 백엔드 API 수정하면 반영해둘것.
   const [, setPending] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const { onSubmit, control, isValid, onVerifyStudent, isPending } =
-    useStudentVerification();
+  const {
+    onSubmitEmail,
+    control,
+    isValid,
+    onVerifyStudent,
+    isPending,
+    getValues
+  } = useStudentVerification();
 
   const IsStudentVerified = async () => {
     const univStatus = await onVerifyStudent();
@@ -34,22 +40,35 @@ export const StudentVerification = () => {
     IsStudentVerified();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (isClicked) return;
+
     setIsClicked(true);
-    onSubmit();
+    try {
+      await onSubmitEmail();
+      const inputEmail = getValues ? getValues('univEmail') : '';
+      navigate(RoutePath.StudentVerificationCode, {
+        state: { email: inputEmail }
+      });
+    } catch (error) {
+      // 에러 발생시 중단
+    } finally {
+      setIsClicked(false);
+    }
   };
 
   return (
-    <Wrapper direction="column" justify="flex-start" align="flex-start">
+    <Wrapper direction="column" justify="space-between" align="flex-start">
       {isPending && <LoadingSpinner />}
       <Flex
         gap="xl"
         direction="column"
-        justify="space-between"
+        justify="flex-start"
         css={css`
           flex: 1;
           ${media.pc} {
+            flex: none;
             justify-content: center;
             max-width: 500px;
             gap: 60px;
@@ -67,16 +86,24 @@ export const StudentVerification = () => {
             `}>
             준회원으로 활동하기 위해서 재학생 인증 과정이 필요해요.
             <br />
-            학교 이메일을 통해 재학생 인증을 마무리해주세요!
+            학교 이메일을 통해 재학생 인증을 해주세요!
           </Text>
         </Flex>
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            minHeight: '100%',
+            flex: 1
+          }}>
           <Flex
             direction="column"
             align="flex-start"
             css={css`
-              ${media.pc} {
+              width: 100% ${media.pc} {
                 align-items: center;
               }
             `}>
@@ -104,7 +131,7 @@ export const StudentVerification = () => {
                       onBlur={field.onBlur}
                       value={field.value}
                       error={fieldState.invalid}
-                      placeholder="이메일 작성"
+                      placeholder="이메일 주소를 입력하세요"
                       label="학교 이메일"
                       helperText={fieldState.error?.message}
                     />
@@ -126,26 +153,21 @@ export const StudentVerification = () => {
             <GuideList>
               <li>메일 전송이 최대 30분 가량 늦어질 수 있어요.</li>
               <li>
-                메일이 보이지 않는 경우 스팸 메일함을 확인해주시고, 스팸
-                메일함에도 없을 경우 카카오톡 채널로 문의해주세요.
-              </li>
-              <li>
-                만약 이메일 수신 이후에 인증 버튼을 눌렀음에도 제대로 인증이
-                되지 않는 경우, 해당 브라우저에서 다시 가입 절차를 진행해주세요.
+                메일 전송이 되지 않을 경우 카카오톡 채널을 통해 코어팀 멤버에게
+                문의해주세요.
               </li>
             </GuideList>
           </Flex>
-
           <ButtonContainer>
             <ButtonWrapper>
               <Button
-                disabled={!isValid}
+                disabled={!isValid || isClicked}
                 style={{
                   width: '100%',
                   backgroundColor: isValid ? color.primary : color.darkDisabled,
                   color: 'white'
                 }}>
-                인증메일 받기
+                인증코드 받기
               </Button>
             </ButtonWrapper>
             <StudentGuideLink
@@ -197,6 +219,7 @@ const Wrapper = styled(Flex)`
   ${media.pc} {
     min-height: calc(100vh - var(--header-height, 0px));
     align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -218,7 +241,8 @@ const ButtonContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: ${space.xs};
-  margin-top: ${space.xl};
+  margin-top: auto;
+
   ${media.pc} {
     align-items: center;
     margin-top: 60px;

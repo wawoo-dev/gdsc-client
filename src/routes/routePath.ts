@@ -13,14 +13,15 @@ const RoutePath = {
 
   GithubSignin: '/auth',
   StudentVerification: '/student-verification',
+  StudentVerificationCode: '/student-verification/code',
   Signup: '/signup',
   EmailVerification: '/email-verification',
 
   AuthGithubLoginRedirect: `${BASE_URL}/oauth2/authorization/github`,
 
   AuthServerRedirect: '/social-login/redirect',
-  StudentVerificationServerRedirect: '/onboarding/verify-univ-email',
-  EmailVerificationServerRedirect: '/onboarding/verify-email',
+  // StudentVerificationServerRedirect: '/onboarding/verify-univ-email',
+  // EmailVerificationServerRedirect: '/onboarding/verify-email',
   GDGHongikLink: 'https://www.gdghongik.com',
   GDGHongikDiscord: 'https://discord.gg/dSV6vSEuGU',
   GitHubGuideLink: 'https://www.gdghongik.com/onboard-guide/github',
