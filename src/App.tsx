@@ -231,8 +231,8 @@ function App() {
           <Flex direction="column" gap="sm">
             <InformationBox
               title="모집 기간"
-              description="1차 지원 기간: 2월 19일 ~ 2월 28일"
-              description2="2차 지원 기간: 3월 1일 ~ 3월 7일"
+              description="1차 지원 기간: 8월 27일 ~ 9월 2일"
+              description2="2차 지원 기간: 9월 8일 ~ 9월 14일"
             />
             <InformationBox
               title="지원 자격"

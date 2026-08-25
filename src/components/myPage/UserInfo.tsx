@@ -34,7 +34,7 @@ const UserInfo = ({ member }: { member: User }) => {
                 ${typography.display2}
               }
             `}>
-            정보를 입력해주세요
+            게스트 님
           </Text>
         )}
         {githubHandle && (

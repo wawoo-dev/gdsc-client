@@ -5,7 +5,8 @@ import GlobalSize from '@/constants/globalSize';
 import RoutePath from '@/routes/routePath';
 import { media } from '@/styles';
 import styled from '@emotion/styled';
-import { useLayoutEffect, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useMemo } from 'react';
+import ReactGA from 'react-ga4';
 import { Outlet, useLocation } from 'react-router-dom';
 import { color } from 'wowds-tokens';
 import { Flex } from '../common/Wrapper';
@@ -18,6 +19,13 @@ const PATHS_WITH_HEADER_FOOTER: Set<string> = new Set([
   RoutePath.Discord
 ]);
 
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_ID;
+if (GA_MEASUREMENT_ID) {
+  ReactGA.initialize(GA_MEASUREMENT_ID, {
+    gtagOptions: { send_page_view: false }
+  });
+}
+
 const Layout = () => {
   const location = useLocation();
 
@@ -25,22 +33,24 @@ const Layout = () => {
     return PATHS_WITH_HEADER_FOOTER.has(location.pathname);
   }, [location.pathname]);
 
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname + location.search
+    });
+  }, [location.pathname, location.search]);
+
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
   return (
     <ApiErrorBoundary>
-      <Container
-        style={
-          {
-            '--header-height': GlobalSize.header
-          } as React.CSSProperties
-        }>
+      <Container $hasHeaderOnMobile={showHeaderFooter}>
         <HeaderWrapper $showOnMobile={showHeaderFooter}>
           <Header />
         </HeaderWrapper>
-        <Wrapper $hasHeader={showHeaderFooter}>
+        <Wrapper>
           <Outlet />
           <Footer />
         </Wrapper>
@@ -50,10 +60,17 @@ const Layout = () => {
 };
 export default Layout;
 
-const Container = styled(Flex)`
+const Container = styled(Flex)<{ $hasHeaderOnMobile: boolean }>`
+  --header-height: ${GlobalSize.header};
+
   background-color: ${color.mono150};
   overflow: hidden;
   flex-direction: column;
+
+  ${media.mobile} {
+    --header-height: ${({ $hasHeaderOnMobile }) =>
+      $hasHeaderOnMobile ? GlobalSize.header : '0px'};
+  }
 `;
 
 const HeaderWrapper = styled(Flex)<{ $showOnMobile: boolean }>`
@@ -64,9 +81,9 @@ const HeaderWrapper = styled(Flex)<{ $showOnMobile: boolean }>`
   }
 `;
 
-const Wrapper = styled(Flex)<{ $hasHeader: boolean }>`
-  margin-top: ${GlobalSize.header};
-  min-height: calc(100vh - ${GlobalSize.header});
+const Wrapper = styled(Flex)`
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
   align-items: flex-start;
   overflow: hidden;
 
@@ -76,8 +93,5 @@ const Wrapper = styled(Flex)<{ $hasHeader: boolean }>`
 
   ${media.mobile} {
     width: 100vw;
-    margin-top: ${({ $hasHeader }) => ($hasHeader ? GlobalSize.header : '0')};
-    min-height: ${({ $hasHeader }) =>
-      $hasHeader ? `calc(100vh - ${GlobalSize.header})` : '100vh'};
   }
 `;
