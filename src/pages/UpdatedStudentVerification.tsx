@@ -14,6 +14,19 @@ import Button from 'wowds-ui/Button';
 import TextField from 'wowds-ui/TextField';
 import { Modal } from '../components/common/Modal';
 import { isAxiosError } from 'axios';
+import {
+  STUDENT_VERIFY_STORAGE_KEY,
+  STUDENT_VERIFY_EXPIRE_SECONDS
+} from '../constants/auth';
+import { formatTime } from '@/utils/formatTime';
+
+const getRemainingSeconds = (): number => {
+  const savedExpiresAt = sessionStorage.getItem(STUDENT_VERIFY_STORAGE_KEY);
+  if (!savedExpiresAt) return 0;
+
+  const remaining = Math.ceil((Number(savedExpiresAt) - Date.now()) / 1000);
+  return remaining > 0 ? remaining : 0;
+};
 
 export default function UpdatedStudentVerification() {
   const navigate = useNavigate();
@@ -34,7 +47,19 @@ export default function UpdatedStudentVerification() {
     setError
   } = useStudentVerification();
 
-  const [timeLeft, setTimeLeft] = useState<number>(58);
+  const [timeLeft, setTimeLeft] = useState<number>(() => {
+    const remaining = getRemainingSeconds();
+    if (
+      remaining === 0 &&
+      !sessionStorage.getItem(STUDENT_VERIFY_STORAGE_KEY)
+    ) {
+      const expiresAt = Date.now() + STUDENT_VERIFY_EXPIRE_SECONDS * 1000;
+      sessionStorage.setItem(STUDENT_VERIFY_STORAGE_KEY, String(expiresAt));
+      return STUDENT_VERIFY_EXPIRE_SECONDS;
+    }
+    return remaining;
+  });
+
   const [isRunning, setIsRunning] = useState<boolean>(true);
 
   useEffect(() => {
@@ -47,14 +72,13 @@ export default function UpdatedStudentVerification() {
     if (!isRunning) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          setIsRunning(false);
-          return 0;
-        }
-        return prev - 1;
-      });
+      const remaining = getRemainingSeconds();
+      setTimeLeft(remaining);
+
+      if (remaining <= 0) {
+        clearInterval(timer);
+        setIsRunning(false);
+      }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -78,7 +102,9 @@ export default function UpdatedStudentVerification() {
       if (onResendEmail) {
         await onResendEmail(prevEmail);
       }
-      setTimeLeft(58);
+      const newExpiresAt = Date.now() + STUDENT_VERIFY_EXPIRE_SECONDS * 1000;
+      sessionStorage.setItem(STUDENT_VERIFY_STORAGE_KEY, String(newExpiresAt));
+      setTimeLeft(STUDENT_VERIFY_EXPIRE_SECONDS);
       setIsRunning(true);
     } catch {
       setError('verificationCode', {
@@ -96,6 +122,7 @@ export default function UpdatedStudentVerification() {
     setIsClicked(true);
     try {
       await onSubmitCode();
+      sessionStorage.removeItem(STUDENT_VERIFY_STORAGE_KEY);
       setIsModalOpen(true);
     } catch (error) {
       if (isAxiosError(error) && error.response) {
@@ -305,7 +332,7 @@ export default function UpdatedStudentVerification() {
             </ButtonWrapper>
             {timeLeft > 0 ? (
               <Text typo="body2" color="error">
-                인증코드는 {timeLeft}초 후 다시 받을 수 있어요.
+                인증코드는 {formatTime(timeLeft)} 후 다시 받을 수 있어요.
               </Text>
             ) : (
               <Text typo="body2" color="error">
